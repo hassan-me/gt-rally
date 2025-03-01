@@ -28,11 +28,11 @@ export default function HomePage10() {
         <Header1 />
       </div>
       <Hero />
-      <Filter />
-      <Categories2 />
+      {/* <Filter /> */}
+      {/* <Categories2 /> */}
       <div className="mt-5 pt-5"></div>
       <Cars />
-      <RecomandedCars />
+      {/* <RecomandedCars /> */}
       <Cars2 />
       <Agents />
       <DownloadApp />
@@ -42,7 +42,7 @@ export default function HomePage10() {
       <Brands />
       <Testimonials />
       <Blogs parentClass="section-blog tf-section3" />
-      <LoanCalculator />
+      {/* <LoanCalculator /> */}
       <Footer1 />
     </>
   );

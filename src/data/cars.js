@@ -468,6 +468,228 @@ export const carData = [
   },
 ];
 
+export const rallyData = [
+  {
+    "id": "df8c444c-f4a2-4f36-9f29-dee1be195320",
+    "name": "Drive",
+    "thumbnail": "1740812881670-1740812852712.jpg",
+    "thumbnail_url": "/assets/images/car-list/car16.jpg",
+    "type": "Custom Drive",
+    "no_of_vehicles": 12,
+    "start_date": "2025-03-02T07:07:00.000Z",
+    "start_time": "2025-03-02T07:07:00.000Z",
+    "point_of_interests": "",
+    "share_link": "https://gtrally.page.link/87nY",
+    "end_date": "2025-03-02T07:07:00.000Z",
+    "end_time": "2025-03-02T07:07:00.000Z",
+    "is_active": false,
+    "start_mapbox_district": "Essex County",
+    "end_mapbox_district": "Union County",
+    "user_id": "10e28a53-f47e-498d-a4c5-f277caca32dd",
+    "distance": "106226.039",
+    "duration": "14167.163",
+    "checkpoints": [
+      {
+        "id": "c034e270-02f5-4f0b-8fa9-698e72a0b809",
+        "name": "Check With One Waypoint ",
+        "description": null,
+        "departure_time": "2025-03-02T08:07:00.000Z",
+        "activities": null,
+        "images_urls": null,
+        "images": null,
+        "order": 2,
+        "rally_id": "df8c444c-f4a2-4f36-9f29-dee1be195320"
+      },
+      {
+        "id": "be8cec52-255d-41bc-b6eb-b0929d7f9787",
+        "name": "Check With 2 Waypoint ",
+        "description": null,
+        "departure_time": "2025-03-02T10:07:00.000Z",
+        "activities": null,
+        "images_urls": null,
+        "images": null,
+        "order": 3,
+        "rally_id": "df8c444c-f4a2-4f36-9f29-dee1be195320"
+      },
+      {
+        "id": "89b34349-8339-4ad2-9713-2ee2786a9ce2",
+        "name": "Check Without Waypoints ",
+        "description": null,
+        "departure_time": "2025-03-02T07:07:00.000Z",
+        "activities": null,
+        "images_urls": null,
+        "images": null,
+        "order": 1,
+        "rally_id": "df8c444c-f4a2-4f36-9f29-dee1be195320"
+      }
+    ],
+    "user": {
+      "username": "DevUser",
+      "first_name": "Abdullah",
+      "last_name": "User",
+      "email": "user02@gmail.com",
+      "profile_image": "1740132389041-DevUser",
+      "profile_image_url": "https://storage.googleapis.com/gt-rally.appspot.com/1740132389041-DevUser",
+      "sso_profile_image": null
+    }
+  },
+  {
+    "id": "87f0f43d-a9fa-4c69-abcd-24079a1e3fd8",
+    "name": "Drivee",
+    "thumbnail": "1740697429255-1740697404210.jpg",
+    "thumbnail_url": "https://storage.googleapis.com/gt-rally.appspot.com/1740697429255-1740697404210.jpg",
+    "type": "Grand Touring Rally",
+    "no_of_vehicles": 6,
+    "start_date": "2025-02-27T23:03:14.063Z",
+    "start_time": "2025-02-27T23:03:14.063Z",
+    "point_of_interests": "",
+    "share_link": "https://gtrally.page.link/3KLT",
+    "end_date": "2025-03-20T12:00:00.000Z",
+    "end_time": "2025-03-20T12:00:00.000Z",
+    "is_active": false,
+    "start_mapbox_district": "Essex County",
+    "end_mapbox_district": "Essex County",
+    "user_id": "0937861c-a6fc-4377-b97c-a96dffc488dd",
+    "distance": "76548.586",
+    "duration": "11160.142",
+    "checkpoints": [
+      {
+        "id": "e6308527-e730-40c9-a2d2-98bbc259a7ea",
+        "name": "Check ✅",
+        "description": "Drive Through ",
+        "departure_time": "2025-02-28T00:03:00.000Z",
+        "activities": "Test",
+        "images_urls": [
+          "https://storage.googleapis.com/gt-rally.appspot.com/1740734930473-1740734918833.jpg"
+        ],
+        "images": [
+          "1740734930473-1740734918833.jpg"
+        ],
+        "order": 1,
+        "rally_id": "87f0f43d-a9fa-4c69-abcd-24079a1e3fd8"
+      },
+      {
+        "id": "8f19439a-b0ed-4050-9c09-2c18a0d44ea6",
+        "name": "Runway 🚀",
+        "description": "Galaxy ",
+        "departure_time": "2025-02-28T02:03:00.000Z",
+        "activities": null,
+        "images_urls": [
+          "https://storage.googleapis.com/gt-rally.appspot.com/1740735048996-1740735034490.jpg"
+        ],
+        "images": [
+          "1740735048996-1740735034490.jpg"
+        ],
+        "order": 2,
+        "rally_id": "87f0f43d-a9fa-4c69-abcd-24079a1e3fd8"
+      }
+    ],
+    "user": {
+      "username": "designPro",
+      "first_name": "Ava",
+      "last_name": "Brown",
+      "email": "user03@gmail.com",
+      "profile_image": "1723802306919-profile.jpg",
+      "profile_image_url": "https://storage.googleapis.com/gt-rally.appspot.com/1723802306919-profile.jpg",
+      "sso_profile_image": null
+    }
+  },
+  {
+    "id": "b4a85354-b8af-4ea4-88cb-0896a53aa6e5",
+    "name": "Custom Drive",
+    "thumbnail": "1739448151924-1739448142698.jpg",
+    "thumbnail_url": "https://storage.googleapis.com/gt-rally.appspot.com/1739448151924-1739448142698.jpg",
+    "type": "Custom Drive",
+    "no_of_vehicles": 5,
+    "start_date": "2025-02-14T04:00:41.000Z",
+    "start_time": "2025-02-14T04:00:41.000Z",
+    "point_of_interests": "",
+    "share_link": "https://gtrally.page.link/c5he",
+    "end_date": "2025-03-14T09:42:25.612Z",
+    "end_time": "2025-03-14T09:42:25.612Z",
+    "is_active": true,
+    "start_mapbox_district": "San Francisco County",
+    "end_mapbox_district": "San Francisco County",
+    "user_id": "10e28a53-f47e-498d-a4c5-f277caca32dd",
+    "distance": "11160701",
+    "duration": "536740.479",
+    "checkpoints": [
+      {
+        "id": "ef5ecf12-181e-4050-90e5-ddf37ab77839",
+        "name": "Drive2",
+        "description": "Test",
+        "departure_time": "2025-01-24T21:51:00.000Z",
+        "activities": null,
+        "images_urls": null,
+        "images": null,
+        "order": 2,
+        "rally_id": "b4a85354-b8af-4ea4-88cb-0896a53aa6e5"
+      },
+      {
+        "id": "caeeaa90-cf8d-461e-b7bd-a5eacc2b997d",
+        "name": "Drive",
+        "description": "Test",
+        "departure_time": "2025-01-24T18:36:00.000Z",
+        "activities": null,
+        "images_urls": null,
+        "images": null,
+        "order": 1,
+        "rally_id": "b4a85354-b8af-4ea4-88cb-0896a53aa6e5"
+      },
+      {
+        "id": "d3b92e35-7a4b-4c05-a353-e73808e91e5c",
+        "name": "Drive3",
+        "description": null,
+        "departure_time": "2025-01-24T18:30:18.000Z",
+        "activities": null,
+        "images_urls": null,
+        "images": null,
+        "order": 1,
+        "rally_id": "b4a85354-b8af-4ea4-88cb-0896a53aa6e5"
+      }
+    ],
+    "user": {
+      "username": "DevUser",
+      "first_name": "Abdullah",
+      "last_name": "User",
+      "email": "user02@gmail.com",
+      "profile_image": "1740132389041-DevUser",
+      "profile_image_url": "https://storage.googleapis.com/gt-rally.appspot.com/1740132389041-DevUser",
+      "sso_profile_image": null
+    }
+  },
+  {
+    "id": "ac43abe5-1829-408a-b44c-5ea09a284838",
+    "name": "Test Build 98",
+    "thumbnail": "1737761948380-40434FF3-CB00-4F7A-9490-D811FD431882.jpg",
+    "thumbnail_url": "https://storage.googleapis.com/gt-rally.appspot.com/1737761948380-40434FF3-CB00-4F7A-9490-D811FD431882.jpg",
+    "type": "Grand Touring Rally",
+    "no_of_vehicles": 12,
+    "start_date": "2025-03-24T10:38:32.000Z",
+    "start_time": "2025-03-24T10:38:32.000Z",
+    "point_of_interests": "",
+    "share_link": "https://gtrally.page.link/eKU6",
+    "end_date": "2025-03-24T22:38:32.000Z",
+    "end_time": "2025-03-24T22:38:32.000Z",
+    "is_active": false,
+    "start_mapbox_district": "Henrico County",
+    "end_mapbox_district": "Henrico County",
+    "user_id": "7e5ebb69-31e8-4224-bf0f-f0132ffe09cd",
+    "distance": "8013.039",
+    "duration": "754.379",
+    "checkpoints": [],
+    "user": {
+      "username": "Mariamwaris",
+      "first_name": "Mariam",
+      "last_name": "Waris",
+      "email": "mgchwb8zmy@privaterelay.appleid.com",
+      "profile_image": null,
+      "profile_image_url": null,
+      "sso_profile_image": null
+    }
+  }
+];
+
 export const carData2 = [
   {
     id: 12,

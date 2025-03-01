@@ -16,7 +16,7 @@ export default function Blogs3({ parentClass = "section-blog tf-section" }) {
                 data-wow-delay="0.2s"
                 data-wow-duration="1000ms"
               >
-                News to help choose your car
+                Rally Radar: News to Fuel Your Drive!
               </h2>
               <Link
                 to={`/blog-grid`}

@@ -19,11 +19,10 @@ export default function DownloadApp({ parentClass = "tf-section-banner" }) {
               </div>
               <div className="content">
                 <h2 className="text-color-1">
-                  <a href="#">Down load our app</a>
+                  <a href="#">Download Our App</a>
                 </h2>
                 <p className="text-color-1">
-                  Whether you're buying, selling, or simply researching cars,
-                  AutoDecar is the app for you.
+                  Whether you're racing, spectating, or planning your next rally adventure, AutoRally is the app for you.
                 </p>
                 <div className="flex gap-8">
                   <a href="#">
@@ -64,11 +63,10 @@ export default function DownloadApp({ parentClass = "tf-section-banner" }) {
               </div>
               <div className="content">
                 <h2 className="text-color-1">
-                  <a href="#">Are you looking for a car?</a>
+                  <a href="#">Looking for Your Next Rally Beast?</a>
                 </h2>
                 <p className="text-color-1">
-                  Save time and effort as you no longer need to visit multiple
-                  stores to find the right car.
+                Find high-performance rally cars, event details, and racing opportunities—all in one place. Get ready to hit the track!
                 </p>
                 <a href="#" className="find-cars">
                   <span>Find cars</span>

@@ -41,7 +41,7 @@ export default function Testimonials() {
               data-wow-delay="0.2s"
               data-wow-duration="1000ms"
             >
-              <h2>We love our clients</h2>
+              <h2>Fueled by Your Passion! 🏁💨</h2>
             </div>
           </div>
           <div className="col-lg-12">

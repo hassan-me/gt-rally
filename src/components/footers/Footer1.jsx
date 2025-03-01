@@ -91,8 +91,8 @@ export default function Footer1() {
                   </svg>
                 </div>
                 <div className="content">
-                  <h5 className="title">Top 1 Americas</h5>
-                  <p>Largest Auto portal</p>
+                  <h5 className="title">Elite Rallies</h5>
+                  <p>Experience the most thrilling events</p>
                 </div>
               </div>
             </div>
@@ -231,8 +231,8 @@ export default function Footer1() {
                   </svg>
                 </div>
                 <div className="content">
-                  <h5 className="title">Car Sold</h5>
-                  <p>Every 5 minute</p>
+                  <h5 className="title">Thrill Every Lap</h5>
+                  <p>New races start every hour</p>
                 </div>
               </div>
             </div>
@@ -259,8 +259,8 @@ export default function Footer1() {
                   </svg>
                 </div>
                 <div className="content">
-                  <h5 className="title">Offers</h5>
-                  <p>Stay updated pay less</p>
+                  <h5 className="title">Ultimate Showdowns</h5>
+                  <p>Compare top rally beasts</p>
                 </div>
               </div>
             </div>
@@ -295,14 +295,14 @@ export default function Footer1() {
                   </svg>
                 </div>
                 <div className="content">
-                  <h5 className="title">Compare</h5>
-                  <p>Decode the right car</p>
+                  <h5 className="title">Exclusive Perks</h5>
+                  <p>Unlock VIP rally access</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="footer-main">
+        {/* <div className="footer-main">
           <div className="row">
             {footerData.map((column, index) => (
               <div className="col-lg-3 col-sm-6 col-12" key={index}>
@@ -378,7 +378,7 @@ export default function Footer1() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
         <div className="footer-bottom">
           <div className="row">
             <div className="col-lg-4 col-md-12">

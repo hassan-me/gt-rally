@@ -14,7 +14,7 @@ export default function Agents({ parentClass = "tf-section" }) {
                 data-wow-delay="0.2s"
                 data-wow-duration="1000ms"
               >
-                Meet Our Agents
+                Meet the Rally Experts
               </h2>
             </div>
           </div>
@@ -70,7 +70,7 @@ export default function Agents({ parentClass = "tf-section" }) {
 
           <div className="col-lg-12">
             <div className="box-text flex justify-center mt-15 flex-wrap center">
-              <p>Become an agent and get the commission you deserve.</p>
+              <p>Partner with Us & Get Rewarded for Every Rally Connection.</p>&nbsp;
               <Link to={`/contact`} className="text-color-3 font-2">
                 Contact us
               </Link>

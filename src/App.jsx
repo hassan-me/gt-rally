@@ -117,7 +117,7 @@ function App() {
         <div id="pagee" className="clearfix">
           <Routes>
             <Route path="/">
-              <Route index element={<HomePage1 />} />
+              <Route index element={<HomePage10 />} />
               <Route path="home02" element={<HomePage2 />} />
               <Route path="home03" element={<HomePage3 />} />
               <Route path="home04" element={<HomePage4 />} />

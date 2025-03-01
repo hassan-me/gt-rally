@@ -18,19 +18,19 @@ export default function Header1() {
                     <Link to={`/`}>
                       <img
                         className="lazyload img-none"
-                        data-src="/assets/images/logo/logo2.png"
+                        data-src="/assets/images/logo/logo2-gt-rally.png"
                         alt=""
                         width={225}
                         height={40}
-                        src="/assets/images/logo/logo2.png"
+                        src="/assets/images/logo/logo2-gt-rally.png"
                       />
                       <img
                         className="lazyload img-is-fixed"
-                        data-src="/assets/images/logo/logo@2x.png"
+                        data-src="/assets/images/logo/logo2-gt-rally.png"
                         alt=""
                         width={225}
                         height={40}
-                        src="/assets/images/logo/logo@2x.png"
+                        src="/assets/images/logo/logo2-gt-rally.png"
                       />
                     </Link>
                   </div>
@@ -151,7 +151,7 @@ export default function Header1() {
                           </clipPath>
                         </defs>
                       </svg>
-                      <span>Add listing</span>
+                      <span>Create Rally</span>
                     </Link>
                   </div>
                 </div>

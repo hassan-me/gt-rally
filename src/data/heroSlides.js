@@ -186,19 +186,27 @@ export const sliderSlides = [
 export const slidesData = [
   {
     imgSrc: "/assets/images/slider/slide10.jpg",
-    heading: "Let’s find your next drive in your city",
+    heading: "Gear Up for the Ultimate Rally Experience!",
     paragraph:
-      "Explore the world’s largest database to buy, sell, trade or \n simply rent a car",
-    linkText: "View Detail",
+      "Join the adrenaline-fueled world of rally racing. Compete, spectate, or find your next off-road adventure.",
+    linkText: "Explore Events",
     linkHref: "#",
   },
   {
-    imgSrc: "/assets/images/slider/slide10.jpg",
-    heading: "Let’s find your next drive in your city",
+    imgSrc: "/assets/images/slider/slide4.jpg",
+    heading: "Conquer the Toughest Terrains",
     paragraph:
-      "Explore the world’s largest database to buy, sell, trade or \n simply rent a car",
-    linkText: "View Detail",
+      "From desert dunes to rugged mountains—challenge yourself on the world’s most thrilling rally tracks.",
+    linkText: "Get Started",
     linkHref: "#",
   },
+  {
+    imgSrc: "/assets/images/slider/slide7.jpg",
+    heading: "Speed, Strategy, and Glory Await!",
+    paragraph:
+      "Master the art of rally racing. Test your skills, push your limits, and leave your mark on the track.",
+    linkText: "Join a Rally",
+    linkHref: "#",
+  }
   // Add more objects as needed
 ];

@@ -13,16 +13,14 @@ export default function Features() {
                   data-wow-delay="0.2s"
                   data-wow-duration="1000ms"
                 >
-                  Why Choose Auto Decar
+                  GT Rally – Where Speed Meets Spirit!
                 </h2>
                 <p
                   className="mt-18 wow fadeInUpSmall"
                   data-wow-delay="0.2s"
                   data-wow-duration="1000ms"
                 >
-                  Our experienced team excels in car sales with many years of
-                  successfully navigating the market, delivering informed
-                  decisions and optimal results.
+                  If the smell of burning rubber, the roar of engines, and the rush of speed fuel your soul, then welcome home. AutoRally isn’t just a platform—it’s where legends are made, rivalries are born, and the road is yours to dominate!
                 </p>
               </div>
               <div className="tf-icon-box-list">
@@ -59,12 +57,11 @@ export default function Features() {
                   </div>
                   <div className="content">
                     <h5>
-                      <a href="#">Proven Expertise</a>
+                      <a href="#">🏁 Start Something EPIC</a>
                     </h5>
                     <p>
-                      Our experienced team excels in car sales with many years
-                      of successfully navigating the market, delivering informed
-                      decisions and optimal results.
+                      Forget waiting for the next big event—create your own! 
+                      Set the course, gather your crew, and challenge the fiercest racers out there.
                     </p>
                   </div>
                 </div>
@@ -93,12 +90,11 @@ export default function Features() {
                   </div>
                   <div className="content">
                     <h5>
-                      <a href="#">Customized Solutions</a>
+                      <a href="#">🚗 Join the Wildest Rally Scenes</a>
                     </h5>
                     <p>
-                      We pride ourselves on creating personalized strategies to
-                      suit your unique goals, ensuring a seamless car selling
-                      journey.
+                    Dirt, tarmac, dunes, mountains—you pick the terrain, we bring the adrenaline. 
+                    Find your next race, hop in, and let the thrill take over.
                     </p>
                   </div>
                 </div>
@@ -159,12 +155,11 @@ export default function Features() {
                   </div>
                   <div className="content">
                     <h5>
-                      <a href="#">Transparent Partnerships</a>
+                      <a href="#">⚡ Squad Up & Burn Some Rubber</a>
                     </h5>
                     <p>
-                      Transparency is key in our client relationships. We
-                      prioritize clear communication and ethical practices,
-                      fostering trust and reliability throughout.
+                      Race solo or form an unstoppable crew. 
+                      Connect with real racers, build rivalries, and earn your place among the fearless.
                     </p>
                   </div>
                 </div>

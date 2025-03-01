@@ -45,7 +45,7 @@ export default function Brands() {
                 data-wow-delay="0.2s"
                 data-wow-duration="1000ms"
               >
-                Our partners
+                Powering Victories with Our Sponsors!
               </h2>
             </div>
             <Swiper

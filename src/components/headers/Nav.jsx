@@ -25,7 +25,7 @@ export default function Nav() {
   return (
     <>
       <li
-        className={`tf-megamenu dropdown2 ${
+        className={`tf-megamenu ${
           isActive(homepages) ? "current" : ""
         } `}
       >
@@ -45,37 +45,8 @@ export default function Nav() {
           ))}
         </ul>
       </li>
-      <li
-        className={`tfcl-mega-menu dropdown2  ${
-          isActive(listingPages) ? "current" : ""
-        } `}
-      >
-        <a href="#">Listing Car</a>
-        <ul>
-          {listingPages.map((item, index) => (
-            <li key={index} className={item.className}>
-              <a href="#">{item.title}</a>
-              <ul>
-                {item.links.map((link, linkIndex) => (
-                  <li
-                    key={linkIndex}
-                    className={`${link.className || ""} ${
-                      link.href.split("/")[1] == pathname.split("/")[1]
-                        ? "current"
-                        : ""
-                    }`}
-                  >
-                    <Link to={link.href}>{link.text}</Link>
-                  </li>
-                ))}
-              </ul>
-              <div className="dropdown2-btn" />
-            </li>
-          ))}
-        </ul>
-      </li>
-      <li className={`dropdown2  ${isActive(otherPages) ? "current" : ""} `}>
-        <a href="#">Page</a>
+      <li className={`  ${isActive(otherPages) ? "current" : ""} `}>
+        <a href="#">About Us</a>
         <ul>
           {otherPages.map((item, index) => (
             <li
@@ -114,7 +85,7 @@ export default function Nav() {
           ))}
         </ul>
       </li>
-      <li className={`dropdown2  ${isActive(blogPages) ? "current" : ""} `}>
+      <li className={` ${isActive(blogPages) ? "current" : ""} `}>
         <a href="#">Blog</a>
         <ul>
           {blogPages.map((item, index) => (
@@ -127,6 +98,35 @@ export default function Nav() {
               }
             >
               <Link to={item.href}>{item.text}</Link>
+            </li>
+          ))}
+        </ul>
+      </li>
+      <li
+        className={`tfcl-mega-menu dropdown2  ${
+          isActive(listingPages) ? "current" : ""
+        } `}
+      >
+        <a href="#">Showdown</a>
+        <ul>
+          {listingPages.map((item, index) => (
+            <li key={index} className={item.className}>
+              <a href="#">{item.title}</a>
+              <ul>
+                {item.links.map((link, linkIndex) => (
+                  <li
+                    key={linkIndex}
+                    className={`${link.className || ""} ${
+                      link.href.split("/")[1] == pathname.split("/")[1]
+                        ? "current"
+                        : ""
+                    }`}
+                  >
+                    <Link to={link.href}>{link.text}</Link>
+                  </li>
+                ))}
+              </ul>
+              <div className="dropdown2-btn" />
             </li>
           ))}
         </ul>
