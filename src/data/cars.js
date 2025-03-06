@@ -529,7 +529,7 @@ export const rallyData = [
       "last_name": "User",
       "email": "user02@gmail.com",
       "profile_image": "1740132389041-DevUser",
-      "profile_image_url": "https://storage.googleapis.com/gt-rally.appspot.com/1740132389041-DevUser",
+      "profile_image_url": "/assets/images/author/avt-cm3.jpg",
       "sso_profile_image": null
     }
   },
@@ -537,7 +537,7 @@ export const rallyData = [
     "id": "87f0f43d-a9fa-4c69-abcd-24079a1e3fd8",
     "name": "Drivee",
     "thumbnail": "1740697429255-1740697404210.jpg",
-    "thumbnail_url": "https://storage.googleapis.com/gt-rally.appspot.com/1740697429255-1740697404210.jpg",
+    "thumbnail_url": "/assets/images/car-list/car17.jpg",
     "type": "Grand Touring Rally",
     "no_of_vehicles": 6,
     "start_date": "2025-02-27T23:03:14.063Z",
@@ -590,7 +590,7 @@ export const rallyData = [
       "last_name": "Brown",
       "email": "user03@gmail.com",
       "profile_image": "1723802306919-profile.jpg",
-      "profile_image_url": "https://storage.googleapis.com/gt-rally.appspot.com/1723802306919-profile.jpg",
+      "profile_image_url": "/assets/images/author/1.jpg",
       "sso_profile_image": null
     }
   },
@@ -598,7 +598,7 @@ export const rallyData = [
     "id": "b4a85354-b8af-4ea4-88cb-0896a53aa6e5",
     "name": "Custom Drive",
     "thumbnail": "1739448151924-1739448142698.jpg",
-    "thumbnail_url": "https://storage.googleapis.com/gt-rally.appspot.com/1739448151924-1739448142698.jpg",
+    "thumbnail_url": "/assets/images/car-list/car14.jpg",
     "type": "Custom Drive",
     "no_of_vehicles": 5,
     "start_date": "2025-02-14T04:00:41.000Z",
@@ -654,7 +654,7 @@ export const rallyData = [
       "last_name": "User",
       "email": "user02@gmail.com",
       "profile_image": "1740132389041-DevUser",
-      "profile_image_url": "https://storage.googleapis.com/gt-rally.appspot.com/1740132389041-DevUser",
+      "profile_image_url": "/assets/images/author/avt1.jpg",
       "sso_profile_image": null
     }
   },
@@ -662,7 +662,7 @@ export const rallyData = [
     "id": "ac43abe5-1829-408a-b44c-5ea09a284838",
     "name": "Test Build 98",
     "thumbnail": "1737761948380-40434FF3-CB00-4F7A-9490-D811FD431882.jpg",
-    "thumbnail_url": "https://storage.googleapis.com/gt-rally.appspot.com/1737761948380-40434FF3-CB00-4F7A-9490-D811FD431882.jpg",
+    "thumbnail_url": "/assets/images/car-list/car15.jpg",
     "type": "Grand Touring Rally",
     "no_of_vehicles": 12,
     "start_date": "2025-03-24T10:38:32.000Z",
@@ -684,7 +684,7 @@ export const rallyData = [
       "last_name": "Waris",
       "email": "mgchwb8zmy@privaterelay.appleid.com",
       "profile_image": null,
-      "profile_image_url": null,
+      "profile_image_url": "/assets/images/author/avt2.jpg",
       "sso_profile_image": null
     }
   }

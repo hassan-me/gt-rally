@@ -49,11 +49,9 @@ export default function Cars2() {
           <div className="col-md-6">
             <div className="content-wcs">
               <div className="heading-section">
-                <h2>Find your dream car easily and quickly</h2>
+                <h2>Features Rallies</h2>
                 <p className="mt-18">
-                  Browse thousands of new and used cars from all reputable
-                  brands on the <br />
-                  market.
+                  Browse the rallies at your own accord or choose from the featured ones
                 </p>
               </div>
               <div className="tf-icon-box-list">

@@ -152,6 +152,10 @@ function App() {
                 path="listing-detail-v5/:id"
                 element={<BlogListingDetailsPage5 />}
               />
+              <Route
+                path="rallies/:id"
+                element={<BlogListingDetailsPage4 />}
+              />
               <Route path="about-us" element={<AboutUsPage />} />
               <Route path="faq" element={<FaqPage />} />
               <Route path="pricing" element={<PricingPage />} />
