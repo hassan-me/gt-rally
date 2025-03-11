@@ -189,24 +189,22 @@ export const slidesData = [
     heading: "Gear Up for the Ultimate Rally Experience!",
     paragraph:
       "Join the adrenaline-fueled world of rally racing. Compete, spectate, or find your next off-road adventure.",
-    linkText: "Explore Events",
-    linkHref: "#",
+    linkText: "Explore GT Rally",
+    linkHref: "join-as-participant",
   },
   {
-    imgSrc: "/assets/images/slider/slide4.jpg",
-    heading: "Conquer the Toughest Terrains",
-    paragraph:
-      "From desert dunes to rugged mountains—challenge yourself on the world’s most thrilling rally tracks.",
-    linkText: "Get Started",
-    linkHref: "#",
+    imgSrc: "/assets/images/slider/slide1.jpg",
+    heading: "GT Rally Mobile App. Your Ultimate Rally Companion!",
+    paragraph: "Plan, join, and experience car rallies like never before with real-time navigation, event management, and community engagement—all in one powerful app!",
+    linkText: "Download Mobile App",
+    linkHref: "mobile-app",
   },
   {
-    imgSrc: "/assets/images/slider/slide7.jpg",
-    heading: "Speed, Strategy, and Glory Await!",
-    paragraph:
-      "Master the art of rally racing. Test your skills, push your limits, and leave your mark on the track.",
-    linkText: "Join a Rally",
-    linkHref: "#",
+    imgSrc: "/assets/images/slider/slide1.jpg",
+    heading: "Fuel Your Brand’s Momentum with GT Rally!",
+    paragraph: "Get in the fast lane—sponsor epic rallies, connect with die-hard car enthusiasts, and put your brand in pole position at GT Rally!",
+    linkText: "Become a Sponsor",
+    linkHref: "become-a-sponsor",
   }
   // Add more objects as needed
 ];
