@@ -45,8 +45,8 @@ export default function Nav() {
           ))}
         </ul>
       </li>
-      <li className={`  ${isActive(otherPages) ? "current" : ""} `}>
-        <a href="#">About Us</a>
+      <li className={`dropdown2 ${isActive(otherPages) ? "current" : ""} `}>
+        <a href="#">Start Your Journey</a>
         <ul>
           {otherPages.map((item, index) => (
             <li
@@ -107,7 +107,7 @@ export default function Nav() {
           isActive(listingPages) ? "current" : ""
         } `}
       >
-        <a href="#">Showdown</a>
+        <a href="#">Find your Route</a>
         <ul>
           {listingPages.map((item, index) => (
             <li key={index} className={item.className}>

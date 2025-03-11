@@ -14,38 +14,39 @@ export const homepages = [
 export const listingPages = [
   {
     className: "dropdown2",
-    title: "Thrill Rides",
-    links: [{ href: "/listing-list", text: "Explore high-octane rallies" }],
+    title: "Rallies",
+    links: [{ href: "/listing-list", text: "Explore rallies" }],
   },
   {
     className: "dropdown2",
-    title: "Epic Showdowns",
-    links: [{ href: "/listing-grid", text: "Experience electrifying events" }],
+    title: "Car Meet & Shows",
+    links: [{ href: "/listing-grid", text: "Explore events" }],
   }
 ];
 
 export const otherPages = [
-  { href: "/about-us", text: "About Us" },
-  { href: "/faq", text: "Faq's" },
-  { href: "/pricing", text: "Pricing" },
-  { href: "/compare", text: "Compare" },
-  {
-    className: "dropdown2",
-    title: "Dealer",
-    links: [
-      { href: "/dealer-listing", text: "Dealer listing" },
-      { href: "/dealer-detail/1", text: "Dealer detail" },
-    ],
-  },
-  {
-    className: "dropdown2",
-    title: "Agents",
-    links: [
-      { href: "/sale-agents", text: "Sale agents" },
-      { href: "/sale-agents-detail/1", text: "Sale agents detail" },
-    ],
-  },
-  { href: "/dashboard", text: "Dashboard" },
+  { href: "/join-as-participant", text: "The GT Rally Experience" },
+  { href: "/mobile-app", text: "Download Mobile App" },
+  { href: "/become-a-sponsor", text: "Become a Sponsor" },
+  // { href: "/pricing", text: "Pricing" },
+  // { href: "/compare", text: "Compare" },
+  // {
+  //   className: "dropdown2",
+  //   title: "Dealer",
+  //   links: [
+  //     { href: "/dealer-listing", text: "Dealer listing" },
+  //     { href: "/dealer-detail/1", text: "Dealer detail" },
+  //   ],
+  // },
+  // {
+  //   className: "dropdown2",
+  //   title: "Agents",
+  //   links: [
+  //     { href: "/sale-agents", text: "Sale agents" },
+  //     { href: "/sale-agents-detail/1", text: "Sale agents detail" },
+  //   ],
+  // },
+  // { href: "/dashboard", text: "Dashboard" },
 ];
 
 export const blogPages = [
