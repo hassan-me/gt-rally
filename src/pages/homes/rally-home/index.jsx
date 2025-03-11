@@ -1,18 +1,14 @@
-import Categories2 from "@/components/common/Categories2";
 import Header1 from "@/components/headers/Header1";
-import Cars from "@/components/homes/home-10/Cars";
-import Filter from "@/components/homes/home-10/Filter";
-import Hero from "@/components/homes/home-10/Hero";
-import RecomandedCars from "@/components/common/RecomandedCars";
+import Events from "@/components/homes/rally-home/Events";
+import Hero from "@/components/homes/rally-home/Hero";
 import React from "react";
-import Cars2 from "@/components/homes/home-10/Cars2";
+import FeaturedEvents from "@/components/homes/rally-home/FeaturedEvents";
 import Agents from "@/components/common/Agents";
 import DownloadApp from "@/components/common/DownloadApp";
-import Features from "@/components/homes/home-10/Features";
+import Features from "@/components/homes/rally-home/Features";
 import Brands from "@/components/common/Brands";
-import Testimonials from "@/components/homes/home-10/Testimonials";
+import Testimonials from "@/components/homes/rally-home/Testimonials";
 import Blogs from "@/components/common/Blogs3";
-import LoanCalculator from "@/components/homes/home-10/LoanCalculator";
 import Footer1 from "@/components/footers/Footer1";
 
 import MetaComponent from "@/components/common/MetaComponent";
@@ -20,21 +16,18 @@ const metadata = {
   title: "GT Rally Hub - Drive. Compete. Conquer.",
   description: "Discover and join thrilling rally events worldwide. Connect with racing enthusiasts, explore off-road adventures, and experience high-speed excitement. Find your next rally today!",
 };
-export default function HomePage10() {
+export default function RallyHome() {
   return (
     <>
-      <MetaComponent />
+      <MetaComponent meta={metadata} />
       <div className="header-fixed">
         <Header1 />
       </div>
       <Hero />
-      {/* <Filter /> */}
-      {/* <Categories2 /> */}
       <div className="mt-5 pt-5"></div>
-      <Cars />
-      {/* <RecomandedCars /> */}
-      <Cars2 />
-      <Agents />
+      <Events />
+      <FeaturedEvents />
+      <br/><br/>
       <DownloadApp />
       <div className="mt-5 pt-5"></div>
       <Features />
@@ -42,7 +35,7 @@ export default function HomePage10() {
       <Brands />
       <Testimonials />
       <Blogs parentClass="section-blog tf-section3" />
-      {/* <LoanCalculator /> */}
+      <Agents />
       <Footer1 />
     </>
   );

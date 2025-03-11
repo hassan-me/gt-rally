@@ -18,19 +18,19 @@ export default function Header1() {
                     <Link to={`/`}>
                       <img
                         className="lazyload img-none"
-                        data-src="/assets/images/logo/logo2-gt-rally.png"
+                        data-src="/assets/images/logo/logo@2x.png"
                         alt=""
                         width={225}
                         height={40}
-                        src="/assets/images/logo/logo2-gt-rally.png"
+                        src="/assets/images/logo/logo@2x.png"
                       />
                       <img
                         className="lazyload img-is-fixed"
-                        data-src="/assets/images/logo/logo2-gt-rally.png"
+                        data-src="/assets/images/logo/logo@2x.png"
                         alt=""
                         width={225}
                         height={40}
-                        src="/assets/images/logo/logo2-gt-rally.png"
+                        src="/assets/images/logo/logo@2x.png"
                       />
                     </Link>
                   </div>

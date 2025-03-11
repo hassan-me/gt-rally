@@ -67,15 +67,6 @@ export default function Agents({ parentClass = "tf-section" }) {
               </div>
             </div>
           ))}
-
-          <div className="col-lg-12">
-            <div className="box-text flex justify-center mt-15 flex-wrap center">
-              <p>Partner with Us & Get Rewarded for Every Rally Connection.</p>&nbsp;
-              <Link to={`/contact`} className="text-color-3 font-2">
-                Contact us
-              </Link>
-            </div>
-          </div>
         </div>
       </div>
     </section>

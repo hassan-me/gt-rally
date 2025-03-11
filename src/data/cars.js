@@ -690,6 +690,210 @@ export const rallyData = [
   }
 ];
 
+export const eventData = [
+  {
+    "id": "fb889eaa-33c5-4eae-8e39-7a6c241f3296",
+    "name": "GT Event 2-3-25",
+    "type": "Car Meets",
+    "no_of_vehicles": 22,
+    "start_date": "2025-03-08T13:48:38.000Z",
+    "start_time": "2025-03-08T13:48:38.000Z",
+    "end_time": "2025-03-10T17:48:38.000Z",
+    "end_location": "{\"type\":\"FeatureCollection\",\"query\":[-122.39680211631867,37.767983125279514],\"features\":[{\"id\":\"address.6982278411205950\",\"type\":\"Feature\",\"place_type\":[\"address\"],\"relevance\":1,\"properties\":{\"accuracy\":\"point\",\"mapbox_id\":\"dXJuOm1ieGFkcjpkYWQzMTJiOS0wZjgyLTQ5NTctYTg3NC1iODU0YmE3OTM2Zjk\"},\"text\":\"7th Street\",\"place_name\":\"1101 7th Street, San Francisco, California 94107, United States\",\"center\":[-122.396745,37.7685],\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.396745,37.7685]},\"address\":\"1101\",\"context\":[{\"id\":\"neighborhood.601435372\",\"mapbox_id\":\"dXJuOm1ieHBsYzpJOWtzN0E\",\"text\":\"South of Market\"},{\"id\":\"postcode.6982278411205950\",\"text\":\"94107\"},{\"id\":\"place.292358380\",\"mapbox_id\":\"dXJuOm1ieHBsYzpFVzBJN0E\",\"wikidata\":\"Q62\",\"text\":\"San Francisco\"},{\"id\":\"district.20547308\",\"mapbox_id\":\"dXJuOm1ieHBsYzpBVG1HN0E\",\"wikidata\":\"Q62\",\"text\":\"San Francisco County\"},{\"id\":\"region.419052\",\"mapbox_id\":\"dXJuOm1ieHBsYzpCbVRz\",\"wikidata\":\"Q99\",\"short_code\":\"US-CA\",\"text\":\"California\"},{\"id\":\"country.8940\",\"mapbox_id\":\"dXJuOm1ieHBsYzpJdXc\",\"wikidata\":\"Q30\",\"short_code\":\"us\",\"text\":\"United States\"}]},{\"id\":\"neighborhood.601435372\",\"type\":\"Feature\",\"place_type\":[\"neighborhood\"],\"relevance\":1,\"properties\":{\"mapbox_id\":\"dXJuOm1ieHBsYzpJOWtzN0E\"},\"text\":\"South of Market\",\"place_name\":\"South of Market, San Francisco, California, United States\",\"bbox\":[-122.423401,37.765944,-122.394462,37.784],\"center\":[-122.405646,37.778481],\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.405646,37.778481]},\"context\":[{\"id\":\"postcode.6982278411205950\",\"text\":\"94107\"},{\"id\":\"place.292358380\",\"mapbox_id\":\"dXJuOm1ieHBsYzpFVzBJN0E\",\"wikidata\":\"Q62\",\"text\":\"San Francisco\"},{\"id\":\"district.20547308\",\"mapbox_id\":\"dXJuOm1ieHBsYzpBVG1HN0E\",\"wikidata\":\"Q62\",\"text\":\"San Francisco County\"},{\"id\":\"region.419052\",\"mapbox_id\":\"dXJuOm1ieHBsYzpCbVRz\",\"wikidata\":\"Q99\",\"short_code\":\"US-CA\",\"text\":\"California\"},{\"id\":\"country.8940\",\"mapbox_id\":\"dXJuOm1ieHBsYzpJdXc\",\"wikidata\":\"Q30\",\"short_code\":\"us\",\"text\":\"United States\"}]},{\"id\":\"postcode.6982278411205950\",\"type\":\"Feature\",\"place_type\":[\"postcode\"],\"relevance\":1,\"properties\":{},\"text\":\"94107\",\"place_name\":\"San Francisco, California 94107, United States\",\"center\":[-122.403629,37.77313],\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.403629,37.77313]},\"context\":[{\"id\":\"place.292358380\",\"mapbox_id\":\"dXJuOm1ieHBsYzpFVzBJN0E\",\"wikidata\":\"Q62\",\"text\":\"San Francisco\"},{\"id\":\"district.20547308\",\"mapbox_id\":\"dXJuOm1ieHBsYzpBVG1HN0E\",\"wikidata\":\"Q62\",\"text\":\"San Francisco County\"},{\"id\":\"region.419052\",\"mapbox_id\":\"dXJuOm1ieHBsYzpCbVRz\",\"wikidata\":\"Q99\",\"short_code\":\"US-CA\",\"text\":\"California\"},{\"id\":\"country.8940\",\"mapbox_id\":\"dXJuOm1ieHBsYzpJdXc\",\"wikidata\":\"Q30\",\"short_code\":\"us\",\"text\":\"United States\"}]},{\"id\":\"place.292358380\",\"type\":\"Feature\",\"place_type\":[\"place\"],\"relevance\":1,\"properties\":{\"mapbox_id\":\"dXJuOm1ieHBsYzpFVzBJN0E\",\"wikidata\":\"Q62\"},\"text\":\"San Francisco\",\"place_name\":\"San Francisco, California, United States\",\"bbox\":[-122.544637,37.670769,-122.30107,37.866488],\"center\":[-122.419359,37.779238],\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.419359,37.779238]},\"context\":[{\"id\":\"district.20547308\",\"mapbox_id\":\"dXJuOm1ieHBsYzpBVG1HN0E\",\"wikidata\":\"Q62\",\"text\":\"San Francisco County\"},{\"id\":\"region.419052\",\"mapbox_id\":\"dXJuOm1ieHBsYzpCbVRz\",\"wikidata\":\"Q99\",\"short_code\":\"US-CA\",\"text\":\"California\"},{\"id\":\"country.8940\",\"mapbox_id\":\"dXJuOm1ieHBsYzpJdXc\",\"wikidata\":\"Q30\",\"short_code\":\"us\",\"text\":\"United States\"}]},{\"id\":\"district.20547308\",\"type\":\"Feature\",\"place_type\":[\"district\"],\"relevance\":1,\"properties\":{\"mapbox_id\":\"dXJuOm1ieHBsYzpBVG1HN0E\",\"wikidata\":\"Q62\"},\"text\":\"San Francisco County\",\"place_name\":\"San Francisco County, California, United States\",\"bbox\":[-123.134946,37.670769,-122.30107,37.929639],\"center\":[-122.42017,37.780081],\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.42017,37.780081]},\"context\":[{\"id\":\"region.419052\",\"mapbox_id\":\"dXJuOm1ieHBsYzpCbVRz\",\"wikidata\":\"Q99\",\"short_code\":\"US-CA\",\"text\":\"California\"},{\"id\":\"country.8940\",\"mapbox_id\":\"dXJuOm1ieHBsYzpJdXc\",\"wikidata\":\"Q30\",\"short_code\":\"us\",\"text\":\"United States\"}]},{\"id\":\"region.419052\",\"type\":\"Feature\",\"place_type\":[\"region\"],\"relevance\":1,\"properties\":{\"mapbox_id\":\"dXJuOm1ieHBsYzpCbVRz\",\"wikidata\":\"Q99\",\"short_code\":\"US-CA\"},\"text\":\"California\",\"place_name\":\"California, United States\",\"bbox\":[-124.513074,32.526821,-114.131211,42.009503],\"center\":[-119.699375,37.07436],\"geometry\":{\"type\":\"Point\",\"coordinates\":[-119.699375,37.07436]},\"context\":[{\"id\":\"country.8940\",\"mapbox_id\":\"dXJuOm1ieHBsYzpJdXc\",\"wikidata\":\"Q30\",\"short_code\":\"us\",\"text\":\"United States\"}]},{\"id\":\"country.8940\",\"type\":\"Feature\",\"place_type\":[\"country\"],\"relevance\":1,\"properties\":{\"mapbox_id\":\"dXJuOm1ieHBsYzpJdXc\",\"wikidata\":\"Q30\",\"short_code\":\"us\"},\"text\":\"United States\",\"place_name\":\"United States\",\"bbox\":[-179.9,18.829161,-66.902733,71.420291],\"center\":[-97.922211,39.381266],\"geometry\":{\"type\":\"Point\",\"coordinates\":[-97.922211,39.381266]}}],\"attribution\":\"NOTICE: © 2024 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service (https://www.mapbox.com/about/maps/). This response and the information it contains may not be retained. POI(s) provided by Foursquare.\"} ",
+    "start_location": "{\"type\":\"FeatureCollection\",\"query\":[-122.40425085250129,37.78453119928291],\"features\":[{\"id\":\"address.2858205657929190\",\"type\":\"Feature\",\"place_type\":[\"address\"],\"relevance\":1,\"properties\":{\"accuracy\":\"point\",\"mapbox_id\":\"dXJuOm1ieGFkcjpkYmNkNmY5Ny0yZjE2LTQ5OWQtYTFmMy1kMTMyOWRhZGUwZDE\"},\"text\":\"Mission Street\",\"place_name\":\"4 Mission Street, San Francisco, California 94103, United States\",\"center\":[-122.404112,37.784268],\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.404112,37.784268]},\"address\":\"4\",\"context\":[{\"id\":\"neighborhood.740895980\",\"mapbox_id\":\"dXJuOm1ieHBsYzpMQ2tzN0E\",\"text\":\"Yerba Buena\"},{\"id\":\"postcode.2858205657929190\",\"text\":\"94103\"},{\"id\":\"place.292358380\",\"mapbox_id\":\"dXJuOm1ieHBsYzpFVzBJN0E\",\"wikidata\":\"Q62\",\"text\":\"San Francisco\"},{\"id\":\"district.20547308\",\"mapbox_id\":\"dXJuOm1ieHBsYzpBVG1HN0E\",\"wikidata\":\"Q62\",\"text\":\"San Francisco County\"},{\"id\":\"region.419052\",\"mapbox_id\":\"dXJuOm1ieHBsYzpCbVRz\",\"wikidata\":\"Q99\",\"short_code\":\"US-CA\",\"text\":\"California\"},{\"id\":\"country.8940\",\"mapbox_id\":\"dXJuOm1ieHBsYzpJdXc\",\"wikidata\":\"Q30\",\"short_code\":\"us\",\"text\":\"United States\"}]},{\"id\":\"neighborhood.740895980\",\"type\":\"Feature\",\"place_type\":[\"neighborhood\"],\"relevance\":1,\"properties\":{\"mapbox_id\":\"dXJuOm1ieHBsYzpMQ2tzN0E\"},\"text\":\"Yerba Buena\",\"place_name\":\"Yerba Buena, San Francisco, California, United States\",\"bbox\":[-122.408089,37.779034,-122.3974,37.787674],\"center\":[-122.404342,37.784408],\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.404342,37.784408]},\"context\":[{\"id\":\"postcode.2858205657929190\",\"text\":\"94103\"},{\"id\":\"place.292358380\",\"mapbox_id\":\"dXJuOm1ieHBsYzpFVzBJN0E\",\"wikidata\":\"Q62\",\"text\":\"San Francisco\"},{\"id\":\"district.20547308\",\"mapbox_id\":\"dXJuOm1ieHBsYzpBVG1HN0E\",\"wikidata\":\"Q62\",\"text\":\"San Francisco County\"},{\"id\":\"region.419052\",\"mapbox_id\":\"dXJuOm1ieHBsYzpCbVRz\",\"wikidata\":\"Q99\",\"short_code\":\"US-CA\",\"text\":\"California\"},{\"id\":\"country.8940\",\"mapbox_id\":\"dXJuOm1ieHBsYzpJdXc\",\"wikidata\":\"Q30\",\"short_code\":\"us\",\"text\":\"United States\"}]},{\"id\":\"postcode.2858205657929190\",\"type\":\"Feature\",\"place_type\":[\"postcode\"],\"relevance\":1,\"properties\":{},\"text\":\"94103\",\"place_name\":\"San Francisco, California 94103, United States\",\"center\":[-122.42371,37.740253],\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.42371,37.740253]},\"context\":[{\"id\":\"place.292358380\",\"mapbox_id\":\"dXJuOm1ieHBsYzpFVzBJN0E\",\"wikidata\":\"Q62\",\"text\":\"San Francisco\"},{\"id\":\"district.20547308\",\"mapbox_id\":\"dXJuOm1ieHBsYzpBVG1HN0E\",\"wikidata\":\"Q62\",\"text\":\"San Francisco County\"},{\"id\":\"region.419052\",\"mapbox_id\":\"dXJuOm1ieHBsYzpCbVRz\",\"wikidata\":\"Q99\",\"short_code\":\"US-CA\",\"text\":\"California\"},{\"id\":\"country.8940\",\"mapbox_id\":\"dXJuOm1ieHBsYzpJdXc\",\"wikidata\":\"Q30\",\"short_code\":\"us\",\"text\":\"United States\"}]},{\"id\":\"place.292358380\",\"type\":\"Feature\",\"place_type\":[\"place\"],\"relevance\":1,\"properties\":{\"mapbox_id\":\"dXJuOm1ieHBsYzpFVzBJN0E\",\"wikidata\":\"Q62\"},\"text\":\"San Francisco\",\"place_name\":\"San Francisco, California, United States\",\"bbox\":[-122.544637,37.670769,-122.30107,37.866488],\"center\":[-122.419359,37.779238],\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.419359,37.779238]},\"context\":[{\"id\":\"district.20547308\",\"mapbox_id\":\"dXJuOm1ieHBsYzpBVG1HN0E\",\"wikidata\":\"Q62\",\"text\":\"San Francisco County\"},{\"id\":\"region.419052\",\"mapbox_id\":\"dXJuOm1ieHBsYzpCbVRz\",\"wikidata\":\"Q99\",\"short_code\":\"US-CA\",\"text\":\"California\"},{\"id\":\"country.8940\",\"mapbox_id\":\"dXJuOm1ieHBsYzpJdXc\",\"wikidata\":\"Q30\",\"short_code\":\"us\",\"text\":\"United States\"}]},{\"id\":\"district.20547308\",\"type\":\"Feature\",\"place_type\":[\"district\"],\"relevance\":1,\"properties\":{\"mapbox_id\":\"dXJuOm1ieHBsYzpBVG1HN0E\",\"wikidata\":\"Q62\"},\"text\":\"San Francisco County\",\"place_name\":\"San Francisco County, California, United States\",\"bbox\":[-123.134946,37.670769,-122.30107,37.929639],\"center\":[-122.42017,37.780081],\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.42017,37.780081]},\"context\":[{\"id\":\"region.419052\",\"mapbox_id\":\"dXJuOm1ieHBsYzpCbVRz\",\"wikidata\":\"Q99\",\"short_code\":\"US-CA\",\"text\":\"California\"},{\"id\":\"country.8940\",\"mapbox_id\":\"dXJuOm1ieHBsYzpJdXc\",\"wikidata\":\"Q30\",\"short_code\":\"us\",\"text\":\"United States\"}]},{\"id\":\"region.419052\",\"type\":\"Feature\",\"place_type\":[\"region\"],\"relevance\":1,\"properties\":{\"mapbox_id\":\"dXJuOm1ieHBsYzpCbVRz\",\"wikidata\":\"Q99\",\"short_code\":\"US-CA\"},\"text\":\"California\",\"place_name\":\"California, United States\",\"bbox\":[-124.513074,32.526821,-114.131211,42.009503],\"center\":[-119.699375,37.07436],\"geometry\":{\"type\":\"Point\",\"coordinates\":[-119.699375,37.07436]},\"context\":[{\"id\":\"country.8940\",\"mapbox_id\":\"dXJuOm1ieHBsYzpJdXc\",\"wikidata\":\"Q30\",\"short_code\":\"us\",\"text\":\"United States\"}]},{\"id\":\"country.8940\",\"type\":\"Feature\",\"place_type\":[\"country\"],\"relevance\":1,\"properties\":{\"mapbox_id\":\"dXJuOm1ieHBsYzpJdXc\",\"wikidata\":\"Q30\",\"short_code\":\"us\"},\"text\":\"United States\",\"place_name\":\"United States\",\"bbox\":[-179.9,18.829161,-66.902733,71.420291],\"center\":[-97.922211,39.381266],\"geometry\":{\"type\":\"Point\",\"coordinates\":[-97.922211,39.381266]}}],\"attribution\":\"NOTICE: © 2024 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service (https://www.mapbox.com/about/maps/). This response and the information it contains may not be retained. POI(s) provided by Foursquare.\"}",
+    "event_images": "[\"https://storage.googleapis.com/gt-rally.appspot.com/1740865997948-web.jpg\"]",
+    "user_id": "10e28a53-f47e-498d-a4c5-f277caca32dd",
+    "updatedAt": "2025-03-01T21:53:18.252Z",
+    "user": {
+      "id": "10e28a53-f47e-498d-a4c5-f277caca32dd",
+      "username": "DevUser",
+      "email": "user02@gmail.com"
+    },
+    "type_custom": "event"
+  },
+  {
+    "id": "87f0f43d-a9fa-4c69-abcd-24079a1e3fd8",
+    "name": "Drivee",
+    "thumbnail": "1740697429255-1740697404210.jpg",
+    "thumbnail_url": "https://storage.googleapis.com/gt-rally.appspot.com/1740697429255-1740697404210.jpg",
+    "type": "Grand Touring Rally",
+    "no_of_vehicles": 6,
+    "start_date": "2025-02-27T23:03:14.063Z",
+    "start_time": "2025-02-27T23:03:14.063Z",
+    "point_of_interests": "",
+    "share_link": "https://gtrally.page.link/3KLT",
+    "end_date": "2025-03-20T12:00:00.000Z",
+    "end_time": "2025-03-20T12:00:00.000Z",
+    "is_active": false,
+    "start_mapbox_district": "Essex County",
+    "end_mapbox_district": "Essex County",
+    "user_id": "0937861c-a6fc-4377-b97c-a96dffc488dd",
+    "distance": "76548.586",
+    "duration": "11160.142",
+    "updatedAt": "2025-02-28T09:30:56.786Z",
+    "checkpoints": [
+      {
+        "id": "e6308527-e730-40c9-a2d2-98bbc259a7ea",
+        "name": "Check ✅",
+        "description": "Drive Through ",
+        "departure_time": "2025-02-28T00:03:00.000Z",
+        "activities": "Test",
+        "images_urls": [
+          "https://storage.googleapis.com/gt-rally.appspot.com/1740734930473-1740734918833.jpg"
+        ],
+        "images": [
+          "1740734930473-1740734918833.jpg"
+        ],
+        "order": 1,
+        "rally_id": "87f0f43d-a9fa-4c69-abcd-24079a1e3fd8"
+      },
+      {
+        "id": "8f19439a-b0ed-4050-9c09-2c18a0d44ea6",
+        "name": "Runway 🚀",
+        "description": "Galaxy ",
+        "departure_time": "2025-02-28T02:03:00.000Z",
+        "activities": null,
+        "images_urls": [
+          "https://storage.googleapis.com/gt-rally.appspot.com/1740735048996-1740735034490.jpg"
+        ],
+        "images": [
+          "1740735048996-1740735034490.jpg"
+        ],
+        "order": 2,
+        "rally_id": "87f0f43d-a9fa-4c69-abcd-24079a1e3fd8"
+      }
+    ],
+    "user": {
+      "username": "designPro",
+      "first_name": "Ava",
+      "last_name": "Brown",
+      "email": "user03@gmail.com",
+      "profile_image": "1723802306919-profile.jpg",
+      "profile_image_url": "https://storage.googleapis.com/gt-rally.appspot.com/1723802306919-profile.jpg",
+      "sso_profile_image": null
+    },
+    "type_custom": "rally"
+  },
+  {
+    "id": "b4a85354-b8af-4ea4-88cb-0896a53aa6e5",
+    "name": "Custom Drive",
+    "thumbnail": "1739448151924-1739448142698.jpg",
+    "thumbnail_url": "https://storage.googleapis.com/gt-rally.appspot.com/1739448151924-1739448142698.jpg",
+    "type": "Custom Drive",
+    "no_of_vehicles": 5,
+    "start_date": "2025-02-14T04:00:41.000Z",
+    "start_time": "2025-02-14T04:00:41.000Z",
+    "point_of_interests": "",
+    "share_link": "https://gtrally.page.link/c5he",
+    "end_date": "2025-03-14T09:42:25.612Z",
+    "end_time": "2025-03-14T09:42:25.612Z",
+    "is_active": true,
+    "start_mapbox_district": "San Francisco County",
+    "end_mapbox_district": "San Francisco County",
+    "user_id": "10e28a53-f47e-498d-a4c5-f277caca32dd",
+    "distance": "11160701",
+    "duration": "536740.479",
+    "updatedAt": "2025-02-27T22:55:05.976Z",
+    "checkpoints": [
+      {
+        "id": "ef5ecf12-181e-4050-90e5-ddf37ab77839",
+        "name": "Drive2",
+        "description": "Test",
+        "departure_time": "2025-01-24T21:51:00.000Z",
+        "activities": null,
+        "images_urls": null,
+        "images": null,
+        "order": 2,
+        "rally_id": "b4a85354-b8af-4ea4-88cb-0896a53aa6e5"
+      },
+      {
+        "id": "caeeaa90-cf8d-461e-b7bd-a5eacc2b997d",
+        "name": "Drive",
+        "description": "Test",
+        "departure_time": "2025-01-24T18:36:00.000Z",
+        "activities": null,
+        "images_urls": null,
+        "images": null,
+        "order": 1,
+        "rally_id": "b4a85354-b8af-4ea4-88cb-0896a53aa6e5"
+      },
+      {
+        "id": "d3b92e35-7a4b-4c05-a353-e73808e91e5c",
+        "name": "Drive3",
+        "description": null,
+        "departure_time": "2025-01-24T18:30:18.000Z",
+        "activities": null,
+        "images_urls": null,
+        "images": null,
+        "order": 1,
+        "rally_id": "b4a85354-b8af-4ea4-88cb-0896a53aa6e5"
+      }
+    ],
+    "user": {
+      "username": "DevUser",
+      "first_name": "Abdullah",
+      "last_name": "User",
+      "email": "user02@gmail.com",
+      "profile_image": "1740132389041-DevUser",
+      "profile_image_url": "https://storage.googleapis.com/gt-rally.appspot.com/1740132389041-DevUser",
+      "sso_profile_image": null
+    },
+    "type_custom": "rally"
+  },
+  {
+    "id": "ac43abe5-1829-408a-b44c-5ea09a284838",
+    "name": "Test Build 98",
+    "thumbnail": "1737761948380-40434FF3-CB00-4F7A-9490-D811FD431882.jpg",
+    "thumbnail_url": "https://storage.googleapis.com/gt-rally.appspot.com/1737761948380-40434FF3-CB00-4F7A-9490-D811FD431882.jpg",
+    "type": "Grand Touring Rally",
+    "no_of_vehicles": 12,
+    "start_date": "2025-03-24T10:38:32.000Z",
+    "start_time": "2025-03-24T10:38:32.000Z",
+    "point_of_interests": "",
+    "share_link": "https://gtrally.page.link/eKU6",
+    "end_date": "2025-03-24T22:38:32.000Z",
+    "end_time": "2025-03-24T22:38:32.000Z",
+    "is_active": false,
+    "start_mapbox_district": "Henrico County",
+    "end_mapbox_district": "Henrico County",
+    "user_id": "7e5ebb69-31e8-4224-bf0f-f0132ffe09cd",
+    "distance": "8013.039",
+    "duration": "754.379",
+    "updatedAt": "2025-01-24T23:40:02.168Z",
+    "checkpoints": [],
+    "user": {
+      "username": "Mariamwaris",
+      "first_name": "Mariam",
+      "last_name": "Waris",
+      "email": "mgchwb8zmy@privaterelay.appleid.com",
+      "profile_image": null,
+      "profile_image_url": null,
+      "sso_profile_image": null
+    },
+    "type_custom": "rally"
+  },
+  {
+    "id": "22ba45cb-dd3e-4834-a398-b827408d3107",
+    "name": "Event",
+    "type": "Car Meets",
+    "no_of_vehicles": 5,
+    "start_date": "2025-11-08T05:18:08.000Z",
+    "start_time": "2025-11-08T05:18:08.000Z",
+    "end_time": "2025-11-08T10:15:08.000Z",
+    "end_location": null,
+    "start_location": "{\"type\":\"FeatureCollection\",\"query\":[-122.39951392299868,37.760518278884504],\"features\":[{\"id\":\"address.2214856568540396\",\"type\":\"Feature\",\"place_type\":[\"address\"],\"relevance\":1,\"properties\":{\"accuracy\":\"rooftop\",\"mapbox_id\":\"dXJuOm1ieGFkcjo0ODBhMGE1Mi0xNjk0LTRjMTEtOWY0OS1mMzQ0ODY3MDZhMTI\"},\"text\":\"Wisconsin Street\",\"place_name\":\"550 Wisconsin Street, San Francisco, California 94107, United States\",\"center\":[-122.399539,37.760531],\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.399539,37.760531]},\"address\":\"550\",\"context\":[{\"id\":\"neighborhood.514272492\",\"mapbox_id\":\"dXJuOm1ieHBsYzpIcWNzN0E\",\"wikidata\":\"Q3400108\",\"text\":\"Potrero Hill\"},{\"id\":\"postcode.2214856568540396\",\"text\":\"94107\"},{\"id\":\"place.292358380\",\"mapbox_id\":\"dXJuOm1ieHBsYzpFVzBJN0E\",\"wikidata\":\"Q62\",\"text\":\"San Francisco\"},{\"id\":\"district.20547308\",\"mapbox_id\":\"dXJuOm1ieHBsYzpBVG1HN0E\",\"wikidata\":\"Q62\",\"text\":\"San Francisco County\"},{\"id\":\"region.419052\",\"mapbox_id\":\"dXJuOm1ieHBsYzpCbVRz\",\"wikidata\":\"Q99\",\"short_code\":\"US-CA\",\"text\":\"California\"},{\"id\":\"country.8940\",\"mapbox_id\":\"dXJuOm1ieHBsYzpJdXc\",\"wikidata\":\"Q30\",\"short_code\":\"us\",\"text\":\"United States\"}]},{\"id\":\"neighborhood.514272492\",\"type\":\"Feature\",\"place_type\":[\"neighborhood\"],\"relevance\":1,\"properties\":{\"mapbox_id\":\"dXJuOm1ieHBsYzpIcWNzN0E\",\"wikidata\":\"Q3400108\"},\"text\":\"Potrero Hill\",\"place_name\":\"Potrero Hill, San Francisco, California, United States\",\"bbox\":[-122.406258,37.749348,-122.391251,37.766574],\"center\":[-122.39761,37.76379],\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.39761,37.76379]},\"context\":[{\"id\":\"postcode.2214856568540396\",\"text\":\"94107\"},{\"id\":\"place.292358380\",\"mapbox_id\":\"dXJuOm1ieHBsYzpFVzBJN0E\",\"wikidata\":\"Q62\",\"text\":\"San Francisco\"},{\"id\":\"district.20547308\",\"mapbox_id\":\"dXJuOm1ieHBsYzpBVG1HN0E\",\"wikidata\":\"Q62\",\"text\":\"San Francisco County\"},{\"id\":\"region.419052\",\"mapbox_id\":\"dXJuOm1ieHBsYzpCbVRz\",\"wikidata\":\"Q99\",\"short_code\":\"US-CA\",\"text\":\"California\"},{\"id\":\"country.8940\",\"mapbox_id\":\"dXJuOm1ieHBsYzpJdXc\",\"wikidata\":\"Q30\",\"short_code\":\"us\",\"text\":\"United States\"}]},{\"id\":\"postcode.2214856568540396\",\"type\":\"Feature\",\"place_type\":[\"postcode\"],\"relevance\":1,\"properties\":{},\"text\":\"94107\",\"place_name\":\"San Francisco, California 94107, United States\",\"center\":[-122.399379,37.758622],\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.399379,37.758622]},\"context\":[{\"id\":\"place.292358380\",\"mapbox_id\":\"dXJuOm1ieHBsYzpFVzBJN0E\",\"wikidata\":\"Q62\",\"text\":\"San Francisco\"},{\"id\":\"district.20547308\",\"mapbox_id\":\"dXJuOm1ieHBsYzpBVG1HN0E\",\"wikidata\":\"Q62\",\"text\":\"San Francisco County\"},{\"id\":\"region.419052\",\"mapbox_id\":\"dXJuOm1ieHBsYzpCbVRz\",\"wikidata\":\"Q99\",\"short_code\":\"US-CA\",\"text\":\"California\"},{\"id\":\"country.8940\",\"mapbox_id\":\"dXJuOm1ieHBsYzpJdXc\",\"wikidata\":\"Q30\",\"short_code\":\"us\",\"text\":\"United States\"}]},{\"id\":\"place.292358380\",\"type\":\"Feature\",\"place_type\":[\"place\"],\"relevance\":1,\"properties\":{\"mapbox_id\":\"dXJuOm1ieHBsYzpFVzBJN0E\",\"wikidata\":\"Q62\"},\"text\":\"San Francisco\",\"place_name\":\"San Francisco, California, United States\",\"bbox\":[-122.544637,37.670769,-122.30107,37.866488],\"center\":[-122.419359,37.779238],\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.419359,37.779238]},\"context\":[{\"id\":\"district.20547308\",\"mapbox_id\":\"dXJuOm1ieHBsYzpBVG1HN0E\",\"wikidata\":\"Q62\",\"text\":\"San Francisco County\"},{\"id\":\"region.419052\",\"mapbox_id\":\"dXJuOm1ieHBsYzpCbVRz\",\"wikidata\":\"Q99\",\"short_code\":\"US-CA\",\"text\":\"California\"},{\"id\":\"country.8940\",\"mapbox_id\":\"dXJuOm1ieHBsYzpJdXc\",\"wikidata\":\"Q30\",\"short_code\":\"us\",\"text\":\"United States\"}]},{\"id\":\"district.20547308\",\"type\":\"Feature\",\"place_type\":[\"district\"],\"relevance\":1,\"properties\":{\"mapbox_id\":\"dXJuOm1ieHBsYzpBVG1HN0E\",\"wikidata\":\"Q62\"},\"text\":\"San Francisco County\",\"place_name\":\"San Francisco County, California, United States\",\"bbox\":[-123.134946,37.670769,-122.30107,37.929639],\"center\":[-122.42017,37.780081],\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.42017,37.780081]},\"context\":[{\"id\":\"region.419052\",\"mapbox_id\":\"dXJuOm1ieHBsYzpCbVRz\",\"wikidata\":\"Q99\",\"short_code\":\"US-CA\",\"text\":\"California\"},{\"id\":\"country.8940\",\"mapbox_id\":\"dXJuOm1ieHBsYzpJdXc\",\"wikidata\":\"Q30\",\"short_code\":\"us\",\"text\":\"United States\"}]},{\"id\":\"region.419052\",\"type\":\"Feature\",\"place_type\":[\"region\"],\"relevance\":1,\"properties\":{\"mapbox_id\":\"dXJuOm1ieHBsYzpCbVRz\",\"wikidata\":\"Q99\",\"short_code\":\"US-CA\"},\"text\":\"California\",\"place_name\":\"California, United States\",\"bbox\":[-124.513074,32.526821,-114.131211,42.009503],\"center\":[-119.699375,37.07436],\"geometry\":{\"type\":\"Point\",\"coordinates\":[-119.699375,37.07436]},\"context\":[{\"id\":\"country.8940\",\"mapbox_id\":\"dXJuOm1ieHBsYzpJdXc\",\"wikidata\":\"Q30\",\"short_code\":\"us\",\"text\":\"United States\"}]},{\"id\":\"country.8940\",\"type\":\"Feature\",\"place_type\":[\"country\"],\"relevance\":1,\"properties\":{\"mapbox_id\":\"dXJuOm1ieHBsYzpJdXc\",\"wikidata\":\"Q30\",\"short_code\":\"us\"},\"text\":\"United States\",\"place_name\":\"United States\",\"bbox\":[-179.9,18.829161,-66.902733,71.420291],\"center\":[-97.922211,39.381266],\"geometry\":{\"type\":\"Point\",\"coordinates\":[-97.922211,39.381266]}}],\"attribution\":\"NOTICE: © 2024 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service (https://www.mapbox.com/about/maps/).\"}",
+    "event_images": "[\"https://storage.googleapis.com/gt-rally.appspot.com/1730866721233-IMG_0010.JPG\",\"https://storage.googleapis.com/gt-rally.appspot.com/1730866721534-IMG_0011.JPG\",\"https://storage.googleapis.com/gt-rally.appspot.com/1730866721814-IMG_0012.JPG\",\"https://storage.googleapis.com/gt-rally.appspot.com/1735711597469-IMG_0007.JPG\"]",
+    "user_id": "0937861c-a6fc-4377-b97c-a96dffc488dd",
+    "updatedAt": "2025-01-01T14:44:25.477Z",
+    "user": {
+      "id": "0937861c-a6fc-4377-b97c-a96dffc488dd",
+      "username": "designPro",
+      "email": "user03@gmail.com"
+    },
+    "type_custom": "event"
+  }
+];
+
 export const carData2 = [
   {
     id: 12,

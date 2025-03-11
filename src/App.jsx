@@ -11,27 +11,32 @@ import SignUp from "@/components/modals/SignUp";
 import { Route, Routes, useLocation } from "react-router-dom";
 import WOW from "./utlis/wow";
 import ScrollTopBehaviour from "./components/common/ScrollToTopBehaviour";
-import HomePage1 from "./pages/page";
-import HomePage2 from "./pages/homes/home02";
-import HomePage3 from "./pages/homes/home03";
-import HomePage4 from "./pages/homes/home04";
-import HomePage5 from "./pages/homes/home05";
-import HomePage6 from "./pages/homes/home06";
-import HomePage7 from "./pages/homes/home07";
-import HomePage8 from "./pages/homes/home08";
-import HomePage10 from "./pages/homes/home10";
-import HomePage9 from "./pages/homes/home09";
-import ListingListPage from "./pages/car-listings/listing-list";
-import ListingGridPage from "./pages/car-listings/listing-grid";
-import ListingGridPage2 from "./pages/car-listings/listing-grid2";
-import ListingGridMapPage from "./pages/car-listings/listing-grid-map";
-import ListingListMapPage from "./pages/car-listings/listing-list-map";
-import BlogListingDetailsPage1 from "./pages/car-details/listing-detail-v1";
-import BlogListingDetailsPage2 from "./pages/car-details/listing-detail-v2";
-import BlogListingDetailsPage3 from "./pages/car-details/listing-detail-v3";
-import BlogListingDetailsPage4 from "./pages/car-details/listing-detail-v4";
-import BlogListingDetailsPage5 from "./pages/car-details/listing-detail-v5";
+import RallyHome from "./pages/homes/rally-home";
+// import HomePage1 from "./pages/page";
+// import HomePage2 from "./pages/homes/home02";
+// import HomePage3 from "./pages/homes/home03";
+// import HomePage4 from "./pages/homes/home04";
+// import HomePage5 from "./pages/homes/home05";
+// import HomePage6 from "./pages/homes/home06";
+// import HomePage7 from "./pages/homes/home07";
+// import HomePage8 from "./pages/homes/home08";
+// import HomePage10 from "./pages/homes/home10";
+// import HomePage9 from "./pages/homes/home09";
+// import ListingListPage from "./pages/car-listings/listing-list";
+// import ListingGridPage from "./pages/car-listings/listing-grid";
+// import ListingGridPage2 from "./pages/car-listings/listing-grid2";
+// import ListingGridMapPage from "./pages/car-listings/listing-grid-map";
+// import ListingListMapPage from "./pages/car-listings/listing-list-map";
+// import BlogListingDetailsPage1 from "./pages/car-details/listing-detail-v1";
+// import BlogListingDetailsPage2 from "./pages/car-details/listing-detail-v2";
+// import BlogListingDetailsPage3 from "./pages/car-details/listing-detail-v3";
+// import BlogListingDetailsPage4 from "./pages/car-details/listing-detail-v4";
+// import BlogListingDetailsPage5 from "./pages/car-details/listing-detail-v5";
+import EventDetails from "./pages/event-details";
 import AboutUsPage from "./pages/other-pages/about-us";
+import JoinAsParticipant from "./pages/other-pages/join-as-participant";
+import BecomeASponsor from "./pages/other-pages/become-a-sponsor";
+import MobileApp from "./pages/other-pages/mobile-app";
 import FaqPage from "./pages/other-pages/faq";
 import PricingPage from "./pages/other-pages/pricing";
 import ComparePage from "./pages/other-pages/compare";
@@ -117,8 +122,8 @@ function App() {
         <div id="pagee" className="clearfix">
           <Routes>
             <Route path="/">
-              <Route index element={<HomePage10 />} />
-              <Route path="home02" element={<HomePage2 />} />
+              <Route index element={<RallyHome />} />
+              {/* <Route path="home02" element={<HomePage2 />} />
               <Route path="home03" element={<HomePage3 />} />
               <Route path="home04" element={<HomePage4 />} />
               <Route path="home05" element={<HomePage5 />} />
@@ -151,12 +156,15 @@ function App() {
               <Route
                 path="listing-detail-v5/:id"
                 element={<BlogListingDetailsPage5 />}
-              />
+              /> */}
               <Route
-                path="rallies/:id"
-                element={<BlogListingDetailsPage4 />}
+                path="events/:id"
+                element={<EventDetails />}
               />
               <Route path="about-us" element={<AboutUsPage />} />
+              <Route path="join-as-participant" element={<JoinAsParticipant />} />
+              <Route path="mobile-app" element={<MobileApp />} />
+              <Route path="become-a-sponsor" element={<BecomeASponsor />} />
               <Route path="faq" element={<FaqPage />} />
               <Route path="pricing" element={<PricingPage />} />
               <Route path="compare" element={<ComparePage />} />
