@@ -3,12 +3,14 @@ import { Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import PhotoSwipeLightbox from "photoswipe/lightbox";
+import { getImage } from "@/utlis/helpers";
 const imageList = [
   { imgSrc: "/assets/images/section/listing-detai-1.jpg", alt: "image 1" },
   { imgSrc: "/assets/images/section/listing-detai-2.jpg", alt: "image 2" },
   { imgSrc: "/assets/images/section/listing-detai-3.jpg", alt: "image 3" },
 ];
-export default function Slider3() {
+export default function Slider3(props) {
+  const { images } = props;
   const swiperOptions = {
     autoplay: {
       delay: 6000,
@@ -58,7 +60,7 @@ export default function Slider3() {
       className="swiper mainslider slider home mb-40"
       id="my-gallery"
     >
-      {imageList.map((image, index) => (
+      {images.map((image, index) => (
         <SwiperSlide key={index} className="swiper-slide">
           <div className="image-list-details">
             <a
@@ -66,16 +68,17 @@ export default function Slider3() {
               data-pswp-height="825"
               target="_blank"
               className="image"
-              href={image.imgSrc}
+              href={getImage(image)}
               data-fancybox="gallery"
             >
               <img
                 className="lazyload"
-                data-src={image.imgSrc}
-                alt={image.alt}
-                src={image.imgSrc}
+                data-src={getImage(image)}
+                alt={getImage(image)}
+                src={getImage(image)}
                 width={941}
                 height={825}
+                style={{maxHeight: 600, backgroundSize: 'cover', objectFit: 'cover'}}
               />
             </a>
             <div className="specs-features-wrap flex-three">

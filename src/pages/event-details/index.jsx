@@ -6,6 +6,7 @@ import { Link, useParams } from "react-router-dom";
 import EventDetails from "@/components/eventDetails/EventDetails4"
 import { allCars } from "@/data/cars";
 import { events } from "@/data/events";
+import { singleEventResponse } from "@/data/SingleEventResponse";
 import MetaComponent from "@/components/common/MetaComponent";
 const metadata = {
   title:
@@ -37,7 +38,7 @@ export default function EventDetail() {
           </div>
         </div>
       </section>
-      <EventDetails eventDetail={events[0]} />
+      <EventDetails eventDetail={singleEventResponse} />
       <Footer1 />
     </>
   );

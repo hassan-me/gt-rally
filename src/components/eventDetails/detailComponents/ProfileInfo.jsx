@@ -2,7 +2,7 @@ import { getImage } from "@/utlis/helpers";
 import React from "react";
 
 export default function ProfileInfo(props) {
-  const { user } = props;
+  const { user, startLocation } = props;
   return (
     <>
       <div className="prolile-info flex-three mb-30">
@@ -44,16 +44,18 @@ export default function ProfileInfo(props) {
         <div className="list-icon-pf gap-8 flex-three">
           <i className="far fa-map" />
           <p className="font-1">
-            Username: {user.username}
+            {startLocation}
           </p>
         </div>
         <div className="map">
-          <iframe
-            className="map-content"
-            src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d7302.453092836291!2d90.47477022812872!3d23.77494577893369!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1svi!2s!4v1627293157601!5m2!1svi!2s"
-            allowFullScreen=""
-            loading="lazy"
-          ></iframe>
+        <iframe
+          className="map-content"
+          src="https://www.google.com/maps?q=40.643804,-73.781892&hl=en&z=14&output=embed"
+          allowFullScreen
+          loading="lazy"
+          style={{ border: 0, width: '100%', height: '250px', pointerEvents: 'auto' }}
+          title="Foo bar hello"
+        ></iframe>
         </div>
       </div>
       {/* <div className="profile-contact">

@@ -120,7 +120,7 @@ export default function EventDetails({ eventDetail }) {
           </div>
           <div className="row">
             <div className="col-lg-8">
-              <Slider3 />
+              <Slider3 images={eventDetail.thumbnail} />
               <nav
                 id="navbar-example2 "
                 className="navbar tab-listing-scroll mb-30"
@@ -233,7 +233,7 @@ export default function EventDetails({ eventDetail }) {
               <div className="overlay-siderbar-mobie" />
               <div className="listing-sidebar">
                 <div className="widget-listing mb-30">
-                  <ProfileInfo user={eventDetail.user} />
+                  <ProfileInfo user={eventDetail.user} startLocation={eventDetail.start_mapbox_location_name}/>
                 </div>
                 {/* <div className="list-icon-pf gap-8 flex-three mb-40">
                   <i className="far fa-flag" />
