@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-
+import { formatDateRange } from "@/utlis/helpers";
+import { EventType } from "@/constants";
 
 export default function Event(props) {
   const { event } = props;
@@ -8,7 +9,7 @@ export default function Event(props) {
     <div className="image-group relative">
       <div className="top flex-two">
         <ul className="d-flex gap-8">
-          <li className="flag-tag success">{event.type}</li>
+          <li className="flag-tag success">{EventType[event.type].label}</li>
           <li className="flag-tag style-1">
             <div className="icon">
               <svg
@@ -27,10 +28,10 @@ export default function Event(props) {
                 />
               </svg>
             </div>
-            6
+            {event.thumbnail_url.length}
           </li>
         </ul>
-        <div className="year flag-tag">2024</div>
+        <div className="year flag-tag">{formatDateRange(event.start_date, event.end_date)}</div>
       </div>
       <ul className="change-heart flex">
         <li className="box-icon w-32">
@@ -81,7 +82,7 @@ export default function Event(props) {
         <img
           className="lazyload"
           alt="image"
-          src={`https://gt-rally.web.app/image_web/{event.thumbnail}`}
+          src={`https://gt-rally.web.app/image_web/${event.thumbnail[0]}`}
           width={450}
           height={338}
         />
@@ -89,7 +90,7 @@ export default function Event(props) {
     </div>
     <div className="content">
       <div className="text-address">
-        <p className="text-color-3 font">{`{event.start_mapbox_district} ➡ {event.end_mapbox_district}`}</p>
+        <p className="text-color-3 font">{event.start_mapbox_district}</p>
       </div>
       <h5 className="link-style-1">
         <Link to={`/events/${event.id}`}>
@@ -103,11 +104,11 @@ export default function Event(props) {
         </div>
         <div className="icons flex-three">
           <i className="icon-autodeal-diesel" />
-          <span>{`rally.distance`} miles</span>
+          <span>{event.distance} miles</span>
         </div>
         <div className="icons flex-three">
           <i className="icon-autodeal-automatic" />
-          <span>{`rally.duration`}</span>
+          <span>{event.duration}</span>
         </div>
       </div>
       <div className="money fs-20 fw-5 lh-25 text-color-3">

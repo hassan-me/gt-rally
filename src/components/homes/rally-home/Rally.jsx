@@ -1,11 +1,7 @@
 import { Link } from "react-router-dom";
-const addSuperSet = (data, superSetValue) => data.map(a => Object.assign({}, a, { superSetType: superSetValue}));
-const metersToMiles = (meters) => (meters * 0.000621371).toFixed(2); // Convert meters to miles
-function formatDuration(duration) {
-  const hours = Math.floor(duration / 3600);
-  const minutes = Math.floor((duration % 3600) / 60);
-  return [hours ? hours + "h" : "", minutes ? minutes + "m" : ""].filter(Boolean).join(" ");
-}
+import { EventType } from "@/constants";
+import { formatDateRange, formatDuration, metersToMiles } from "@/utlis/helpers";
+
 
 
 export default function Rally(props) {
@@ -15,7 +11,7 @@ export default function Rally(props) {
     <div className="image-group relative">
       <div className="top flex-two">
         <ul className="d-flex gap-8">
-          <li className="flag-tag success">{rally.type}</li>
+          <li className="flag-tag success">{EventType[rally.type].label}</li>
           <li className="flag-tag style-1">
             <div className="icon">
               <svg
@@ -34,10 +30,10 @@ export default function Rally(props) {
                 />
               </svg>
             </div>
-            6
+            {rally.thumbnail_url.length}
           </li>
         </ul>
-        <div className="year flag-tag">2024</div>
+        <div className="year flag-tag">{formatDateRange(rally.start_date, rally.end_date)}</div>
       </div>
       <ul className="change-heart flex">
         <li className="box-icon w-32">
@@ -88,7 +84,7 @@ export default function Rally(props) {
         <img
           className="lazyload"
           alt="image"
-          src={`https://gt-rally.web.app/image_web/${rally.thumbnail}`}
+          src={`https://gt-rally.web.app/image_web/${rally.thumbnail[0]}`}
           width={450}
           height={338}
         />

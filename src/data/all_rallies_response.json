@@ -1,0 +1,88 @@
+[
+  {
+    "id": "58151acd-e949-4439-870e-4ff78bd4c4e8",
+    "name": "Test Check Point",
+    "thumbnail": "[\"1741784959353-st3.webp\"]",
+    "thumbnail_url": "[\"https://storage.googleapis.com/gt-rally.appspot.com/1741784959353-st3.webp\"]",
+    "type": "CUSTOM_DRIVE",
+    "no_of_vehicles": 5,
+    "start_date": "2024-12-30T17:12:32.000Z",
+    "start_time": "2024-12-30T17:12:32.000Z",
+    "point_of_interests": "",
+    "share_link": "https://gtrally.page.link/2338",
+    "end_date": "2025-01-14T19:12:32.000Z",
+    "end_time": "2025-01-14T19:12:32.000Z",
+    "is_active": false,
+    "start_mapbox_district": "Queens County",
+    "end_mapbox_district": "Queens County",
+    "user_id": "3532c2a7-4089-4059-89c5-e608603d5689",
+    "distance": "81001.219",
+    "duration": "16784.655",
+    "checkpoints": [
+      {
+        "id": "63852094-6ec6-403b-b41e-bfe12c58d662",
+        "name": "Ck4",
+        "description": "Ch",
+        "departure_time": "2024-12-30T17:12:32.000Z",
+        "activities": null,
+        "images_urls": null,
+        "images": null,
+        "order": 2,
+        "rally_id": "58151acd-e949-4439-870e-4ff78bd4c4e8"
+      },
+      {
+        "id": "ee8fe363-ce03-4a42-ab9e-82126cb51268",
+        "name": "Ck2",
+        "description": "Chk2",
+        "departure_time": "2024-12-30T17:12:32.000Z",
+        "activities": "Chk\n\n\n",
+        "images_urls": null,
+        "images": null,
+        "order": 4,
+        "rally_id": "58151acd-e949-4439-870e-4ff78bd4c4e8"
+      },
+      {
+        "id": "94c76336-05aa-46ff-a50b-b7014710a8f0",
+        "name": "Ch3",
+        "description": "Chk",
+        "departure_time": "2024-12-29T19:12:32.000Z",
+        "activities": null,
+        "images_urls": null,
+        "images": null,
+        "order": 3,
+        "rally_id": "58151acd-e949-4439-870e-4ff78bd4c4e8"
+      },
+      {
+        "id": "088120e6-e03e-4c2e-afa7-23a2eaa05db2",
+        "name": "Ck5",
+        "description": "Chk",
+        "departure_time": "2024-12-30T17:12:32.000Z",
+        "activities": "\n",
+        "images_urls": null,
+        "images": null,
+        "order": 5,
+        "rally_id": "58151acd-e949-4439-870e-4ff78bd4c4e8"
+      },
+      {
+        "id": "4b942106-5dc6-4786-913e-49b141e0095f",
+        "name": "Ck1",
+        "description": "Chk1",
+        "departure_time": "2024-12-30T17:12:32.000Z",
+        "activities": "Test\n",
+        "images_urls": null,
+        "images": null,
+        "order": 1,
+        "rally_id": "58151acd-e949-4439-870e-4ff78bd4c4e8"
+      }
+    ],
+    "user": {
+      "username": "Salman21",
+      "first_name": "Salman",
+      "last_name": "Tariq",
+      "email": "salman.tariq.87@gmail.com",
+      "profile_image": null,
+      "profile_image_url": null,
+      "sso_profile_image": null
+    }
+  }
+]

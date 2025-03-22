@@ -181,6 +181,9 @@
   .image-group {
     img {
       width: 100%;
+      background-size: cover;
+      max-height: 185px;
+      object-fit: cover;
     }
 
     .top {

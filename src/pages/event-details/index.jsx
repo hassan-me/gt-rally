@@ -3,7 +3,9 @@ import Footer1 from "@/components/footers/Footer1";
 import Header2 from "@/components/headers/Header2";
 import React from "react";
 import { Link, useParams } from "react-router-dom";
+import EventDetails from "@/components/eventDetails/EventDetails4"
 import { allCars } from "@/data/cars";
+import { events } from "@/data/events";
 import MetaComponent from "@/components/common/MetaComponent";
 const metadata = {
   title:
@@ -28,14 +30,14 @@ export default function EventDetail() {
                   <Link className="home fw-6 text-color-3" to={`/`}>
                     Home
                   </Link>
-                  <span>Used cars for sale</span>
+                  <span>Event Details</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </section>
-      <CarDetails4 carItem={carItem} />
+      <EventDetails eventDetail={events[0]} />
       <Footer1 />
     </>
   );
