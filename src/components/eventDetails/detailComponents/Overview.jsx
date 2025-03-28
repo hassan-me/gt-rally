@@ -1,6 +1,7 @@
 import React from "react";
 
-export default function Overview() {
+export default function Overview(props) {
+  
   return (
     <div className="tfcl-listing-info tf-collapse-content mt-30">
       <div className="row">

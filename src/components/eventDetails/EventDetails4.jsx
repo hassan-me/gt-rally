@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useRef, useEffect } from "react";
 import Slider3 from "./sliders/Slider3";
 
 import Description from "./detailComponents/Description";
@@ -8,12 +8,94 @@ import LoanCalculator from "./detailComponents/LoanCalculator";
 import CarReview from "./detailComponents/CarReview";
 import ProfileInfo from "./detailComponents/ProfileInfo";
 import Recommended from "./detailComponents/Recommended";
+import mapboxgl from "mapbox-gl";
+import 'mapbox-gl/dist/mapbox-gl.css';
 import { allCars } from "@/data/cars";
 import SidebarToggleButton from "./SidebarToggleButton";
 import { formatDuration, metersToMiles } from "@/utlis/helpers";
 import { EventType } from "@/constants";
 export default function EventDetails({ eventDetail }) {
   console.log("--> ", eventDetail);
+  const mapContainer = useRef(null);
+  console.log("--> process.env", import.meta.env);
+
+  useEffect(() => {
+    mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
+
+    const map = new mapboxgl.Map({
+      container: mapContainer.current,
+      style: 'mapbox://styles/mapbox/streets-v11',
+      // center: [-73.781892, 40.643804],
+      zoom: 14,
+    });
+
+    if (eventDetail.route_json) {
+      try {
+        const routeData = JSON.parse(eventDetail.route_json);
+
+        if (Array.isArray(routeData) && routeData.length) {
+          map.on('load', () => {
+            const geoJson = {
+              type: 'Feature',
+              geometry: {
+                type: 'LineString',
+                coordinates: routeData,
+              },
+            };
+
+            map.addSource('route', {
+              type: 'geojson',
+              data: geoJson,
+            });
+
+            map.addLayer({
+              id: 'route-layer',
+              type: 'line',
+              source: 'route',
+              layout: {
+                'line-join': 'round',
+                'line-cap': 'round',
+              },
+              paint: {
+                'line-color': '#1DA1F2',
+                'line-width': 4,
+              },
+            });
+
+            const bounds = new mapboxgl.LngLatBounds();
+            routeData.forEach((coord) => bounds.extend(coord));
+            map.fitBounds(bounds, { padding: 50 });
+
+            const startCoord = routeData[0];
+            const endCoord = routeData[routeData.length - 1];
+
+            
+            if (Array.isArray(eventDetail.checkpoints)) {
+              eventDetail.checkpoints?.forEach(({ latitude, longitude }) => {
+                new mapboxgl.Marker({ color: 'orange' }).setLngLat([longitude, latitude]).addTo(map);
+              });
+            }
+
+            new mapboxgl.Marker({ color: 'red', scale: 1.5 }).setLngLat(startCoord).addTo(map);
+
+            if (startCoord[0] === endCoord[0] && startCoord[1] === endCoord[1]) {
+              // Use a smaller size for the overlapping end marker
+              new mapboxgl.Marker({ color: 'green', scale: 1.0 }).setLngLat(endCoord).addTo(map);
+            } else {
+              new mapboxgl.Marker({ color: 'green', scale: 1.5 }).setLngLat(endCoord).addTo(map);
+            }
+
+
+          });
+        }
+      } catch (error) {
+        console.error('Invalid route data:', error);
+      }
+    }
+
+    return () => map.remove();
+  }, []);
+
   return (
     <>
       <section className="tf-section3 listing-detail style-2">
@@ -165,7 +247,7 @@ export default function EventDetails({ eventDetail }) {
                     >
                       <div className="listing-description mb-40">
                         <div className="tfcl-listing-header">
-                          <h2>Description</h2>
+                          <h2>Checkpoints</h2>
                         </div>
                         <Description />
                       </div>
@@ -174,12 +256,12 @@ export default function EventDetails({ eventDetail }) {
                         id="scrollspyHeading1"
                       >
                         <div className="footer-heading-desktop">
-                          <h2>Car overview</h2>
+                          <h2>Detailed Overview</h2>
                         </div>
                         <div className="footer-heading-mobie listing-details-mobie">
-                          <h2>Car overview</h2>
+                          <h2>Detailed Overview</h2>
                         </div>
-                        <Overview />
+                        <Overview eventDetail={eventDetail} />
                       </div>
                       <div className="listing-line" />
                       {/* <div
@@ -194,23 +276,25 @@ export default function EventDetails({ eventDetail }) {
                         </div>
                         <Features />
                       </div> */}
-                      <div className="listing-line" />
+                      {/* <div className="listing-line" /> */}
                       <div className="listing-location" id="scrollspyHeading3">
                         <div className="box-title">
-                          <h2 className="title-ct">Location</h2>
+                          <h2 className="title-ct">Route</h2>
                           <div className="list-icon-pf gap-8 flex-three">
                             <i className="far fa-map" />
                             <p className="font-1">
-                              2972 Westheimer Rd. Santa Ana, Illinois 85486
+                              {eventDetail.start_mapbox_location_name}
                             </p>
                           </div>
                         </div>
-                        <iframe
+                        {/* <div id='map-container' /> */}
+                        <div ref={mapContainer} style={{ width: '100%', height: '450px' }} />
+                        {/* <iframe
                           className="map-content"
                           src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d7302.453092836291!2d90.47477022812872!3d23.77494577893369!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1svi!2s!4v1627293157601!5m2!1svi!2s"
                           allowFullScreen=""
                           loading="lazy"
-                        />
+                        /> */}
                       </div>
                       {/* <div className="listing-line" /> */}
                       {/* <div
