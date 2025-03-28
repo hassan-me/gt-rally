@@ -1,4 +1,4 @@
-export const singleEventResponse = {
+export const singleEvent = {
   "avoid_highway": true,
   "avoid_toll": true,
   "checkpoints": [
