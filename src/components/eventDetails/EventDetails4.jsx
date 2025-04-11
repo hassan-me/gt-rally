@@ -1,4 +1,4 @@
-import React, {useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import Slider3 from "./sliders/Slider3";
 
 import Description from "./detailComponents/Description";
@@ -9,10 +9,10 @@ import CarReview from "./detailComponents/CarReview";
 import ProfileInfo from "./detailComponents/ProfileInfo";
 import Recommended from "./detailComponents/Recommended";
 import mapboxgl from "mapbox-gl";
-import 'mapbox-gl/dist/mapbox-gl.css';
+import "mapbox-gl/dist/mapbox-gl.css";
 import { allCars } from "@/data/cars";
 import SidebarToggleButton from "./SidebarToggleButton";
-import { formatDuration, metersToMiles } from "@/utlis/helpers";
+import { formatDuration, getImage, metersToMiles } from "@/utlis/helpers";
 import { EventType } from "@/constants";
 export default function EventDetails({ eventDetail }) {
   console.log("--> ", eventDetail);
@@ -20,80 +20,90 @@ export default function EventDetails({ eventDetail }) {
   console.log("--> process.env", import.meta.env);
 
   useEffect(() => {
-    mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
+    if (eventDetail.type !== EventType.CAR_MEETS.type) {
+      mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
-    const map = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/streets-v11',
-      // center: [-73.781892, 40.643804],
-      zoom: 14,
-    });
+      const map = new mapboxgl.Map({
+        container: mapContainer.current,
+        style: "mapbox://styles/mapbox/streets-v11",
+        // center: [-73.781892, 40.643804],
+        zoom: 14,
+      });
 
-    if (eventDetail.route_json) {
-      try {
-        const routeData = JSON.parse(eventDetail.route_json);
+      if (eventDetail.route_json) {
+        try {
+          const routeData = JSON.parse(eventDetail.route_json);
 
-        if (Array.isArray(routeData) && routeData.length) {
-          map.on('load', () => {
-            const geoJson = {
-              type: 'Feature',
-              geometry: {
-                type: 'LineString',
-                coordinates: routeData,
-              },
-            };
+          if (Array.isArray(routeData) && routeData.length) {
+            map.on("load", () => {
+              const geoJson = {
+                type: "Feature",
+                geometry: {
+                  type: "LineString",
+                  coordinates: routeData,
+                },
+              };
 
-            map.addSource('route', {
-              type: 'geojson',
-              data: geoJson,
-            });
-
-            map.addLayer({
-              id: 'route-layer',
-              type: 'line',
-              source: 'route',
-              layout: {
-                'line-join': 'round',
-                'line-cap': 'round',
-              },
-              paint: {
-                'line-color': '#1DA1F2',
-                'line-width': 4,
-              },
-            });
-
-            const bounds = new mapboxgl.LngLatBounds();
-            routeData.forEach((coord) => bounds.extend(coord));
-            map.fitBounds(bounds, { padding: 50 });
-
-            const startCoord = routeData[0];
-            const endCoord = routeData[routeData.length - 1];
-
-            
-            if (Array.isArray(eventDetail.checkpoints)) {
-              eventDetail.checkpoints?.forEach(({ latitude, longitude }) => {
-                new mapboxgl.Marker({ color: 'orange' }).setLngLat([longitude, latitude]).addTo(map);
+              map.addSource("route", {
+                type: "geojson",
+                data: geoJson,
               });
-            }
 
-            new mapboxgl.Marker({ color: 'red', scale: 1.5 }).setLngLat(startCoord).addTo(map);
+              map.addLayer({
+                id: "route-layer",
+                type: "line",
+                source: "route",
+                layout: {
+                  "line-join": "round",
+                  "line-cap": "round",
+                },
+                paint: {
+                  "line-color": "#1DA1F2",
+                  "line-width": 4,
+                },
+              });
 
-            if (startCoord[0] === endCoord[0] && startCoord[1] === endCoord[1]) {
-              // Use a smaller size for the overlapping end marker
-              new mapboxgl.Marker({ color: 'green', scale: 1.0 }).setLngLat(endCoord).addTo(map);
-            } else {
-              new mapboxgl.Marker({ color: 'green', scale: 1.5 }).setLngLat(endCoord).addTo(map);
-            }
+              const bounds = new mapboxgl.LngLatBounds();
+              routeData.forEach((coord) => bounds.extend(coord));
+              map.fitBounds(bounds, { padding: 50 });
 
+              const startCoord = routeData[0];
+              const endCoord = routeData[routeData.length - 1];
 
-          });
+              if (Array.isArray(eventDetail.checkpoints)) {
+                eventDetail.checkpoints?.forEach(({ latitude, longitude }) => {
+                  new mapboxgl.Marker({ color: "orange" })
+                    .setLngLat([longitude, latitude])
+                    .addTo(map);
+                });
+              }
+
+              new mapboxgl.Marker({ color: "red", scale: 1.5 })
+                .setLngLat(startCoord)
+                .addTo(map);
+
+              if (
+                startCoord[0] === endCoord[0] &&
+                startCoord[1] === endCoord[1]
+              ) {
+                // Use a smaller size for the overlapping end marker
+                new mapboxgl.Marker({ color: "green", scale: 1.0 })
+                  .setLngLat(endCoord)
+                  .addTo(map);
+              } else {
+                new mapboxgl.Marker({ color: "green", scale: 1.5 })
+                  .setLngLat(endCoord)
+                  .addTo(map);
+              }
+            });
+          }
+        } catch (error) {
+          console.error("Invalid route data:", error);
         }
-      } catch (error) {
-        console.error('Invalid route data:', error);
       }
-    }
 
-    return () => map.remove();
+      return () => map.remove();
+    }
   }, []);
 
   return (
@@ -111,21 +121,29 @@ export default function EventDetails({ eventDetail }) {
                       &nbsp;
                       <span>{eventDetail.no_of_vehicles} vehicles</span>
                     </div>
-                    <div className="icons flex-three">
-                      <i className="icon-autodeal-diesel" />
-                      &nbsp;
-                      <span>{metersToMiles(eventDetail.distance)} miles</span>
-                    </div>
-                    <div className="icons flex-three">
-                      <i className="icon-autodeal-automatic" />
-                      &nbsp;
-                      <span>{formatDuration(eventDetail.duration)}</span>
-                    </div>
-                    <div className="icons flex-three">
-                      <i className="icon-autodeal-owner" />
-                      &nbsp;
-                      <span>{eventDetail.checkpoints?.length} checkpoints</span>
-                    </div>
+                    {eventDetail.type !== EventType.CAR_MEETS.type && (
+                      <>
+                        <div className="icons flex-three">
+                          <i className="icon-autodeal-diesel" />
+                          &nbsp;
+                          <span>
+                            {metersToMiles(eventDetail.distance)} miles
+                          </span>
+                        </div>
+                        <div className="icons flex-three">
+                          <i className="icon-autodeal-automatic" />
+                          &nbsp;
+                          <span>{formatDuration(eventDetail.duration)}</span>
+                        </div>
+                        <div className="icons flex-three">
+                          <i className="icon-autodeal-owner" />
+                          &nbsp;
+                          <span>
+                            {eventDetail.checkpoints?.length} checkpoints
+                          </span>
+                        </div>
+                      </>
+                    )}
                   </div>
                   <div className="money text-color-3 font">
                     Type: {EventType[eventDetail.type].label}
@@ -202,7 +220,10 @@ export default function EventDetails({ eventDetail }) {
           </div>
           <div className="row">
             <div className="col-lg-8">
-              <Slider3 images={JSON.parse(eventDetail.thumbnail)} />
+              {JSON.parse(eventDetail.thumbnail).length > 0 && (
+                <Slider3 images={JSON.parse(eventDetail.thumbnail)} />
+              )}
+
               <nav
                 id="navbar-example2 "
                 className="navbar tab-listing-scroll mb-30"
@@ -235,6 +256,7 @@ export default function EventDetails({ eventDetail }) {
                   </li>
                 </ul> */}
               </nav>
+
               <div className="listing-detail-wrap">
                 <div className="row">
                   <div className="col-lg-12">
@@ -245,12 +267,75 @@ export default function EventDetails({ eventDetail }) {
                       className="scrollspy-example"
                       tabIndex={0}
                     >
-                      <div className="listing-description mb-40">
-                        <div className="tfcl-listing-header">
-                          <h2>Checkpoints</h2>
+                      {eventDetail?.checkpoints?.length > 0 && (
+                        <div className="listing-description mb-40">
+                          <div className="tfcl-listing-header">
+                            <h2>Checkpoints</h2>
+                          </div>
+                          <div className="overflow-x-auto mt-30">
+                            <table className="table-auto w-full border border-gray-300 border-collapse text-left text-sm">
+                              <thead className="bg-gray-100">
+                                <tr>
+                                  <th className="p-3 border border-gray-200 font-bold ">
+                                    Order
+                                  </th>
+                                  <th className="p-3 border border-gray-200 font-semibold text-gray-900">
+                                    Name
+                                  </th>
+                                  <th className="p-3 border border-gray-200 font-semibold text-gray-900">
+                                    Description
+                                  </th>
+                                  <th className="p-3 border border-gray-200 font-semibold text-gray-900">
+                                    Departure Time
+                                  </th>
+                                  <th className="p-3 border border-gray-200 font-semibold text-gray-900">
+                                    Activities
+                                  </th>
+                                  <th className="p-3 border border-gray-200 font-semibold text-gray-900">
+                                    Images
+                                  </th>
+                                </tr>
+                              </thead>
+
+                              <tbody>
+                                {eventDetail.checkpoints?.map((checkpoint) => (
+                                  <tr key={checkpoint.id} className="border-b">
+                                    <td className="p-3 border font-medium text-gray-800">
+                                      {checkpoint.order}
+                                    </td>
+                                    <td className="p-3 border font-medium text-gray-800">
+                                      {checkpoint.name}
+                                    </td>
+                                    <td className="p-3 border">
+                                      {checkpoint.description}
+                                    </td>
+                                    <td className="p-3 border">
+                                      {new Date(
+                                        checkpoint.departure_time
+                                      ).toLocaleString()}
+                                    </td>
+                                    <td className="p-3 border">
+                                      {checkpoint.activities}
+                                    </td>
+                                    <td className="p-3 ">
+                                      {checkpoint.images.map((url, index) => (
+                                        <img
+                                          width={400}
+                                          height={400}
+                                          key={index}
+                                          src={getImage(url)}
+                                          className="inline-block h-12 w-12 rounded object-cover border"
+                                        />
+                                      ))}
+                                    </td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
                         </div>
-                        <Description />
-                      </div>
+                      )}
+
                       <div
                         className="listing-description footer-col-block"
                         id="scrollspyHeading1"
@@ -288,7 +373,13 @@ export default function EventDetails({ eventDetail }) {
                           </div>
                         </div>
                         {/* <div id='map-container' /> */}
-                        <div ref={mapContainer} style={{ width: '100%', height: '450px' }} />
+                        {eventDetail.type !== EventType.CAR_MEETS.type && (
+                          <div
+                            ref={mapContainer}
+                            style={{ width: "100%", height: "450px" }}
+                          />
+                        )}
+
                         {/* <iframe
                           className="map-content"
                           src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d7302.453092836291!2d90.47477022812872!3d23.77494577893369!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1svi!2s!4v1627293157601!5m2!1svi!2s"
@@ -317,7 +408,10 @@ export default function EventDetails({ eventDetail }) {
               <div className="overlay-siderbar-mobie" />
               <div className="listing-sidebar">
                 <div className="widget-listing mb-30">
-                  <ProfileInfo user={eventDetail.user} startLocation={eventDetail.start_mapbox_location_name}/>
+                  <ProfileInfo
+                    user={eventDetail.user}
+                    startLocation={eventDetail.start_mapbox_location_name}
+                  />
                 </div>
                 {/* <div className="list-icon-pf gap-8 flex-three mb-40">
                   <i className="far fa-flag" />

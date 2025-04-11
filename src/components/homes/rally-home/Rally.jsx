@@ -93,8 +93,11 @@ export default function Rally(props) {
                 ? `https://gtrally.web.app/image_web/${rally.thumbnail[0]}`
                 : "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/800px-Image_not_available.png"
             }
-            width={450}
-            height={338}
+            style={{
+              minWidth: "450px",
+              minHeight: "180px",
+              objectFit: "cover",
+            }}
           />
         </div>
       </div>
@@ -104,8 +107,19 @@ export default function Rally(props) {
             {rally.start_mapbox_district} ➡ {rally.end_mapbox_district}
           </p>
         </div>
-        <h5 className="link-style-1">
-          <Link to={`/events/${rally.id}`}>{rally.name}</Link>
+
+        <h5 className="link-style-1 w-48 md:w-64">
+          <Link
+            to={`/events/${rally.id}`}
+            style={{
+              display: "block",
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+              textOverflow: "ellipsis",
+            }}
+          >
+            {rally.name}
+          </Link>
         </h5>
         <div className="icon-box flex flex-wrap">
           <div className="icons flex-three">

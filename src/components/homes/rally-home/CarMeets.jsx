@@ -3,9 +3,18 @@ import { formatDateRange } from "@/utlis/helpers";
 import { EventType } from "@/constants";
 
 export default function CarMeets(props) {
-  const { event } = props;
+  const { event, style } = props;
   return (
-    <div className="box-car-list hv-one">
+    <div
+      className="box-car-list hv-one"
+      style={{
+        ...style,
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        minHeight: "450px",
+      }}
+    >
       <div className="image-group relative">
         <div className="top flex-two">
           <ul className="d-flex gap-8">
@@ -89,36 +98,69 @@ export default function CarMeets(props) {
                 ? `https://gtrally.web.app/image_web/${event.thumbnail[0]}`
                 : "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/800px-Image_not_available.png"
             }
-            width={450}
-            height={338}
+            style={{
+              minWidth: "450px",
+              minHeight: "180px",
+              objectFit: "cover",
+            }}
           />
         </div>
       </div>
-      <div className="content">
+      <div
+        className="content"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          flexGrow: 1,
+          justifyContent: "space-between",
+        }}
+      >
         <div className="text-address">
           <p className="text-color-3 font">{event.start_mapbox_district}</p>
         </div>
         <h5 className="link-style-1">
-          <Link to={`/events/${event.id}`}>{event.name}</Link>
+          <Link
+            to={`/events/${event.id}`}
+            style={{
+              display: "block",
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+              textOverflow: "ellipsis",
+            }}
+          >
+            {event.name}
+          </Link>
         </h5>
+
         <div className="icon-box flex flex-wrap">
           <div className="icons flex-three">
             <i className="icon-autodeal-km1" />
-            <span>{event.no_of_vehicles.toLocaleString()} vehicles</span>
+            <span style={{ fontSize: "16px" }}>
+              {event.no_of_vehicles.toLocaleString()} vehicles
+            </span>
           </div>
-          <div className="icons flex-three">
+          {/* <div className="icons flex-three">
             <i className="icon-autodeal-diesel" />
-            <span>{event.distance == 0 || event.distance==null  ? 0 : metersToMiles(event.distance)} miles</span>
+            <span>
+              {event.distance == 0 || event.distance == null
+                ? 0
+                : metersToMiles(event.distance)}{" "}
+              miles
+            </span>
           </div>
           <div className="icons flex-three">
             <i className="icon-autodeal-automatic" />
-            <span>   {event.duration == 0 || event.duration==null  ? 0 : formatDuration(event.duration)}</span>
-           
-          </div>
+            <span>
+              {" "}
+              {event.duration == 0 || event.duration == null
+                ? 0
+                : formatDuration(event.duration)}
+            </span>
+          </div> */}
         </div>
-        <div className="money fs-20 fw-5 lh-25 text-color-3">
+        {/* <div className="money fs-20 fw-5 lh-25 text-color-3">
           {event.start_location?.features?.length} Features
-        </div>
+        </div> */}
         <div className="days-box flex justify-space align-center">
           <div className="img-author">
             <img

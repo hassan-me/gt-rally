@@ -153,15 +153,16 @@ export default function Cars() {
                   >
                     {GetFilteredResults().map((record, i) => (
                       <SwiperSlide key={i} className="swiper-slide">
-                        {record.type == EventType.CAR_MEETS.type ? (
-                          <CarMeets event={record} />
-                        ) : (
-                          <Rally rally={record} />
-                        )}
-                        {/* {JSON.stringify(record)} */}
+                        <div>
+                          {record.type == EventType.CAR_MEETS.type ? (
+                            <CarMeets event={record} />
+                          ) : (
+                            <Rally rally={record} />
+                          )}
+                        </div>
                       </SwiperSlide>
                     ))}
-                    <div className="swiper-pagination5 spd11"></div>
+                    <div className="swiper-pagination5 spd11 mb-2"></div>
                   </Swiper>
                   <div className="swiper-button-next style-1 snbn8" />
                   <div className="swiper-button-prev style-1 snbp8" />
