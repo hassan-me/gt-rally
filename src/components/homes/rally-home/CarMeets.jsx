@@ -1,19 +1,24 @@
 import { Link } from "react-router-dom";
+import { formatDateRange } from "@/utlis/helpers";
 import { EventType } from "@/constants";
-import {
-  formatDateRange,
-  formatDuration,
-  metersToMiles,
-} from "@/utlis/helpers";
 
-export default function Rally(props) {
-  const { rally } = props;
+export default function CarMeets(props) {
+  const { event, style } = props;
   return (
-    <div className="box-car-list hv-one">
+    <div
+      className="box-car-list hv-one"
+      style={{
+        ...style,
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        minHeight: "450px",
+      }}
+    >
       <div className="image-group relative">
         <div className="top flex-two">
           <ul className="d-flex gap-8">
-            <li className="flag-tag success">{EventType[rally.type].label}</li>
+            <li className="flag-tag success">{EventType[event.type].label}</li>
             <li className="flag-tag style-1">
               <div className="icon">
                 <svg
@@ -32,11 +37,11 @@ export default function Rally(props) {
                   />
                 </svg>
               </div>
-              {rally.thumbnail_url.length}
+              {event.thumbnail_url.length}
             </li>
           </ul>
           <div className="year flag-tag">
-            {formatDateRange(rally.start_date, rally.end_date)}
+            {formatDateRange(event.start_date, event.end_date)}
           </div>
         </div>
         <ul className="change-heart flex">
@@ -89,8 +94,8 @@ export default function Rally(props) {
             className="lazyload"
             alt="image"
             src={
-              rally.thumbnail && rally.thumbnail.length > 0
-                ? `https://gtrally.web.app/image_web/${rally.thumbnail[0]}`
+              event.thumbnail && event.thumbnail.length > 0
+                ? `https://gtrally.web.app/image_web/${event.thumbnail[0]}`
                 : "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/800px-Image_not_available.png"
             }
             style={{
@@ -101,16 +106,21 @@ export default function Rally(props) {
           />
         </div>
       </div>
-      <div className="content">
+      <div
+        className="content"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          flexGrow: 1,
+          justifyContent: "space-between",
+        }}
+      >
         <div className="text-address">
-          <p className="text-color-3 font">
-            {rally.start_mapbox_district} ➡ {rally.end_mapbox_district}
-          </p>
+          <p className="text-color-3 font">{event.start_mapbox_district}</p>
         </div>
-
-        <h5 className="link-style-1 w-48 md:w-64">
+        <h5 className="link-style-1">
           <Link
-            to={`/events/${rally.id}`}
+            to={`/events/${event.id}`}
             style={{
               display: "block",
               overflow: "hidden",
@@ -118,36 +128,47 @@ export default function Rally(props) {
               textOverflow: "ellipsis",
             }}
           >
-            {rally.name}
+            {event.name}
           </Link>
         </h5>
+
         <div className="icon-box flex flex-wrap">
           <div className="icons flex-three">
             <i className="icon-autodeal-km1" />
-            <span>{rally.no_of_vehicles.toLocaleString()} vehicles</span>
+            <span style={{ fontSize: "16px" }}>
+              {event.no_of_vehicles.toLocaleString()} vehicles
+            </span>
           </div>
-          <div className="icons flex-three">
+          {/* <div className="icons flex-three">
             <i className="icon-autodeal-diesel" />
-            <span>{metersToMiles(rally.distance)} miles</span>
+            <span>
+              {event.distance == 0 || event.distance == null
+                ? 0
+                : metersToMiles(event.distance)}{" "}
+              miles
+            </span>
           </div>
           <div className="icons flex-three">
             <i className="icon-autodeal-automatic" />
             <span>
-              {rally.duration == 0 ? 0 : formatDuration(rally.duration)}
+              {" "}
+              {event.duration == 0 || event.duration == null
+                ? 0
+                : formatDuration(event.duration)}
             </span>
-          </div>
+          </div> */}
         </div>
-        <div className="money fs-20 fw-5 lh-25 text-color-3">
-          {rally.checkpoints.length} Checkpoints
-        </div>
+        {/* <div className="money fs-20 fw-5 lh-25 text-color-3">
+          {event.start_location?.features?.length} Features
+        </div> */}
         <div className="days-box flex justify-space align-center">
           <div className="img-author">
             <img
               className="lazyload"
               alt="image"
               src={
-                rally.user.profile_image
-                  ? `https://gtrally.web.app/image_web/${rally.user.profile_image}`
+                event.user.profile_image
+                  ? `https://gtrally.web.app/image_web/${event.user.profile_image}`
                   : "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
               }
               width={120}
@@ -157,8 +178,8 @@ export default function Rally(props) {
             {rally.user.profile_image_url}
           </span> */}
           </div>
-          <Link to={`/events/${rally.id}`} className="view-car">
-            View Rally
+          <Link to={`/events/${event.id}`} className="view-car">
+            View Event
           </Link>
         </div>
       </div>

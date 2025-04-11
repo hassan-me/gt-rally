@@ -1,12 +1,11 @@
 import CarDetails4 from "@/components/carDetails/CarDetails4";
 import Footer1 from "@/components/footers/Footer1";
 import Header2 from "@/components/headers/Header2";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import EventDetails from "@/components/eventDetails/EventDetails4"
+import EventDetails from "@/components/eventDetails/EventDetails4";
 import { allCars } from "@/data/cars";
 import { events } from "@/data/events";
-import { singleEvent } from "@/data/singleEvent";
 import MetaComponent from "@/components/common/MetaComponent";
 const metadata = {
   title:
@@ -16,6 +15,28 @@ const metadata = {
 export default function EventDetail() {
   let params = useParams();
   const carItem = allCars.filter((elm) => elm.id == params.id)[0] || allCars[0];
+  const [singleEvent, setSingleEvent] = useState(null);
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch(`https://gtrally.web.app/v1/events_web/${params.id}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch detail.");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setSingleEvent(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error.message);
+        setLoading(false);
+      });
+  }, []);
+
   return (
     <>
       <MetaComponent meta={metadata} />
@@ -38,7 +59,12 @@ export default function EventDetail() {
           </div>
         </div>
       </section>
-      <EventDetails eventDetail={singleEvent} />
+      {loading ? (
+        <div>Loading event details...</div>
+      ) : (
+        <EventDetails eventDetail={singleEvent} />
+      )}
+
       <Footer1 />
     </>
   );

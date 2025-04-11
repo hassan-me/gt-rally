@@ -11,7 +11,11 @@ export default function ProfileInfo(props) {
             className="lazyload"
             data-src="/assets/images/author/avt1.jpg"
             alt="image"
-            src={getImage(user.profile_image)}
+            src={
+              user.profile_image
+                ? getImage(user.profile_image)
+                : "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/800px-Image_not_available.png"
+            }
             width={450}
             height={450}
           />
@@ -43,19 +47,22 @@ export default function ProfileInfo(props) {
       <div className="profile-map mb-30">
         <div className="list-icon-pf gap-8 flex-three">
           <i className="far fa-map" />
-          <p className="font-1">
-            {startLocation}
-          </p>
+          <p className="font-1">{startLocation}</p>
         </div>
         <div className="map">
-        <iframe
-          className="map-content"
-          src="https://www.google.com/maps?q=40.643804,-73.781892&hl=en&z=14&output=embed"
-          allowFullScreen
-          loading="lazy"
-          style={{ border: 0, width: '100%', height: '250px', pointerEvents: 'auto' }}
-          title="Foo bar hello"
-        ></iframe>
+          <iframe
+            className="map-content"
+            src="https://www.google.com/maps?q=40.643804,-73.781892&hl=en&z=14&output=embed"
+            allowFullScreen
+            loading="lazy"
+            style={{
+              border: 0,
+              width: "100%",
+              height: "250px",
+              pointerEvents: "auto",
+            }}
+            title="Foo bar hello"
+          ></iframe>
         </div>
       </div>
       {/* <div className="profile-contact">

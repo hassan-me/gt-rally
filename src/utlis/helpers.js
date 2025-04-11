@@ -9,5 +9,5 @@ export const formatDuration = (duration) => {
 }
 
 export const getImage = (imgId) => {
-  return `https://gt-rally.web.app/image_web/${imgId}`;
+  return `https://gtrally.web.app/image_web/${imgId}`;
 }
