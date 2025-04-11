@@ -5,10 +5,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Link } from "react-router-dom";
 import { EventType } from "@/constants";
 import { useEffect, useState } from "react";
-import Rally from './Rally';
-import Event from './Event';
-
-
+import Rally from "./Rally";
+import CarMeets from "./CarMeets";
 
 export default function Cars() {
   const swiperOptions = {
@@ -40,17 +38,15 @@ export default function Cars() {
     },
   };
 
-
   const [selectedType, setSelectedType] = useState(EventType.All);
   const [rallies, setRallies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-
   const GetFilteredResults = () => {
     if (selectedType.type == EventType.All.type) return rallies;
-    return rallies.filter(a => a.type == selectedType.type);
-  }
+    return rallies.filter((a) => a.type == selectedType.type);
+  };
 
   useEffect(() => {
     fetch("https://gtrally.web.app/v1/events_web/public")
@@ -58,19 +54,21 @@ export default function Cars() {
         if (!response.ok) {
           throw new Error("Failed to fetch rallies.");
         }
-        return response.json()
+        return response.json();
       })
       .then((data) => {
-        setRallies(data.map(rec => {
-          rec.thumbnail = JSON.parse(rec.thumbnail);
-          rec.thumbnail_url = JSON.parse(rec.thumbnail_url);
-          // if (rec.type_custom == EventType.Events.type) {
-          //   if (rec.start_location) rec.start_location = JSON.parse(rec.start_location);
-          //   if (rec.end_location) rec.end_location = JSON.parse(rec.end_location);
-          //   if (rec.event_images) rec.event_images = JSON.parse(rec.event_images);
-          // }
-          return rec;
-        }))
+        setRallies(
+          data.map((rec) => {
+            rec.thumbnail = JSON.parse(rec.thumbnail);
+            rec.thumbnail_url = JSON.parse(rec.thumbnail_url);
+            // if (rec.type_custom == EventType.Events.type) {
+            //   if (rec.start_location) rec.start_location = JSON.parse(rec.start_location);
+            //   if (rec.end_location) rec.end_location = JSON.parse(rec.end_location);
+            //   if (rec.event_images) rec.event_images = JSON.parse(rec.event_images);
+            // }
+            return rec;
+          })
+        );
         setLoading(false);
       })
       .catch((error) => {
@@ -116,7 +114,7 @@ export default function Cars() {
                 data-wow-delay="0.2s"
                 data-wow-duration="1000ms"
               >
-               Top Picks: Rally Cars & Thrilling Events
+                Top Picks: Rally Cars & Thrilling Events
               </h2>
               <Link
                 to={`/blog-grid`}
@@ -155,7 +153,11 @@ export default function Cars() {
                   >
                     {GetFilteredResults().map((record, i) => (
                       <SwiperSlide key={i} className="swiper-slide">
-                        {record.type == EventType.CAR_MEETS.type ? <Event event={record} /> : <Rally rally={record}/> }
+                        {record.type == EventType.CAR_MEETS.type ? (
+                          <CarMeets event={record} />
+                        ) : (
+                          <Rally rally={record} />
+                        )}
                         {/* {JSON.stringify(record)} */}
                       </SwiperSlide>
                     ))}
