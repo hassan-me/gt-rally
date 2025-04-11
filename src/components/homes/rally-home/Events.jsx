@@ -53,7 +53,7 @@ export default function Cars() {
   }
 
   useEffect(() => {
-    fetch("https://gt-rally.web.app/v1/events_web/public")
+    fetch("https://gtrally.web.app/v1/events_web/public")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch rallies.");
@@ -156,6 +156,7 @@ export default function Cars() {
                     {GetFilteredResults().map((record, i) => (
                       <SwiperSlide key={i} className="swiper-slide">
                         {record.type == EventType.CAR_MEETS.type ? <Event event={record} /> : <Rally rally={record}/> }
+                        {/* {JSON.stringify(record)} */}
                       </SwiperSlide>
                     ))}
                     <div className="swiper-pagination5 spd11"></div>

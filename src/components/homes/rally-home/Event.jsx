@@ -82,7 +82,7 @@ export default function Event(props) {
         <img
           className="lazyload"
           alt="image"
-          src={`https://gt-rally.web.app/image_web/${event.thumbnail[0]}`}
+          src={`https://gtrally.web.app/image_web/${event.thumbnail[0]}`}
           width={450}
           height={338}
         />
@@ -119,7 +119,7 @@ export default function Event(props) {
           <img
             className="lazyload"
             alt="image"
-            src={`https://gt-rally.web.app/image_web/${event.user.profile_image}`}
+            src={`https://gtrally.web.app/image_web/${event.user.profile_image}`}
             width={120}
             height={120}
           />

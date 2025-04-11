@@ -202,7 +202,7 @@ export default function EventDetails({ eventDetail }) {
           </div>
           <div className="row">
             <div className="col-lg-8">
-              <Slider3 images={eventDetail.thumbnail} />
+              <Slider3 images={JSON.parse(eventDetail.thumbnail)} />
               <nav
                 id="navbar-example2 "
                 className="navbar tab-listing-scroll mb-30"

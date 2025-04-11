@@ -84,7 +84,7 @@ export default function Rally(props) {
         <img
           className="lazyload"
           alt="image"
-          src={`https://gt-rally.web.app/image_web/${rally.thumbnail[0]}`}
+          src={`https://gtrally.web.app/image_web/${rally.thumbnail[0]}`}
           width={450}
           height={338}
         />
@@ -121,7 +121,7 @@ export default function Rally(props) {
           <img
             className="lazyload"
             alt="image"
-            src={`https://gt-rally.web.app/image_web/${rally.user.profile_image}`}
+            src={`https://gtrally.web.app/image_web/${rally.user.profile_image}`}
             width={120}
             height={120}
           />
