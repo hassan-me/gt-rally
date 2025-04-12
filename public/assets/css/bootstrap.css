@@ -706,6 +706,24 @@ progress {
   content: "— ";
 }
 
+.custom-accordion-button {
+  background-color: #fff !important;
+  box-shadow: none !important;
+  color: inherit;
+}
+
+
+.custom-accordion-button:focus {
+  box-shadow: none !important;
+  outline: none;
+}
+
+
+.custom-accordion-button:not(.collapsed) {
+   background-color: var(--bs-card-cap-bg) !important;
+  color: inherit;
+}
+
 .img-fluid {
   max-width: 100%;
   height: auto;
@@ -4673,6 +4691,13 @@ textarea.form-control-lg {
 .accordion-item:last-of-type > .accordion-collapse {
   border-bottom-right-radius: var(--bs-accordion-border-radius);
   border-bottom-left-radius: var(--bs-accordion-border-radius);
+}
+
+@media (max-width: 1200px) {
+  .accordion-collapse.collapse:not(.show) {
+    display: none !important;
+  }
+  
 }
 
 .accordion-body {

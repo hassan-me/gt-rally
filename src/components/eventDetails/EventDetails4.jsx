@@ -20,17 +20,17 @@ export default function EventDetails({ eventDetail }) {
   console.log("--> process.env", import.meta.env);
 
   // useEffect(() => {
-   
+
   //     mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
-  //     let map; 
-    
+  //     let map;
+
   //     if (eventDetail.type === EventType.CAR_MEETS.type) {
   //       if (eventDetail.start_latitude && eventDetail.start_longitude) {
   //         map.on("load", () => {
   //           // Center map on start location
   //           map.setCenter([eventDetail.start_longitude, eventDetail.start_latitude]);
-            
+
   //           // Add marker for the start location
   //           new mapboxgl.Marker({ color: "red", scale: 1.5 })
   //             .setLngLat([eventDetail.start_longitude, eventDetail.start_latitude])
@@ -119,29 +119,34 @@ export default function EventDetails({ eventDetail }) {
   //     }
 
   //     return () => map.remove();
-    
-  // }, []);
 
+  // }, []);
 
   useEffect(() => {
     mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
-  
+
     const map = new mapboxgl.Map({
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/streets-v11",
       zoom: 14,
     });
-  
+
     // For car meets, just show the starting location marker
     if (eventDetail.type === EventType.CAR_MEETS.type) {
       if (eventDetail.start_latitude && eventDetail.start_longitude) {
         map.on("load", () => {
           // Center map on start location
-          map.setCenter([eventDetail.start_longitude, eventDetail.start_latitude]);
-          
+          map.setCenter([
+            eventDetail.start_longitude,
+            eventDetail.start_latitude,
+          ]);
+
           // Add marker for the start location
           new mapboxgl.Marker({ color: "red", scale: 1.5 })
-            .setLngLat([eventDetail.start_longitude, eventDetail.start_latitude])
+            .setLngLat([
+              eventDetail.start_longitude,
+              eventDetail.start_latitude,
+            ])
             .addTo(map);
         });
       }
@@ -218,7 +223,7 @@ export default function EventDetails({ eventDetail }) {
         }
       }
     }
-  
+
     return () => map.remove();
   }, []);
 
@@ -403,114 +408,162 @@ export default function EventDetails({ eventDetail }) {
               </nav>
 
               <div className="listing-detail-wrap">
-  <div className="row">
-    <div className="col-lg-12">
-      <div
-        data-bs-spy="scroll"
-        data-bs-target="#navbar-example2"
-        data-bs-offset={0}
-        className="scrollspy-example"
-        tabIndex={0}
-      >
-        {eventDetail?.checkpoints?.length > 0 && (
-          <div className="listing-description mb-40">
-            <div className="tfcl-listing-header">
-              <h2>Checkpoints</h2>
-            </div>
-            <div className="overflow-x-auto mt-30">
-              <table className="table-auto w-full border border-gray-300 border-collapse text-left text-sm">
-                <thead className="bg-gray-100">
-                  <tr>
-                    <th className="p-3 border border-gray-200 font-bold ">Order</th>
-                    <th className="p-3 border border-gray-200 font-semibold text-gray-900">Name</th>
-                    <th className="p-3 border border-gray-200 font-semibold text-gray-900">Description</th>
-                    <th className="p-3 border border-gray-200 font-semibold text-gray-900">Departure Time</th>
-                    <th className="p-3 border border-gray-200 font-semibold text-gray-900">Activities</th>
-                    <th className="p-3 border border-gray-200 font-semibold text-gray-900">Images</th>
-                  </tr>
-                </thead>
+                <div className="row">
+                  <div className="col-lg-12">
+                    <div
+                      data-bs-spy="scroll"
+                      data-bs-target="#navbar-example2"
+                      data-bs-offset={0}
+                      className="scrollspy-example"
+                      tabIndex={0}
+                    >
+                      {eventDetail?.checkpoints?.length > 0 && (
+                        <>
+                          <div className="tfcl-listing-header mb-4">
+                            <h2>Checkpoints</h2>
+                          </div>
+                          {eventDetail.checkpoints.map((checkpoint) => (
+                            <div
+                              key={checkpoint.id}
+                              className="card mb-4 shadow-sm"
+                            >
+                              <div className="card-header text-white">
+                                <h5 className="p-1">
+                                  Checkpoint {checkpoint.order}:{" "}
+                                  {checkpoint.name}
+                                </h5>
+                              </div>
 
-                <tbody>
-                  {eventDetail.checkpoints?.map((checkpoint) => (
-                    <tr key={checkpoint.id} className="border-b">
-                      <td className="p-3 border font-medium text-gray-800">{checkpoint.order}</td>
-                      <td className="p-3 border font-medium text-gray-800">{checkpoint.name}</td>
-                      <td className="p-3 border">{checkpoint.description}</td>
-                      <td className="p-3 border">
-                        {new Date(checkpoint.departure_time).toLocaleString()}
-                      </td>
-                      <td className="p-3 border">{checkpoint.activities}</td>
-                      <td className="p-2 " >
-                        <div style={{marginTop:"20px"}}></div>
-                        <div
-                        
-                          style={{
-                            display: 'flex',
-                            overflowX: 'auto',
-                            gap: '10px',
-                            padding: '5px 0',
-                            
-                            
-                          }}
-                        >
-                          {checkpoint.images.map((url, index) => (
-                            <img
-                              key={index}
-                              src={getImage(url)}
-                              alt={`Checkpoint image ${index + 1}`}
-                              style={{
-                                flexShrink: 0,
-                                height: '200px', // Adjust size as needed
-                                width: '200px',
-                                objectFit: 'cover',
-                                borderRadius: '5px',
-                                border: '1px solid #ddd',
-                              }}
-                            />
+                              <div className="card-body">
+                                <div className="row mb-3">
+                                  <div className="col-md-6">
+                                    <p className="mb-1">
+                                      <strong className="fw-bolder">
+                                        Description:
+                                      </strong>
+                                    </p>
+                                    <p>{checkpoint.description}</p>
+                                  </div>
+
+                                  <div className="col-md-6">
+                                    <p className="mb-1">
+                                      <strong className="fw-bolder">
+                                        Departure Time:
+                                      </strong>
+                                    </p>
+                                    <p>
+                                      {new Date(
+                                        checkpoint.departure_time
+                                      ).toLocaleString()}
+                                    </p>
+                                  </div>
+
+                                  <div className="col-12">
+                                    <p className="mb-1 mt-3">
+                                      <strong className="fw-bolder">
+                                        Activities:
+                                      </strong>
+                                    </p>
+                                    <p>{checkpoint.activities}</p>
+                                  </div>
+                                </div>
+                                <div
+                                  className="accordion"
+                                  id={`accordionImages${checkpoint.id}`}
+                                >
+                                  <div className="accordion-item">
+                                    <h2
+                                      className="accordion-header"
+                                      id={`heading${checkpoint.id}`}
+                                    >
+                                      <button
+                                        className="accordion-button collapsed custom-accordion-button"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target={`#collapse${checkpoint.id}`}
+                                        aria-expanded="false"
+                                        aria-controls={`collapse${checkpoint.id}`}
+                                      >
+                                        View Images
+                                      </button>
+                                    </h2>
+                                    <div
+                                      id={`collapse${checkpoint.id}`}
+                                      className="accordion-collapse collapse"
+                                      aria-labelledby={`heading${checkpoint.id}`}
+                                      data-bs-parent={`#accordionImages${checkpoint.id}`}
+                                    >
+                                      <div className="accordion-body">
+                                        <div className="row image-container">
+                                          {checkpoint.images.map(
+                                            (url, index) => (
+                                              <div
+                                                key={index}
+                                                className="col-sm-12 col-md-3 mb-2"
+                                              >
+                                                <img
+                                                  style={{
+                                                    minHeight: "160px",
+                                                  }}
+                                                  src={getImage(url)}
+                                                  alt={`Checkpoint ${
+                                                    checkpoint.order
+                                                  } Image ${index + 1}`}
+                                                  className="img-fluid rounded border"
+                                                />
+                                              </div>
+                                            )
+                                          )}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                {/* End Images Accordion */}
+                              </div>
+                              {/* End Card Body */}
+                            </div>
                           ))}
+                        </>
+                      )}
+
+                      <div
+                        className="listing-description footer-col-block"
+                        id="scrollspyHeading1"
+                      >
+                        <div className="footer-heading-desktop">
+                          <h2>Detailed Overview</h2>
                         </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
+                        <div className="footer-heading-mobie listing-details-mobie">
+                          <h2>Detailed Overview</h2>
+                        </div>
+                        <Overview eventDetail={eventDetail} />
+                      </div>
+                      <div className="listing-line" />
+                      <div className="listing-location" id="scrollspyHeading3">
+                        <div className="box-title">
+                          <h2 className="title-ct">
+                            {eventDetail.type !== EventType.CAR_MEETS.type
+                              ? "Route"
+                              : "Location"}
+                          </h2>
+                          <div className="list-icon-pf gap-8 flex-three">
+                            <i className="far fa-map" />
+                            <p className="font-1">
+                              {eventDetail.start_mapbox_location_name}
+                            </p>
+                          </div>
+                        </div>
 
-        <div className="listing-description footer-col-block" id="scrollspyHeading1">
-          <div className="footer-heading-desktop">
-            <h2>Detailed Overview</h2>
-          </div>
-          <div className="footer-heading-mobie listing-details-mobie">
-            <h2>Detailed Overview</h2>
-          </div>
-          <Overview eventDetail={eventDetail} />
-        </div>
-        <div className="listing-line" />
-        <div className="listing-location" id="scrollspyHeading3">
-          <div className="box-title">
-            <h2 className="title-ct">Route</h2>
-            <div className="list-icon-pf gap-8 flex-three">
-              <i className="far fa-map" />
-              <p className="font-1">
-                {eventDetail.start_mapbox_location_name}
-              </p>
-            </div>
-          </div>
-         
-            <div
-              ref={mapContainer}
-              style={{ width: '100%', height: '450px' }}
-            />
-          
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
+                        <div
+                          ref={mapContainer}
+                          style={{ width: "100%", height: "450px" }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <div className="col-lg-4">
               <div className="overlay-siderbar-mobie" />
