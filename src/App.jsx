@@ -5,9 +5,10 @@ import "swiper/css/grid";
 import "photoswipe/style.css";
 import { useEffect } from "react";
 import BackToTop from "@/components/common/BacktoTop";
-
 import Login from "@/components/rally-modals/Login";
 import SignUp from "@/components/rally-modals/SignUp";
+import Login from "@/components/modals/Login";
+import SignUp from "@/components/modals/SignUp";
 import { Route, Routes, useLocation } from "react-router-dom";
 import WOW from "./utlis/wow";
 import ScrollTopBehaviour from "./components/common/ScrollToTopBehaviour";

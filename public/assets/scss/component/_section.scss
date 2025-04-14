@@ -5116,7 +5116,6 @@
 }
 
 .modal-open .modal {
-  overflow: hidden !important;
   padding-right: 0 !important;
 }
 
@@ -5124,7 +5123,7 @@
   display: flex;
   align-items: center;
   min-height: calc(100% - 0rem);
-  max-width: 920px;
+  max-width: 1100px;
   margin: auto auto;
 }
 
