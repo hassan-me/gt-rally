@@ -95,10 +95,7 @@ export default function SignUp() {
       reset();
       Modal.getInstance(document.getElementById("popup_bid2"))?.hide();
       Modal.getOrCreateInstance(document.getElementById("popup_bid")).show();
-      
 
-      registerModal.hide();
-      loginModal.show();
 
       // Hide toast after 5 seconds
       setTimeout(() => {
