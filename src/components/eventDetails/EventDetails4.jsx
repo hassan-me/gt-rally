@@ -1,9 +1,9 @@
 import React, { useRef, useEffect } from "react";
 import Slider3 from "./sliders/Slider3";
 
-import Description from "./detailComponents/Description";
+import { Swiper, SwiperSlide } from "swiper/react";
 import Overview from "./detailComponents/Overview";
-import Features from "./detailComponents/Features";
+import { Navigation, Pagination } from "swiper/modules";
 import LoanCalculator from "./detailComponents/LoanCalculator";
 import CarReview from "./detailComponents/CarReview";
 import ProfileInfo from "./detailComponents/ProfileInfo";
@@ -19,21 +19,142 @@ export default function EventDetails({ eventDetail }) {
   const mapContainer = useRef(null);
   console.log("--> process.env", import.meta.env);
 
+  // useEffect(() => {
+
+  //     mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
+
+  //     let map;
+
+  //     if (eventDetail.type === EventType.CAR_MEETS.type) {
+  //       if (eventDetail.start_latitude && eventDetail.start_longitude) {
+  //         map.on("load", () => {
+  //           // Center map on start location
+  //           map.setCenter([eventDetail.start_longitude, eventDetail.start_latitude]);
+
+  //           // Add marker for the start location
+  //           new mapboxgl.Marker({ color: "red", scale: 1.5 })
+  //             .setLngLat([eventDetail.start_longitude, eventDetail.start_latitude])
+  //             .addTo(map);
+  //         });
+  //       }
+  //     }else {
+  //        map = new mapboxgl.Map({
+  //         container: mapContainer.current,
+  //         style: "mapbox://styles/mapbox/streets-v11",
+  //         // center: [-73.781892, 40.643804],
+  //         zoom: 14,
+  //       });
+  //     }
+
+  //     if (eventDetail.route_json) {
+  //       try {
+  //         const routeData = JSON.parse(eventDetail.route_json);
+
+  //         if (Array.isArray(routeData) && routeData.length) {
+  //           map.on("load", () => {
+  //             const geoJson = {
+  //               type: "Feature",
+  //               geometry: {
+  //                 type: "LineString",
+  //                 coordinates: routeData,
+  //               },
+  //             };
+
+  //             map.addSource("route", {
+  //               type: "geojson",
+  //               data: geoJson,
+  //             });
+
+  //             map.addLayer({
+  //               id: "route-layer",
+  //               type: "line",
+  //               source: "route",
+  //               layout: {
+  //                 "line-join": "round",
+  //                 "line-cap": "round",
+  //               },
+  //               paint: {
+  //                 "line-color": "#1DA1F2",
+  //                 "line-width": 4,
+  //               },
+  //             });
+
+  //             const bounds = new mapboxgl.LngLatBounds();
+  //             routeData.forEach((coord) => bounds.extend(coord));
+  //             map.fitBounds(bounds, { padding: 50 });
+
+  //             const startCoord = routeData[0];
+  //             const endCoord = routeData[routeData.length - 1];
+
+  //             if (Array.isArray(eventDetail.checkpoints)) {
+  //               eventDetail.checkpoints?.forEach(({ latitude, longitude }) => {
+  //                 new mapboxgl.Marker({ color: "orange" })
+  //                   .setLngLat([longitude, latitude])
+  //                   .addTo(map);
+  //               });
+  //             }
+
+  //             new mapboxgl.Marker({ color: "red", scale: 1.5 })
+  //               .setLngLat(startCoord)
+  //               .addTo(map);
+
+  //             if (
+  //               startCoord[0] === endCoord[0] &&
+  //               startCoord[1] === endCoord[1]
+  //             ) {
+  //               // Use a smaller size for the overlapping end marker
+  //               new mapboxgl.Marker({ color: "green", scale: 1.0 })
+  //                 .setLngLat(endCoord)
+  //                 .addTo(map);
+  //             } else {
+  //               new mapboxgl.Marker({ color: "green", scale: 1.5 })
+  //                 .setLngLat(endCoord)
+  //                 .addTo(map);
+  //             }
+  //           });
+  //         }
+  //       } catch (error) {
+  //         console.error("Invalid route data:", error);
+  //       }
+  //     }
+
+  //     return () => map.remove();
+
+  // }, []);
+
   useEffect(() => {
-    if (eventDetail.type !== EventType.CAR_MEETS.type) {
-      mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
+    mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
-      const map = new mapboxgl.Map({
-        container: mapContainer.current,
-        style: "mapbox://styles/mapbox/streets-v11",
-        // center: [-73.781892, 40.643804],
-        zoom: 14,
-      });
+    const map = new mapboxgl.Map({
+      container: mapContainer.current,
+      style: "mapbox://styles/mapbox/streets-v11",
+      zoom: 14,
+    });
 
+    // For car meets, just show the starting location marker
+    if (eventDetail.type === EventType.CAR_MEETS.type) {
+      if (eventDetail.start_latitude && eventDetail.start_longitude) {
+        map.on("load", () => {
+          // Center map on start location
+          map.setCenter([
+            eventDetail.start_longitude,
+            eventDetail.start_latitude,
+          ]);
+
+          // Add marker for the start location
+          new mapboxgl.Marker({ color: "red", scale: 1.5 })
+            .setLngLat([
+              eventDetail.start_longitude,
+              eventDetail.start_latitude,
+            ])
+            .addTo(map);
+        });
+      }
+    } else {
+      // Your existing route drawing code for other event types
       if (eventDetail.route_json) {
         try {
           const routeData = JSON.parse(eventDetail.route_json);
-
           if (Array.isArray(routeData) && routeData.length) {
             map.on("load", () => {
               const geoJson = {
@@ -101,10 +222,39 @@ export default function EventDetails({ eventDetail }) {
           console.error("Invalid route data:", error);
         }
       }
-
-      return () => map.remove();
     }
+
+    return () => map.remove();
   }, []);
+
+  const swiperOptions = {
+    speed: 1000,
+    spaceBetween: 30,
+    pagination: {
+      el: ".spd11",
+      clickable: true,
+    },
+    navigation: {
+      nextEl: ".snbn10",
+      prevEl: ".snbp10",
+    },
+    breakpoints: {
+      0: {
+        slidesPerView: 1,
+        spaceBetween: 20,
+      },
+      600: {
+        slidesPerView: 2,
+        spaceBetween: 20,
+      },
+      991: {
+        slidesPerView: 3,
+      },
+      1200: {
+        slidesPerView: 4,
+      },
+    },
+  };
 
   return (
     <>
@@ -268,72 +418,113 @@ export default function EventDetails({ eventDetail }) {
                       tabIndex={0}
                     >
                       {eventDetail?.checkpoints?.length > 0 && (
-                        <div className="listing-description mb-40">
-                          <div className="tfcl-listing-header">
+                        <>
+                          <div className="tfcl-listing-header mb-4">
                             <h2>Checkpoints</h2>
                           </div>
-                          <div className="overflow-x-auto mt-30">
-                            <table className="table-auto w-full border border-gray-300 border-collapse text-left text-sm">
-                              <thead className="bg-gray-100">
-                                <tr>
-                                  <th className="p-3 border border-gray-200 font-bold ">
-                                    Order
-                                  </th>
-                                  <th className="p-3 border border-gray-200 font-semibold text-gray-900">
-                                    Name
-                                  </th>
-                                  <th className="p-3 border border-gray-200 font-semibold text-gray-900">
-                                    Description
-                                  </th>
-                                  <th className="p-3 border border-gray-200 font-semibold text-gray-900">
-                                    Departure Time
-                                  </th>
-                                  <th className="p-3 border border-gray-200 font-semibold text-gray-900">
-                                    Activities
-                                  </th>
-                                  <th className="p-3 border border-gray-200 font-semibold text-gray-900">
-                                    Images
-                                  </th>
-                                </tr>
-                              </thead>
+                          {eventDetail.checkpoints.map((checkpoint) => (
+                            <div
+                              key={checkpoint.id}
+                              className="card mb-4 shadow-sm"
+                            >
+                              <div className="card-header text-white">
+                                <h5 className="p-1">
+                                  Checkpoint {checkpoint.order}:{" "}
+                                  {checkpoint.name}
+                                </h5>
+                              </div>
 
-                              <tbody>
-                                {eventDetail.checkpoints?.map((checkpoint) => (
-                                  <tr key={checkpoint.id} className="border-b">
-                                    <td className="p-3 border font-medium text-gray-800">
-                                      {checkpoint.order}
-                                    </td>
-                                    <td className="p-3 border font-medium text-gray-800">
-                                      {checkpoint.name}
-                                    </td>
-                                    <td className="p-3 border">
-                                      {checkpoint.description}
-                                    </td>
-                                    <td className="p-3 border">
+                              <div className="card-body">
+                                <div className="row mb-3">
+                                  <div className="col-md-6">
+                                    <p className="mb-1">
+                                      <strong className="fw-bolder">
+                                        Description:
+                                      </strong>
+                                    </p>
+                                    <p>{checkpoint.description}</p>
+                                  </div>
+
+                                  <div className="col-md-6">
+                                    <p className="mb-1">
+                                      <strong className="fw-bolder">
+                                        Departure Time:
+                                      </strong>
+                                    </p>
+                                    <p>
                                       {new Date(
                                         checkpoint.departure_time
                                       ).toLocaleString()}
-                                    </td>
-                                    <td className="p-3 border">
-                                      {checkpoint.activities}
-                                    </td>
-                                    <td className="p-3 ">
-                                      {checkpoint.images.map((url, index) => (
-                                        <img
-                                          width={400}
-                                          height={400}
-                                          key={index}
-                                          src={getImage(url)}
-                                          className="inline-block h-12 w-12 rounded object-cover border"
-                                        />
-                                      ))}
-                                    </td>
-                                  </tr>
-                                ))}
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
+                                    </p>
+                                  </div>
+
+                                  <div className="col-12">
+                                    <p className="mb-1 mt-3">
+                                      <strong className="fw-bolder">
+                                        Activities:
+                                      </strong>
+                                    </p>
+                                    <p>{checkpoint.activities}</p>
+                                  </div>
+                                </div>
+                                <div
+                                  className="accordion"
+                                  id={`accordionImages${checkpoint.id}`}
+                                >
+                                  <div className="accordion-item">
+                                    <h2
+                                      className="accordion-header"
+                                      id={`heading${checkpoint.id}`}
+                                    >
+                                      <button
+                                        className="accordion-button collapsed custom-accordion-button"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target={`#collapse${checkpoint.id}`}
+                                        aria-expanded="false"
+                                        aria-controls={`collapse${checkpoint.id}`}
+                                      >
+                                        View Images
+                                      </button>
+                                    </h2>
+                                    <div
+                                      id={`collapse${checkpoint.id}`}
+                                      className="accordion-collapse collapse"
+                                      aria-labelledby={`heading${checkpoint.id}`}
+                                      data-bs-parent={`#accordionImages${checkpoint.id}`}
+                                    >
+                                      <div className="accordion-body">
+                                        <div className="row image-container">
+                                          {checkpoint.images.map(
+                                            (url, index) => (
+                                              <div
+                                                key={index}
+                                                className="col-sm-12 col-md-3 mb-2"
+                                              >
+                                                <img
+                                                  style={{
+                                                    minHeight: "160px",
+                                                  }}
+                                                  src={getImage(url)}
+                                                  alt={`Checkpoint ${
+                                                    checkpoint.order
+                                                  } Image ${index + 1}`}
+                                                  className="img-fluid rounded border"
+                                                />
+                                              </div>
+                                            )
+                                          )}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                {/* End Images Accordion */}
+                              </div>
+                              {/* End Card Body */}
+                            </div>
+                          ))}
+                        </>
                       )}
 
                       <div
@@ -349,22 +540,13 @@ export default function EventDetails({ eventDetail }) {
                         <Overview eventDetail={eventDetail} />
                       </div>
                       <div className="listing-line" />
-                      {/* <div
-                        className="listing-features footer-col-block"
-                        id="scrollspyHeading2"
-                      >
-                        <div className="footer-heading-desktop">
-                          <h2>Features</h2>
-                        </div>
-                        <div className="footer-heading-mobie listing-details-mobie mb-30">
-                          <h2>Features</h2>
-                        </div>
-                        <Features />
-                      </div> */}
-                      {/* <div className="listing-line" /> */}
                       <div className="listing-location" id="scrollspyHeading3">
                         <div className="box-title">
-                          <h2 className="title-ct">Route</h2>
+                          <h2 className="title-ct">
+                            {eventDetail.type !== EventType.CAR_MEETS.type
+                              ? "Route"
+                              : "Location"}
+                          </h2>
                           <div className="list-icon-pf gap-8 flex-three">
                             <i className="far fa-map" />
                             <p className="font-1">
@@ -372,33 +554,12 @@ export default function EventDetails({ eventDetail }) {
                             </p>
                           </div>
                         </div>
-                        {/* <div id='map-container' /> */}
-                        {eventDetail.type !== EventType.CAR_MEETS.type && (
-                          <div
-                            ref={mapContainer}
-                            style={{ width: "100%", height: "450px" }}
-                          />
-                        )}
 
-                        {/* <iframe
-                          className="map-content"
-                          src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d7302.453092836291!2d90.47477022812872!3d23.77494577893369!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1svi!2s!4v1627293157601!5m2!1svi!2s"
-                          allowFullScreen=""
-                          loading="lazy"
-                        /> */}
+                        <div
+                          ref={mapContainer}
+                          style={{ width: "100%", height: "450px" }}
+                        />
                       </div>
-                      {/* <div className="listing-line" /> */}
-                      {/* <div
-                        className="listing-reviews flat-property-detail"
-                        id="scrollspyHeading5"
-                      >
-                        <div className="box-title">
-                          <h2 className="title-ct">
-                            Car User Reviews &amp; Rating
-                          </h2>
-                        </div>
-                        <CarReview />
-                      </div> */}
                     </div>
                   </div>
                 </div>
