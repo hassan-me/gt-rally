@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import axiosBaseQuery from '../../axios/axiosBaseQuery';
-
+import { API_ROUTES } from '../../configs/';
 
 
 export const api = createApi({
@@ -9,7 +9,14 @@ export const api = createApi({
   endpoints: (builder) => ({
     signup: builder.mutation({
       query: (userData) => ({
-        url: '/signup',
+        url: API_ROUTES.AUTH.SIGN_UP,
+        method: 'POST',
+        data: userData, 
+      }),
+    }),
+    login: builder.mutation({
+      query: (userData) => ({
+        url: API_ROUTES.AUTH.LOGIN,
         method: 'POST',
         data: userData, 
       }),
@@ -17,4 +24,4 @@ export const api = createApi({
   }),
 });
 
-export const { useSignupMutation } = api;
+export const { useSignupMutation, useLoginMutation} = api;

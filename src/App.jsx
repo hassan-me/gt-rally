@@ -31,7 +31,7 @@ import RallyHome from "./pages/homes/rally-home";
 // import BlogListingDetailsPage3 from "./pages/car-details/listing-detail-v3";
 // import BlogListingDetailsPage4 from "./pages/car-details/listing-detail-v4";
 // import BlogListingDetailsPage5 from "./pages/car-details/listing-detail-v5";
-import EventDetails from "./pages/event-details";
+import EventDetails from "./pages/rally-event-details";
 import AboutUsPage from "./pages/other-pages/about-us";
 import JoinAsParticipant from "./pages/other-pages/join-as-participant";
 import BecomeASponsor from "./pages/other-pages/become-a-sponsor";
@@ -46,7 +46,7 @@ import SaleAgentDetailsPage from "./pages/agents/sale-agents-detail";
 import BlogPage from "./pages/blogs/blog";
 import BlogGridPage from "./pages/blogs/blog-grid";
 import BlogDetailsPage from "./pages/blogs/blog-detail";
-import DashboardPage from "./pages/dashboard/dashboard";
+import DashboardPage from "./pages/rally-dashboard/dashboard";
 import MyListingPage from "./pages/dashboard/my-listing";
 import MyProfilePage from "./pages/dashboard/my-profile";
 import MessagePage from "./pages/dashboard/message";
@@ -55,6 +55,7 @@ import MyFavoritePage from "./pages/dashboard/my-favorite";
 import ChangePassPage from "./pages/dashboard/change-password";
 import ContactPage from "./pages/other-pages/contact";
 import AddListingPage from "./pages/dashboard/add-listing";
+import ProtectedRoute from "./components/common/protectedRoute";
 function App() {
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -115,6 +116,7 @@ function App() {
     });
     wow.init();
   }, [pathname]);
+
   return (
     <>
       <div id="wrapper">
@@ -156,12 +158,12 @@ function App() {
                 path="listing-detail-v5/:id"
                 element={<BlogListingDetailsPage5 />}
               /> */}
-              <Route
-                path="events/:id"
-                element={<EventDetails />}
-              />
+              <Route path="events/:id" element={<EventDetails />} />
               <Route path="about-us" element={<AboutUsPage />} />
-              <Route path="join-as-participant" element={<JoinAsParticipant />} />
+              <Route
+                path="join-as-participant"
+                element={<JoinAsParticipant />}
+              />
               <Route path="mobile-app" element={<MobileApp />} />
               <Route path="become-a-sponsor" element={<BecomeASponsor />} />
               <Route path="faq" element={<FaqPage />} />
@@ -178,14 +180,71 @@ function App() {
               <Route path="blog-grid" element={<BlogGridPage />} />
               <Route path="blog-detail/:id" element={<BlogDetailsPage />} />
 
-              <Route path="dashboard" element={<DashboardPage />} />
-              <Route path="my-listing" element={<MyListingPage />} />
-              <Route path="my-favorite" element={<MyFavoritePage />} />
-              <Route path="message" element={<MessagePage />} />
-              <Route path="my-review" element={<MyReviewPage />} />
-              <Route path="my-profile" element={<MyProfilePage />} />
-              <Route path="change-password" element={<ChangePassPage />} />
-              <Route path="add-listing" element={<AddListingPage />} />
+              {/* Protected routes */}
+              <Route
+                path="dashboard"
+                element={
+                  <ProtectedRoute>
+                    <DashboardPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="my-listing"
+                element={
+                  <ProtectedRoute>
+                    <MyListingPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="my-favorite"
+                element={
+                  <ProtectedRoute>
+                    <MyFavoritePage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="message"
+                element={
+                  <ProtectedRoute>
+                    <MessagePage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="my-review"
+                element={
+                  <ProtectedRoute>
+                    <MyReviewPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="my-profile"
+                element={
+                  <ProtectedRoute>
+                    <MyProfilePage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="change-password"
+                element={
+                  <ProtectedRoute>
+                    <ChangePassPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="add-listing"
+                element={
+                  <ProtectedRoute>
+                    <AddListingPage />
+                  </ProtectedRoute>
+                }
+              />
               <Route path="contact" element={<ContactPage />} />
             </Route>
           </Routes>
