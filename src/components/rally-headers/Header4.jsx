@@ -15,6 +15,7 @@ import {
 import Nav from "./Nav";
 import MobileNav from "./MobileNav";
 import { selectUser, logout } from "../../redux/slices/user.slice";
+import { getImage } from "@/utlis/helpers";
 
 export default function Header4() {
   const navigate = useNavigate();
@@ -72,10 +73,10 @@ export default function Header4() {
                       data-bs-toggle="dropdown"
                     >
                       <div className="avatar avt-40 round dashboard-header-profle">
-                        {user.profileImageUrl ? (
+                        {user.profileImage ? (
                           <img
                             alt="profile"
-                            src={user.profileImageUrl}
+                            src={getImage(user.profileImage)}
                             width={80}
                             height={80}
                           />

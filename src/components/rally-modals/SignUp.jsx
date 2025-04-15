@@ -7,8 +7,6 @@ import {
   Mail,
   Lock,
   Facebook,
-  AlertCircle,
-  CheckCircle,
 } from "lucide-react";
 import { useSignupMutation } from "@/redux/slices/api.slice";
 import { Modal } from "bootstrap";

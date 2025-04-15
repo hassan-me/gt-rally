@@ -1,9 +1,6 @@
-import {
-    AlertCircle,
-    CheckCircle,
-  } from "lucide-react";
+import { CheckCircle, AlertCircle } from "lucide-react";
 
-export default  Toast = ({ message, type, onClose }) => {
+const Toast = ({ message, type, onClose }) => {
   return (
     <div
       className="toast-container position-fixed top-0 end-0 p-3"
@@ -38,3 +35,5 @@ export default  Toast = ({ message, type, onClose }) => {
     </div>
   );
 };
+
+export default Toast;

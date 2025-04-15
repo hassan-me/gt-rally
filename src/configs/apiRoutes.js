@@ -14,11 +14,11 @@ export default {
     //   CHECKPOINTS: 'checkpoint',
     //   GENERATE_ROUTE: 'generate_route',
     // },
-    // EVENT: {
-    //   BASE: 'event',
-    //   MY_EVENTS: 'events',
-    //   PUBLIC: 'events/all',
-    // },
+    EVENT: {
+      BASE: 'event',
+      MY_EVENTS: 'v1/events',
+      PUBLIC: 'events_web/public',
+    },
     // MAP: {
     //   GEOCODING: 'geocoding/v5/mapbox.places',
     //   DIRECTIONS: 'directions/v5/mapbox/driving',

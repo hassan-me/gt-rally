@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { selectUser } from "../../redux/slices/user.slice";
 import { useSelector } from "react-redux";
 import { User } from "lucide-react";
+import { getImage } from "@/utlis/helpers";
 
 export default function Sidebar() {
   const user = useSelector(selectUser);
@@ -59,7 +60,7 @@ export default function Sidebar() {
               {user.profileImageUrl ? (
                 <img
                   alt="profile"
-                  src={user.profileImageUrl}
+                  src={ getImage(user.profileImage)}
                   width={52}
                   height={52}
                 />
