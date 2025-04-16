@@ -7,7 +7,7 @@ export default function Features2(props) {
     section1, desc1, section2, desc2, section3, desc3, section4, desc4, section5, desc5,
     bottomMsg } = props;
   return (
-    <section className="tf-section3 section-why-choose-us">
+    <section className="tf-section3 section-why-choose-us" style={{paddingBottom:"10px"}}>
       <div className="container">
         <div className="row">
           <div className="col-md-6">
