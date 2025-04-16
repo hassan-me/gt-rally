@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import DashboardChart from "./DashboardChart";
 import { Link } from "react-router-dom";
 import {
@@ -26,7 +26,10 @@ import {
 export default function DashBoard() {
   const [getMyEvents, { data: eventsData, isLoading }] =
     useGetMyEventsMutation();
+  const [filteredEvents, setFilteredEvents] = useState([]);
   const [events, setEvents] = useState([]);
+  const [selectedType, setSelectedType] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     getMyEvents();
@@ -59,6 +62,31 @@ export default function DashBoard() {
       setEvents(parsedData);
     }
   }, [eventsData]);
+
+  const typeMap = useMemo(() => {
+    const rawTypes = [...new Set(events.map((e) => e.type))];
+
+    return {
+      All: null,
+      ...Object.fromEntries(
+        rawTypes.map((type) => [type.replace(/_/g, " "), type])
+      ),
+    };
+  }, [events]);
+
+  useEffect(() => {
+    if (events?.length > 0) {
+      const filterdata = events.filter((event) => {
+        const typeMatch = selectedType ? event.type === selectedType : true;
+        const SearchMatch = event.name
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase());
+
+        return typeMatch && SearchMatch;
+      });
+      setFilteredEvents(filterdata);
+    }
+  }, [selectedType, events, searchQuery]);
 
   return (
     <div className="container">
@@ -167,13 +195,14 @@ export default function DashBoard() {
                                 id="title_search"
                                 defaultValue=""
                                 placeholder="Search..."
+                                onChange={(e) => setSearchQuery(e.target.value)}
                               />
                               <span className="datepicker-icon">
                                 <Search size={18} />
                               </span>
                             </div>
                           </div>
-                          <div className="col-xl-3 col-lg-6 mb-2">
+                          {/* <div className="col-xl-3 col-lg-6 mb-2">
                             <div className="group-input-icon">
                               <input
                                 type="text"
@@ -202,12 +231,15 @@ export default function DashBoard() {
                                 <Calendar size={18} />
                               </span>
                             </div>
-                          </div>
+                          </div> */}
                           <div className="col-xl-3 col-lg-6 mb-2">
                             <DropdownSelect
                               addtionalParentClass="form-control"
-                              defaultOption={"Select Status"}
-                              options={["Active", "Inactive"]}
+                              defaultOption={"Select Type"}
+                              options={Object.keys(typeMap)}
+                              onChange={(value) => {
+                                setSelectedType(typeMap[value]);
+                              }}
                             />
                           </div>
                         </div>
@@ -216,15 +248,31 @@ export default function DashBoard() {
                             <span className="result-text">
                               <b>{events?.length || 0}</b> results found
                             </span>
-                            <table className="table" >
+                            <table
+                              className="table"
+                              style={{ tableLayout: "fixed", width: "100%" }}
+                            >
                               <thead>
                                 <tr>
-                                  <th>Rally</th>
-                                  <th>Status</th>
-                                  <th>Type</th>
-                                  <th>Date</th>
-                                  <th>Distance-Duration</th>
-                                  <th>Action</th>
+                                  <th
+                                    style={{
+                                      textAlign: "center",
+                                      width: "30%",
+                                    }}
+                                  >
+                                    Rally
+                                  </th>
+                                  <th style={{ textAlign: "center" }}>
+                                    Status
+                                  </th>
+                                  <th style={{ textAlign: "center" }}>Type</th>
+                                  <th style={{ textAlign: "center" }}>Date</th>
+                                  <th style={{ textAlign: "center" }}>
+                                    Distance-Duration
+                                  </th>
+                                  <th style={{ textAlign: "center" }}>
+                                    Action
+                                  </th>
                                 </tr>
                               </thead>
                               <tbody className="tfcl-table-content">
@@ -234,14 +282,13 @@ export default function DashBoard() {
                                       Loading...
                                     </td>
                                   </tr>
-                                ) : events && events.length > 0 ? (
-                                  events.map((event, i) => (
+                                ) : filteredEvents &&
+                                  filteredEvents.length > 0 ? (
+                                  filteredEvents.map((event, i) => (
                                     <tr key={i}>
-                                      <td className="column-listing" >
+                                      <td className="column-listing">
                                         <div className="tfcl-listing-product">
-                                          <Link
-                                            to={`/event-detail/${event.id}`}
-                                          >
+                                          <Link to={`/events/${event.id}`}>
                                             <img
                                               alt="Rally thumbnail"
                                               src={
@@ -255,9 +302,7 @@ export default function DashBoard() {
                                           </Link>
                                           <div className="tfcl-listing-summary">
                                             <h4 className="tfcl-listing-title">
-                                              <Link
-                                                to={`/event-detail/${event.id}`}
-                                              >
+                                              <Link to={`/events/${event.id}`}>
                                                 {event.name}
                                               </Link>
                                             </h4>
@@ -275,7 +320,14 @@ export default function DashBoard() {
                                           </div>
                                         </div>
                                       </td>
-                                      <td className="column-status">
+                                      <td
+                                        className="column-status"
+                                        style={{
+                                          textAlign: "center",
+                                          paddingRight: "30px",
+                                          paddingTop: "60px",
+                                        }}
+                                      >
                                         <span
                                           className={`tfcl-listing-status status-${
                                             event.isActive
@@ -288,12 +340,24 @@ export default function DashBoard() {
                                             : "Inactive"}
                                         </span>
                                       </td>
-                                      <td className="column-date">
+                                      <td
+                                        style={{
+                                          textAlign: "center",
+                                          paddingRight: "30px",
+                                        }}
+                                        className="column-date"
+                                      >
                                         <div className="tfcl-listing-date">
                                           {event.type?.replace(/_/g, " ")}
                                         </div>
                                       </td>
-                                      <td className="column-date">
+                                      <td
+                                        style={{
+                                          textAlign: "center",
+                                          paddingRight: "30px",
+                                        }}
+                                        className="column-date"
+                                      >
                                         <div className="tfcl-listing-date">
                                           {formatDateRange(
                                             event.startDate || "",
@@ -301,7 +365,13 @@ export default function DashBoard() {
                                           )}
                                         </div>
                                       </td>
-                                      <td className="column-date">
+                                      <td
+                                        style={{
+                                          textAlign: "center",
+                                          paddingRight: "30px",
+                                        }}
+                                        className="column-date"
+                                      >
                                         <div className="tfcl-listing-date">
                                           {metersToMiles(event.distance)} -{" "}
                                           {formatDuration(event.duration)}

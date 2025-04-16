@@ -4,6 +4,7 @@ import Footer1 from "@/components/footers/Footer1";
 import Header2 from "@/components/headers/Header2";
 import Features from "@/components/homes/rally-home/Features2";
 import Banner from "@/components/otherPages/Banner";
+import SponsorForm from "@/components/otherPages/SponsorForm";
 
 import React from "react";
 
@@ -45,8 +46,9 @@ export default function BecomeASponsor() {
         desc3 = "Sponsors receive dedicated profiles with key information and direct links to their websites. Additionally, sponsors can participate in events to access exclusive event photos and live chat sessions, enabling direct engagement with rally attendees."
         section4 = "Vibrant Community Engagement"
         desc4 = "Beyond event discovery, our platform fosters a dynamic community where car enthusiasts share experiences, post images, and interact via live chats during events."
-        bottomMsg = "Visit Grand Touring Rally (GT Rally) online today and be part of a movement that's redefining the car event experience for all—participants, organizers, and sponsors alike."
+     //   bottomMsg = "Visit Grand Touring Rally (GT Rally) online today and be part of a movement that's redefining the car event experience for all—participants, organizers, and sponsors alike."
       />
+      <SponsorForm/>
       <Footer1 />
     </>
   );
