@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useSignupMutation } from "@/redux/slices/api.slice";
 import { Modal } from "bootstrap";
+import Toast from "../common/Toast";
 
 // Validation schema
 const schema = yup.object().shape({
@@ -28,42 +29,6 @@ const schema = yup.object().shape({
     .oneOf([yup.ref("password"), null], "Passwords must match")
     .required("Confirm password is required"),
 });
-
-const Toast = ({ message, type, onClose }) => {
-  return (
-    <div
-      className="toast-container position-fixed top-0 end-0 p-3"
-      style={{ zIndex: 1090 }}
-    >
-      <div
-        className={`toast show ${
-          type === "success" ? "bg-success text-white" : "bg-danger text-white"
-        }`}
-        role="alert"
-        aria-live="assertive"
-        aria-atomic="true"
-      >
-        <div className="toast-header">
-          {type === "success" ? (
-            <CheckCircle className="me-2" size={16} />
-          ) : (
-            <AlertCircle className="me-2" size={16} />
-          )}
-          <strong className="me-auto">
-            {type === "success" ? "Success" : "Error"}
-          </strong>
-          <button
-            type="button"
-            className="btn-close ms-2 mb-1"
-            aria-label="Close"
-            onClick={onClose}
-          ></button>
-        </div>
-        <div className="toast-body">{message}</div>
-      </div>
-    </div>
-  );
-};
 
 export default function SignUp() {
   const [showToast, setShowToast] = useState(false);
@@ -85,7 +50,7 @@ export default function SignUp() {
     try {
       const { confirmPassword, ...userData } = data;
 
-       const response = await signup(userData).unwrap();
+      const response = await signup(userData).unwrap();
 
       setToastMessage("Account created successfully!");
       setToastType("success");
@@ -95,7 +60,6 @@ export default function SignUp() {
       reset();
       Modal.getInstance(document.getElementById("popup_bid2"))?.hide();
       Modal.getOrCreateInstance(document.getElementById("popup_bid")).show();
-
 
       // Hide toast after 5 seconds
       setTimeout(() => {

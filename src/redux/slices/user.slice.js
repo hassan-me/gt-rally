@@ -37,10 +37,10 @@ const userSlice = createSlice({
       state.user = action.payload.user;
       state.token = action.payload.token;
     });
-    // builder.addMatcher(api.endpoints.login.matchFulfilled, (state, action) => {
-    //   state.user = action.payload.user;
-    //   state.token = action.payload.token;
-    // });
+    builder.addMatcher(api.endpoints.login.matchFulfilled, (state, action) => {
+      state.user = action.payload.user;
+      state.token = action.payload.token;
+    });
     // builder.addMatcher(api.endpoints.sso.matchFulfilled, (state, action) => {
     //   state.user = action.payload.user;
     //   state.token = action.payload.token;
