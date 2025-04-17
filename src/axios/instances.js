@@ -1,7 +1,10 @@
 import applyCaseMiddleware from 'axios-case-converter';
 import axios from 'axios';
 import { API_ROUTES, GLOBAL_CONFIG } from '../configs/index';
-import { HTTP_HEADERS } from '../constants/index';
+import { HTTP_HEADERS,HTTP_STATUS_CODES } from '../constants/index';
+import { logout } from '@/redux/slices/user.slice';
+
+
 
 // Create instances without interceptors initially
 export const createBaseInstance = (baseURL) => {
@@ -26,8 +29,8 @@ export const instances = {
 };
 
 export const setupInterceptors = (store) => {
-  const { HTTP_STATUS_CODES } = require('../constants/index');
-  const { logout } = require('../redux/slices/user.slice');
+ 
+
   
   // Setup interceptors for each instance
   Object.values(instances).forEach(instance => {

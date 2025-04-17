@@ -1,12 +1,16 @@
 import { useEffect } from "react";
 
-import { Link, useLocation } from "react-router-dom";
-import { selectUser } from "../../redux/slices/user.slice";
-import { useSelector } from "react-redux";
+import { Link, useLocation,useNavigate } from "react-router-dom";
+import { logout, selectUser } from "../../redux/slices/user.slice";
+import { useDispatch, useSelector } from "react-redux";
 import { User } from "lucide-react";
+import { getImage } from "@/utlis/helpers";
+
 
 export default function Sidebar() {
   const user = useSelector(selectUser);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     // Function to open the dashboard
@@ -36,6 +40,14 @@ export default function Sidebar() {
   }, []);
 
   const { pathname } = useLocation();
+
+    const handleLogout = (e) => {
+      e.preventDefault();
+      dispatch(logout());
+      navigate("/");
+    };
+  
+
   return (
     <>
       <div className="dashboard-overlay" />
@@ -59,7 +71,7 @@ export default function Sidebar() {
               {user.profileImageUrl ? (
                 <img
                   alt="profile"
-                  src={user.profileImageUrl}
+                  src={ getImage(user.profileImage)}
                   width={52}
                   height={52}
                 />
@@ -372,7 +384,7 @@ export default function Sidebar() {
                 </Link>
               </li>
               <li>
-                <Link to="/" className="menu-index-7">
+                <Link to="/" className="menu-index-7" onClick={handleLogout}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width={22}

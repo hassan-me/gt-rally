@@ -1,6 +1,8 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import axiosBaseQuery from '../../axios/axiosBaseQuery';
 import { API_ROUTES } from '../../configs/';
+import {HTTP_METHODS} from '../../constants';
+
 
 
 export const api = createApi({
@@ -10,18 +12,30 @@ export const api = createApi({
     signup: builder.mutation({
       query: (userData) => ({
         url: API_ROUTES.AUTH.SIGN_UP,
-        method: 'POST',
+        method: HTTP_METHODS.POST,
         data: userData, 
       }),
     }),
     login: builder.mutation({
       query: (userData) => ({
         url: API_ROUTES.AUTH.LOGIN,
-        method: 'POST',
+        method: HTTP_METHODS.POST,
         data: userData, 
+      }),
+    }),
+    getPublicEvents: builder.mutation({
+      query: (userData) => ({
+        url: API_ROUTES.EVENT.PUBLIC,
+        data: userData, 
+      }),
+      
+    }),
+    getMyEvents: builder.mutation({
+      query: () => ({
+        url: API_ROUTES.EVENT.MY_EVENTS
       }),
     }),
   }),
 });
 
-export const { useSignupMutation, useLoginMutation} = api;
+export const { useSignupMutation, useLoginMutation,useGetMyEventsMutation} = api;
