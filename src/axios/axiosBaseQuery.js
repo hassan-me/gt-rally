@@ -15,8 +15,11 @@ const axiosBaseQuery =
         method,
         headers: {
           ...headers,
-          [CONTENT_TYPE]: headers[CONTENT_TYPE] || HTTP_HEADERS.CONTENT_JSON[CONTENT_TYPE],
+          ...(data instanceof FormData
+            ? {} 
+            : { [CONTENT_TYPE]: headers[CONTENT_TYPE] || HTTP_HEADERS.CONTENT_JSON[CONTENT_TYPE] }),
         },
+        
       });
 
       return { data: response.data };
