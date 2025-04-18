@@ -30,12 +30,31 @@ export const api = createApi({
       }),
       
     }),
-    getMyEvents: builder.mutation({
+    getMyEvents: builder.query({
       query: () => ({
-        url: API_ROUTES.EVENT.MY_EVENTS
+        url: API_ROUTES.EVENT.MY_EVENTS,
+        headers: {
+          'Cache-Control': 'no-cache',
+        },
+      }),
+    }),    
+    updateProfile: builder.mutation({
+      query: (formData) => ({
+        url: API_ROUTES.USER.PROFILE,
+        method: HTTP_METHODS.POST,
+        data: formData, 
       }),
     }),
+    createGarage: builder.mutation({
+      query: (formData) => ({
+        url: API_ROUTES.GARAGE.GARAGE,
+        method: HTTP_METHODS.POST,
+        data: formData, 
+
+      }),
+    }),
+    
   }),
 });
 
-export const { useSignupMutation, useLoginMutation,useGetMyEventsMutation} = api;
+export const { useSignupMutation, useLoginMutation,useGetMyEventsQuery,useUpdateProfileMutation,useCreateGarageMutation} = api;

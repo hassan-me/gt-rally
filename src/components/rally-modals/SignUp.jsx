@@ -7,14 +7,24 @@ import {
   Mail,
   Lock,
   Facebook,
+  ChevronRight,
+  ChevronLeft,
+  Check,
 } from "lucide-react";
-import { useSignupMutation } from "@/redux/slices/api.slice";
+import {
+  useSignupMutation,
+  useUpdateProfileMutation,
+  useCreateGarageMutation,
+} from "@/redux/slices/api.slice";
 import { Modal } from "bootstrap";
 import Toast from "../common/Toast";
+import MyProfile from "../rally-dashboard/MyProfile";
+import MyGarage from "../rally-dashboard/MyGarage";
+import { useNavigate } from "react-router-dom";
 
-// Validation schema
-const schema = yup.object().shape({
-  username: yup.string().required("Username is required"),
+
+// Validation schema for signup form
+const signupSchema = yup.object().shape({
   firstName: yup.string().required("First name is required"),
   lastName: yup.string().required("Last name is required"),
   email: yup.string().email("Invalid email").required("Email is required"),
@@ -32,49 +42,77 @@ export default function SignUp() {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("success");
+  const [currentStep, setCurrentStep] = useState(1); // 1 for signup, 2 for profile
+  const navigate = useNavigate();
 
-  const [signup, { isLoading }] = useSignupMutation();
-
+  const [signup, { isLoading: isSignupLoading }] = useSignupMutation();
+  const [updateProfile] = useUpdateProfileMutation();
+  const [createGarage] = useCreateGarageMutation();
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(signupSchema),
   });
 
-  const onSubmit = async (data) => {
+  const displayToast = (message, type = "success") => {
+    setToastMessage(message);
+    setToastType(type);
+    setShowToast(true);
+
+    setTimeout(() => setShowToast(false), 5000);
+  };
+
+  const onSignupSubmit = async (data) => {
     try {
-      const { confirmPassword, ...userData } = data;
+      const { confirmPassword, ...signupData } = data;
 
-      const response = await signup(userData).unwrap();
+      await signup(signupData).unwrap();
 
-      setToastMessage("Account created successfully!");
-      setToastType("success");
-      setShowToast(true);
+      displayToast(
+        "Account created successfully! Please complete your profile."
+      );
 
-      // Reset form
+      // Move to profile step
+      setCurrentStep(2);
+    } catch (error) {
+      displayToast(
+        error.data?.message || "Registration failed. Please try again.",
+        "error"
+      );
+    }
+  };
+
+  const onProfileComplete = async (formData) => {
+    try {
+      const response = await updateProfile(formData).unwrap();
+
+      displayToast(response?.message || "Profile updated successfully!");
+      reset();
+      setCurrentStep(3);
+    } catch (err) {
+      displayToast(
+        err?.data?.message || "Profile update failed. Please try again.",
+        "error"
+      );
+    }
+  };
+
+  const onGarageComplete = async (formData) => {
+    try {
+      const response = await createGarage(formData).unwrap();
+
+      displayToast(response?.message || "Garage created successfully!");
       reset();
       Modal.getInstance(document.getElementById("popup_bid2"))?.hide();
-      Modal.getOrCreateInstance(document.getElementById("popup_bid")).show();
-
-      // Hide toast after 5 seconds
-      setTimeout(() => {
-        setShowToast(false);
-      }, 5000);
-    } catch (error) {
-      // Show error toast
-      setToastMessage(
-        error.data?.message || "Registration failed. Please try again."
+      navigate("/dashboard")
+    } catch (err) {
+      displayToast(
+        err?.data?.message || "Garage creation failed. Please try again.",
+        "error"
       );
-      setToastType("error");
-      setShowToast(true);
-
-      // Hide toast after 5 seconds
-      setTimeout(() => {
-        setShowToast(false);
-      }, 5000);
     }
   };
 
@@ -95,7 +133,10 @@ export default function SignUp() {
         aria-hidden="true"
       >
         <div className="modal-dialog modal-dialog-centered" role="document">
-          <div className="modal-content">
+          <div
+            className="modal-content"
+            style={{ height: currentStep === 1 ? "800px" : "" }}
+          >
             <button
               type="button"
               className="close"
@@ -104,244 +145,447 @@ export default function SignUp() {
             >
               <span aria-hidden="true">×</span>
             </button>
-            <div className="modal-body space-y-20 pd-40 style2">
-              <div className="wrap-modal flex">
-                <div className="images flex-none relative">
-                  <img
-                    alt="images"
-                    src="/assets/images/section/register.jpg"
-                    width={384}
-                    height={854}
-                  />
-                </div>
-                <div className="content">
-                  <h1 className="title-login">Register</h1>
-                  <div className="comments">
-                    <div className="respond-comment">
-                      <form
-                        onSubmit={handleSubmit(onSubmit)}
-                        className="comment-form form-submit"
-                        acceptCharset="utf-8"
-                      >
-                        <fieldset className="">
-                          <label className="fw-6">User name</label>
-                          <input
-                            type="text"
-                            className="tb-my-input"
-                            placeholder="User name"
-                            {...register("username")}
-                          />
-                          {errors.username && (
-                            <p
-                              className="label error text-sm mt-1"
-                              style={{ color: "red", marginLeft: "5px" }}
-                            >
-                              {errors.username.message}
-                            </p>
-                          )}
-                          <div className="icon">
-                            <User
-                              size={18}
-                              stroke="#B6B6B6"
-                              strokeWidth={1.5}
-                            />
-                          </div>
-                        </fieldset>
-                        <div style={{ display: "flex" }}>
-                          <div className="" style={{ width: "310px" }}>
-                            <label className="fw-6">First name</label>
-                            <input
-                              type="text"
-                              className="tb-my-input"
-                              placeholder="First name"
-                              {...register("firstName")}
-                            />
-                            {errors.firstName && (
-                              <p className="label error text-sm mt-1">
-                                {errors.firstName.message}
-                              </p>
-                            )}
-                            <div className="icon">
-                              <User
-                                size={18}
-                                stroke="#B6B6B6"
-                                strokeWidth={1.5}
-                              />
-                            </div>
-                          </div>
-
-                          <div
-                            className=""
-                            style={{ width: "310px", marginLeft: "20px" }}
-                          >
-                            <label className="fw-6">Last name</label>
-                            <input
-                              type="text"
-                              className="tb-my-input"
-                              placeholder="Last name"
-                              {...register("lastName")}
-                            />
-                            {errors.lastName && (
-                              <p className="label error text-sm mt-1">
-                                {errors.lastName.message}
-                              </p>
-                            )}
-                            <div className="icon">
-                              <User
-                                size={18}
-                                stroke="#B6B6B6"
-                                strokeWidth={1.5}
-                              />
-                            </div>
-                          </div>
-                        </div>
-
-                        <fieldset style={{ marginTop: "20px" }} className="t">
-                          <label className="fw-6">Email address</label>
-                          <input
-                            type="email"
-                            className="tb-my-input"
-                            placeholder="Email address"
-                            {...register("email")}
-                          />
-                          {errors.email && (
-                            <p className="label error text-sm mt-1">
-                              {errors.email.message}
-                            </p>
-                          )}
-                          <div className="icon">
-                            <Mail
-                              size={18}
-                              stroke="#B6B6B6"
-                              strokeWidth={1.5}
-                            />
-                          </div>
-                        </fieldset>
-                        <fieldset className="">
-                          <label className="fw-6">Password</label>
-                          <input
-                            id="password-field"
-                            type="password"
-                            className="input-form password-input"
-                            placeholder="Your password"
-                            {...register("password")}
-                          />
-                          {errors.password && (
-                            <p className="label error text-sm mt-1">
-                              {errors.password.message}
-                            </p>
-                          )}
-                          <span
-                            toggle="#password-field"
-                            className="fa fa-fw fa-eye field-icon toggle-password"
-                          />
-                          <div className="icon">
-                            <Lock
-                              size={18}
-                              stroke="#B6B6B6"
-                              strokeWidth={1.5}
-                            />
-                          </div>
-                        </fieldset>
-                        <fieldset className="">
-                          <label className="fw-6">Confirm password</label>
-                          <input
-                            id="password-field1"
-                            type="password"
-                            className="input-form password-input"
-                            placeholder="Confirm password"
-                            {...register("confirmPassword")}
-                          />
-                          {errors.confirmPassword && (
-                            <p className="label error text-sm mt-1">
-                              {errors.confirmPassword.message}
-                            </p>
-                          )}
-                          <span
-                            toggle="#password-field1"
-                            className="fa fa-fw fa-eye field-icon toggle-password"
-                          />
-                          <div className="icon">
-                            <Lock
-                              size={18}
-                              stroke="#B6B6B6"
-                              strokeWidth={1.5}
-                            />
-                          </div>
-                        </fieldset>
-                        <button
-                          className="sc-button"
-                          name="submit"
-                          type="submit"
-                        >
-                          <span>Sign Up</span>
-                        </button>
-                      </form>
+            <div style={{ marginTop: "15px" }} className="stepper-container">
+              <div className="stepper">
+                {/* Step 1 */}
+                <div
+                  style={{ marginLeft: "15%" }}
+                  className={`step ${currentStep >= 1 ? "active" : ""}`}
+                >
+                  <div className="step-icon">
+                    {currentStep > 1 ? <Check size={18} /> : "1"}
+                  </div>
+                  <div
+                    className="step-content"
+                    style={{ marginRight: "270px" }}
+                  >
+                    <div className="step-title">Account Details</div>
+                    <div className="step-description">
+                      Create your login credentials
                     </div>
                   </div>
-                  <div className="text-box text-center fs-14">
-                    Don't you have an account?{" "}
-                    <a
-                      className="font-2 fw-7 fs-14 color-popup text-color-3"
-                      data-bs-toggle="modal"
-                      data-bs-target="#popup_bid"
-                    >
-                      Login
-                    </a>
+                </div>
+
+                <div className="step-connector">
+                  <div
+                    className={`connector-line ${
+                      currentStep > 1 ? "completed" : ""
+                    }`}
+                  ></div>
+                </div>
+
+                {/* Step 2 */}
+                <div className={`step ${currentStep >= 2 ? "active" : ""}`}>
+                  <div className="step-icon">
+                    {currentStep > 2 ? <Check size={18} /> : "2"}
                   </div>
-                  <p className="texts line fs-12 text-center">
-                    or Register with
-                  </p>
-                  <div className="button-box flex">
-                    <a
-                      href="#"
-                      className="flex align-center hover-login-social"
-                    >
-                      <GoogleIcon />
-                      <span className="fw-6">Google</span>
-                    </a>
-                    <a
-                      href="#"
-                      className="flex align-center hover-login-social"
-                    >
-                      <Facebook size={21} color="#1877F2" />
-                      <span className="fw-6">Facebook</span>
-                    </a>
+                  <div
+                    className="step-content"
+                    style={{ marginRight: "270px" }}
+                  >
+                    <div className="step-title">Personal Info</div>
+                    <div className="step-description">
+                      Complete your profile
+                    </div>
                   </div>
+                </div>
+
+                <div className="step-connector">
+                  <div
+                    className={`connector-line ${
+                      currentStep > 2 ? "completed" : ""
+                    }`}
+                  ></div>
+                </div>
+
+                {/* Step 3 */}
+                <div
+                  style={{ marginRight: "12%" }}
+                  className={`step ${currentStep === 3 ? "active" : ""}`}
+                >
+                  <div className="step-icon">3</div>
+                  <div className="step-content">
+                    <div className="step-title">Add Garage</div>
+                    <div className="step-description">
+                      Enter your car details
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="modal-body space-y-20 pd-40 style2">
+              <div className="wrap-modal flex">
+                {currentStep === 1 && (
+                  <div className="images flex-none relative">
+                    <img
+                      alt="images"
+                      src="/assets/images/section/register.jpg"
+                      width={384}
+                      height={854}
+                    />
+                  </div>
+                )}
+
+                <div className="content">
+                  {currentStep === 1 ? (
+                    <>
+                      <h1 className="title-login">Create Your Account</h1>
+                      <div className="comments">
+                        <div className="respond-comment">
+                          <form
+                            onSubmit={handleSubmit(onSignupSubmit)}
+                            className="comment-form form-submit"
+                            acceptCharset="utf-8"
+                          >
+                            <div style={{ display: "flex" }}>
+                              <div className="" style={{ width: "310px" }}>
+                                <label className="fw-6">First name</label>
+                                <input
+                                  type="text"
+                                  className="tb-my-input"
+                                  placeholder="First name"
+                                  {...register("firstName")}
+                                />
+                                {errors.firstName && (
+                                  <p className="label error text-sm mt-1">
+                                    {errors.firstName.message}
+                                  </p>
+                                )}
+                                <div className="icon">
+                                  <User
+                                    size={18}
+                                    stroke="#B6B6B6"
+                                    strokeWidth={1.5}
+                                  />
+                                </div>
+                              </div>
+                              <div
+                                className=""
+                                style={{ width: "310px", marginLeft: "20px" }}
+                              >
+                                <label className="fw-6">Last name</label>
+                                <input
+                                  type="text"
+                                  className="tb-my-input"
+                                  placeholder="Last name"
+                                  {...register("lastName")}
+                                />
+                                {errors.lastName && (
+                                  <p className="label error text-sm mt-1">
+                                    {errors.lastName.message}
+                                  </p>
+                                )}
+                                <div className="icon">
+                                  <User
+                                    size={18}
+                                    stroke="#B6B6B6"
+                                    strokeWidth={1.5}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+
+                            <fieldset
+                              style={{ marginTop: "20px" }}
+                              className="t"
+                            >
+                              <label className="fw-6">Email address</label>
+                              <input
+                                type="email"
+                                className="tb-my-input"
+                                placeholder="Email address"
+                                {...register("email")}
+                              />
+                              {errors.email && (
+                                <p className="label error text-sm mt-1">
+                                  {errors.email.message}
+                                </p>
+                              )}
+                              <div className="icon">
+                                <Mail
+                                  size={18}
+                                  stroke="#B6B6B6"
+                                  strokeWidth={1.5}
+                                />
+                              </div>
+                            </fieldset>
+                            <fieldset className="">
+                              <label className="fw-6">Password</label>
+                              <input
+                                id="password-field"
+                                type="password"
+                                className="input-form password-input"
+                                placeholder="Your password"
+                                {...register("password")}
+                              />
+                              {errors.password && (
+                                <p className="label error text-sm mt-1">
+                                  {errors.password.message}
+                                </p>
+                              )}
+                              <span
+                                toggle="#password-field"
+                                className="fa fa-fw fa-eye field-icon toggle-password"
+                              />
+                              <div className="icon">
+                                <Lock
+                                  size={18}
+                                  stroke="#B6B6B6"
+                                  strokeWidth={1.5}
+                                />
+                              </div>
+                            </fieldset>
+                            <fieldset className="">
+                              <label className="fw-6">Confirm password</label>
+                              <input
+                                id="password-field1"
+                                type="password"
+                                className="input-form password-input"
+                                placeholder="Confirm password"
+                                {...register("confirmPassword")}
+                              />
+                              {errors.confirmPassword && (
+                                <p className="label error text-sm mt-1">
+                                  {errors.confirmPassword.message}
+                                </p>
+                              )}
+                              <span
+                                toggle="#password-field1"
+                                className="fa fa-fw fa-eye field-icon toggle-password"
+                              />
+                              <div className="icon">
+                                <Lock
+                                  size={18}
+                                  stroke="#B6B6B6"
+                                  strokeWidth={1.5}
+                                />
+                              </div>
+                            </fieldset>
+                            <button
+                              className="sc-button next-button"
+                              name="submit"
+                              type="submit"
+                              disabled={isSignupLoading}
+                            >
+                              <span>
+                                {isSignupLoading
+                                  ? "Creating Account..."
+                                  : "Continue to Profile"}
+                              </span>
+                              <ChevronRight size={16} />
+                            </button>
+                          </form>
+                        </div>
+                      </div>
+                      <div className="text-box text-center fs-14">
+                        Already have an account?{" "}
+                        <a
+                          className="font-2 fw-7 fs-14 color-popup text-color-3"
+                          data-bs-toggle="modal"
+                          data-bs-target="#popup_bid"
+                        >
+                          Login
+                        </a>
+                      </div>
+                      {/* <p className="texts line fs-12 text-center">
+                        or Register with
+                      </p>
+                      <div className="button-box flex">
+                        <a
+                          href="#"
+                          className="social-btn flex align-center hover-login-social"
+                        >
+                          <GoogleIcon />
+                          <span className="fw-6">Google</span>
+                        </a>
+                        <a
+                          href="#"
+                          className="social-btn flex align-center hover-login-social"
+                        >
+                          <Facebook size={21} color="#1877F2" />
+                          <span className="fw-6">Facebook</span>
+                        </a>
+                      </div> */}
+                    </>
+                  ) : currentStep === 2 ? (
+                    <>
+                      <h1 className="title-login">Complete Your Profile</h1>
+
+                      <MyProfile modal={true} onComplete={onProfileComplete} />
+                    </>
+                  ) : (
+                    <MyGarage onComplete={onGarageComplete} />
+                  )}
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      <style jsx>{`
+        .stepper-container {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          padding: 20px;
+
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .stepper {
+          display: flex;
+
+          justify-content: space-between;
+        }
+
+        .step {
+          display: flex;
+          width: 20%;
+        }
+
+        .step-icon {
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          background-color: #e9ecef;
+          color: #6c757d;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-weight: bold;
+          font-size: 16px;
+          margin-right: 12px;
+          border: 2px solid #dee2e6;
+          flex-shrink: 0;
+          transition: all 0.3s ease;
+        }
+
+        .step.active .step-icon {
+          background-color: #3772ff;
+          color: white;
+          border-color: #2a5cd6;
+          box-shadow: 0 0 0 4px rgba(55, 114, 255, 0.2);
+        }
+
+        .step-content {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .step-title {
+          font-size: 16px;
+          font-weight: 600;
+          color: #343a40;
+          margin-bottom: 2px;
+          white-space: nowrap;
+        }
+
+        .step-description {
+          font-size: 12px;
+          color: #6c757d;
+          white-space: nowrap;
+        }
+
+        .step.active .step-title {
+          color: #3772ff;
+        }
+
+        .step-connector {
+          flex: 1;
+          padding: 0 15px;
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-width: 60px;
+        }
+
+        .connector-line {
+          height: 3px;
+          width: 100%;
+          background-color: #dee2e6;
+          position: relative;
+          margin-top: 2px;
+          transition: background-color 0.3s ease;
+        }
+
+        .connector-line.completed {
+          background-color: #3772ff;
+        }
+
+        .back-btn {
+          border: none;
+          background: transparent;
+          color: #3772ff;
+          font-weight: 500;
+          cursor: pointer;
+          transition: color 0.2s;
+          padding: 6px 12px;
+          border-radius: 6px;
+          margin-bottom: 10px;
+        }
+
+        .back-btn:hover {
+          color: #2a5cd6;
+          background-color: rgba(55, 114, 255, 0.1);
+        }
+
+        .next-button {
+          background-color: #3772ff;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 8px;
+          transition: all 0.3s ease;
+        }
+
+        .next-button:hover {
+          background-color: #2a5cd6;
+          transform: translateY(-2px);
+        }
+
+        .social-btn {
+          border: 1px solid #e0e0e0;
+          border-radius: 8px;
+          padding: 10px 16px;
+          transition: all 0.2s ease;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .social-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .title-login {
+          font-size: 24px;
+          font-weight: 700;
+          color: #343a40;
+          margin-bottom: 20px;
+          padding-bottom: 10px;
+          border-bottom: 2px solid #f1f3f5;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 767px) {
+          .step-description {
+            display: none;
+          }
+
+          .step-icon {
+            width: 30px;
+            height: 30px;
+            font-size: 14px;
+          }
+
+          .step-title {
+            font-size: 14px;
+          }
+        }
+      `}</style>
     </>
   );
 }
-
-// Custom Google icon (keeping the original SVG as Lucide doesn't have a Google icon)
-const GoogleIcon = () => (
-  <svg
-    width={20}
-    height={21}
-    viewBox="0 0 20 21"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M4.43242 12.5863L3.73625 15.1852L1.19176 15.239C0.431328 13.8286 0 12.2149 0 10.5C0 8.84179 0.403281 7.27804 1.11812 5.90112H1.11867L3.38398 6.31644L4.37633 8.56815C4.16863 9.17366 4.05543 9.82366 4.05543 10.5C4.05551 11.2341 4.18848 11.9374 4.43242 12.5863Z"
-      fill="#FBBB00"
-    />
-    <path
-      d="M19.8242 8.6319C19.939 9.23682 19.9989 9.86155 19.9989 10.5C19.9989 11.216 19.9236 11.9143 19.7802 12.588C19.2934 14.8803 18.0214 16.8819 16.2594 18.2984L16.2588 18.2978L13.4055 18.1522L13.0017 15.6314C14.1709 14.9456 15.0847 13.8726 15.566 12.588H10.2188V8.6319H19.8242Z"
-      fill="#518EF8"
-    />
-    <path
-      d="M16.2595 18.2978L16.2601 18.2984C14.5464 19.6758 12.3694 20.5 9.99965 20.5C6.19141 20.5 2.88043 18.3715 1.19141 15.239L4.43207 12.5863C5.27656 14.8401 7.45074 16.4445 9.99965 16.4445C11.0952 16.4445 12.1216 16.1484 13.0024 15.6313L16.2595 18.2978Z"
-      fill="#28B446"
-    />
-    <path
-      d="M16.382 2.80219L13.1425 5.45437C12.2309 4.88461 11.1534 4.55547 9.99906 4.55547C7.39246 4.55547 5.17762 6.23348 4.37543 8.56812L1.11773 5.90109H1.11719C2.78148 2.6923 6.13422 0.5 9.99906 0.5C12.4254 0.5 14.6502 1.3643 16.382 2.80219Z"
-      fill="#F14336"
-    />
-  </svg>
-);
