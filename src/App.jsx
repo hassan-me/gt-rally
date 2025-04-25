@@ -11,7 +11,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import WOW from "./utlis/wow";
 import ScrollTopBehaviour from "./components/common/ScrollToTopBehaviour";
 import RallyHome from "./pages/homes/rally-home";
-import { useStore } from "react-redux";
+
 
 // import HomePage1 from "./pages/page";
 // import HomePage2 from "./pages/homes/home02";
@@ -58,7 +58,6 @@ import ChangePassPage from "./pages/dashboard/change-password";
 import ContactPage from "./pages/other-pages/contact";
 import AddListingPage from "./pages/dashboard/add-listing";
 import ProtectedRoute from "./components/common/protectedRoute";
-import { setupInterceptors } from "./axios/instances";
 function App() {
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -120,11 +119,6 @@ function App() {
     wow.init();
   }, [pathname]);
 
-  const store = useStore();
-
-  useEffect(() => {
-    setupInterceptors(store);
-  }, [store]);
 
   return (
     <>
