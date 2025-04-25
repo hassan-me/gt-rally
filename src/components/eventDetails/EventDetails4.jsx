@@ -10,7 +10,7 @@ import ProfileInfo from "./detailComponents/ProfileInfo";
 import Recommended from "./detailComponents/Recommended";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { allCars } from "@/data/cars";
+import { allCars, eventData } from "@/data/cars";
 import SidebarToggleButton from "./SidebarToggleButton";
 import { formatDuration, getImage, metersToMiles } from "@/utlis/helpers";
 import { EventType } from "@/constants";
@@ -18,109 +18,6 @@ export default function EventDetails({ eventDetail }) {
   console.log("--> ", eventDetail);
   const mapContainer = useRef(null);
   console.log("--> process.env", import.meta.env);
-
-  // useEffect(() => {
-
-  //     mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
-
-  //     let map;
-
-  //     if (eventDetail.type === EventType.CAR_MEETS.type) {
-  //       if (eventDetail.start_latitude && eventDetail.start_longitude) {
-  //         map.on("load", () => {
-  //           // Center map on start location
-  //           map.setCenter([eventDetail.start_longitude, eventDetail.start_latitude]);
-
-  //           // Add marker for the start location
-  //           new mapboxgl.Marker({ color: "red", scale: 1.5 })
-  //             .setLngLat([eventDetail.start_longitude, eventDetail.start_latitude])
-  //             .addTo(map);
-  //         });
-  //       }
-  //     }else {
-  //        map = new mapboxgl.Map({
-  //         container: mapContainer.current,
-  //         style: "mapbox://styles/mapbox/streets-v11",
-  //         // center: [-73.781892, 40.643804],
-  //         zoom: 14,
-  //       });
-  //     }
-
-  //     if (eventDetail.route_json) {
-  //       try {
-  //         const routeData = JSON.parse(eventDetail.route_json);
-
-  //         if (Array.isArray(routeData) && routeData.length) {
-  //           map.on("load", () => {
-  //             const geoJson = {
-  //               type: "Feature",
-  //               geometry: {
-  //                 type: "LineString",
-  //                 coordinates: routeData,
-  //               },
-  //             };
-
-  //             map.addSource("route", {
-  //               type: "geojson",
-  //               data: geoJson,
-  //             });
-
-  //             map.addLayer({
-  //               id: "route-layer",
-  //               type: "line",
-  //               source: "route",
-  //               layout: {
-  //                 "line-join": "round",
-  //                 "line-cap": "round",
-  //               },
-  //               paint: {
-  //                 "line-color": "#1DA1F2",
-  //                 "line-width": 4,
-  //               },
-  //             });
-
-  //             const bounds = new mapboxgl.LngLatBounds();
-  //             routeData.forEach((coord) => bounds.extend(coord));
-  //             map.fitBounds(bounds, { padding: 50 });
-
-  //             const startCoord = routeData[0];
-  //             const endCoord = routeData[routeData.length - 1];
-
-  //             if (Array.isArray(eventDetail.checkpoints)) {
-  //               eventDetail.checkpoints?.forEach(({ latitude, longitude }) => {
-  //                 new mapboxgl.Marker({ color: "orange" })
-  //                   .setLngLat([longitude, latitude])
-  //                   .addTo(map);
-  //               });
-  //             }
-
-  //             new mapboxgl.Marker({ color: "red", scale: 1.5 })
-  //               .setLngLat(startCoord)
-  //               .addTo(map);
-
-  //             if (
-  //               startCoord[0] === endCoord[0] &&
-  //               startCoord[1] === endCoord[1]
-  //             ) {
-  //               // Use a smaller size for the overlapping end marker
-  //               new mapboxgl.Marker({ color: "green", scale: 1.0 })
-  //                 .setLngLat(endCoord)
-  //                 .addTo(map);
-  //             } else {
-  //               new mapboxgl.Marker({ color: "green", scale: 1.5 })
-  //                 .setLngLat(endCoord)
-  //                 .addTo(map);
-  //             }
-  //           });
-  //         }
-  //       } catch (error) {
-  //         console.error("Invalid route data:", error);
-  //       }
-  //     }
-
-  //     return () => map.remove();
-
-  // }, []);
 
   useEffect(() => {
     mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
@@ -298,6 +195,18 @@ export default function EventDetails({ eventDetail }) {
                   <div className="money text-color-3 font">
                     Type: {EventType[eventDetail.type].label}
                   </div>
+                  {eventDetail.id ===
+                    "647264d1-73b9-4241-baf9-026ca35dc1ce" && (
+                    <div>
+                      <span
+                        className="badge bg-warning text-dark px-3 py-2"
+                        style={{ fontSize: "20px" }}
+                      >
+                        <i className="fas fa-star me-1"></i> Sponsored
+                      </span>
+                    </div>
+                  )}
+
                   {/* <div className="price-wrap flex">
                     <p className="fs-12 lh-16 text-color-2">
                       Checkpoints:&nbsp;
@@ -377,35 +286,7 @@ export default function EventDetails({ eventDetail }) {
               <nav
                 id="navbar-example2 "
                 className="navbar tab-listing-scroll mb-30"
-              >
-                {/* <ul className="nav nav-pills">
-                  <li className="nav-item">
-                    <a className="nav-link" href="#scrollspyHeading1">
-                      Overview
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link" href="#scrollspyHeading2">
-                      Specs &amp; features
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link" href="#scrollspyHeading3">
-                      Recommended cars
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link" href="#scrollspyHeading4">
-                      Loan calculator
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link" href="#scrollspyHeading5">
-                      New car reviews
-                    </a>
-                  </li>
-                </ul> */}
-              </nav>
+              ></nav>
 
               <div className="listing-detail-wrap">
                 <div className="row">

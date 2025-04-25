@@ -4,6 +4,7 @@ import storage from 'redux-persist/lib/storage';
 
 import userReducer from './slices/user.slice';
 import { api } from './slices/api.slice';
+import { setupInterceptors } from '@/axios/instances';
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -31,4 +32,5 @@ const store = configureStore({
 });
 
 export const persistor = persistStore(store);
+setupInterceptors(store);
 export default store;
