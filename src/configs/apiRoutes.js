@@ -1,8 +1,8 @@
 export default {
-    // USER: {
-    //   PROFILE: 'user/info',
-    //   REGISTER_FCM_TOKEN: 'user/register_fcm_token',
-    // },
+    USER: {
+      PROFILE: 'user/info',
+      REGISTER_FCM_TOKEN: 'user/register_fcm_token',
+    },
     AUTH: {
       SSO: 'auth_sso',
       LOGIN: 'signin',
@@ -25,9 +25,9 @@ export default {
     //   SEARCH_SUGGEST: `${mapSearchAPISegment}suggest`,
     //   SEARCH_RETRIEVE: `${mapSearchAPISegment}retrieve`,
     // },
-    // GARAGE: {
-    //   GARAGE: 'garage',
-    // },
+    GARAGE: {
+      GARAGE: 'garage',
+    },
     // RALLY_INVITES: {
     //   ACCEPTED: 'accepted',
     //   GET_RALLY_INVITES: 'invites',

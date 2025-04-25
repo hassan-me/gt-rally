@@ -1,20 +1,60 @@
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { States, Cities } from "@/data/locations";
+import DropdownSelect from "../common/DropDownSelect";
 
-export default function MyProfile() {
+export default function MyProfile({ modal = false, onComplete }) {
   const [preview, setPreview] = useState(
     "/assets/images/dashboard/avt-profile.jpg"
   );
 
+  const [uploadedFile, setUploadedFile] = useState(null);
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      state: "Alabama",
+      city: null,
+    },
+  });
+
+  const selectedState = watch("state");
+
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
+      setUploadedFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
-        setPreview(reader.result); // Set the preview to the uploaded image
+        setPreview(reader.result); 
       };
       reader.readAsDataURL(file);
     }
   };
+
+  const onSubmit = (data) => {
+    const formData = new FormData();
+  
+    Object.entries(data).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+  
+    if (uploadedFile) {
+      formData.append("profile_image", uploadedFile); 
+    }
+  
+    // Call onComplete with FormData
+    if (onComplete) {
+      onComplete(formData); 
+    }
+  };
+  
+
   return (
     <div className="container">
       <div className="row">
@@ -22,8 +62,12 @@ export default function MyProfile() {
           <div className="content-area">
             <main id="main" className="main-content">
               <div className="tfcl-dashboard">
-                <h1 className="admin-title mb-3">Edit profile</h1>
-                <div className="tfcl-add-listing profile-inner">
+                {!modal && <h1 className="admin-title mb-3">Edit profile</h1>}
+
+                <form
+                  className="tfcl-add-listing profile-inner"
+                  onSubmit={handleSubmit(onSubmit)}
+                >
                   <h3>Avatar</h3>
                   <div className="tfcl_choose_avatar">
                     <div className="avatar">
@@ -39,7 +83,7 @@ export default function MyProfile() {
                         />
                       </div>
                       <div className="choose-box">
-                        <label>Upload a new Avatar</label>
+                        <label>Upload a new Profile Picture</label>
                         <div className="form-group relative pb-2 pt-2">
                           <input
                             type="file"
@@ -53,150 +97,73 @@ export default function MyProfile() {
                         </div>
                         <span className="notify-avatar">
                           PNG, JPG, SVG dimension (400 * 400) max file not more
-                          then size 4 mb
+                          than size 4 mb
                         </span>
                       </div>
                     </div>
                   </div>
+
                   <h3 className="form-title">Information</h3>
-                  <div className="form-group">
-                    <label htmlFor="listing_title">Full name</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      name="listing_title"
-                      placeholder="Your name"
-                      defaultValue=""
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="listing_title">Description</label>
-                    <textarea
-                      name=""
-                      id=""
-                      placeholder="Your description"
-                      defaultValue={""}
-                    />
-                  </div>
-                  <div className="form-group-4">
+                  <div className="form-group-2">
                     <div className="form-group">
-                      <label htmlFor="listing_title">Your company</label>
                       <input
                         type="text"
                         className="form-control"
-                        name="listing_title"
-                        defaultValue=""
+                        {...register("username", { required: true })}
+                        placeholder="User Name"
                       />
+                      {errors.userName && (
+                        <span className="text-danger">
+                          Username is required
+                        </span>
+                      )}
                     </div>
                     <div className="form-group">
-                      <label htmlFor="listing_title">Job</label>
                       <input
                         type="text"
                         className="form-control"
-                        name="listing_title"
-                        defaultValue=""
+                        {...register("zipCode", { required: true })}
+                        placeholder="Zip Code"
                       />
+                      {errors.zipCode && (
+                        <span className="text-danger">
+                          Zip Code is required
+                        </span>
+                      )}
                     </div>
+                  </div>
+
+                  <div className="form-group-2">
                     <div className="form-group">
-                      <label htmlFor="listing_title">Email address</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="listing_title"
-                        defaultValue=""
+                      <DropdownSelect
+                        addtionalParentClass="form-control"
+                        defaultOption="Select State"
+                        options={States}
+                        onChange={(value) => {
+                          setValue("state", value);
+                          setValue("city", null);
+                        }}
                       />
                     </div>
+
                     <div className="form-group">
-                      <label htmlFor="listing_title">Your phone</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="listing_title"
-                        defaultValue=""
+                      <DropdownSelect
+                        addtionalParentClass="form-control"
+                        defaultOption="Select City"
+                        options={Cities[selectedState] || []}
+                        onChange={(value) => {
+                          setValue("city", value);
+                        }}
                       />
                     </div>
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="listing_title">Location</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      name="listing_title"
-                      defaultValue=""
-                    />
-                  </div>
-                  <div id="map-single">
-                    <iframe
-                      className="map-single"
-                      src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d7302.453092836291!2d90.47477022812872!3d23.77494577893369!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1svi!2s!4v1627293157601!5m2!1svi!2s"
-                      allowFullScreen=""
-                      loading="lazy"
-                      width={"100%"}
-                    ></iframe>
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="listing_title">Socials</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      name="listing_title"
-                      defaultValue=""
-                    />
-                  </div>
+
                   <div className="group-button-submit left mb-3">
-                    <button className="pre-btn">Save &amp; Update</button>
+                    <button type="submit" className="pre-btn">
+                      Save &amp; Update
+                    </button>
                   </div>
-                  <h3>Change passwords</h3>
-                  <div className="tfcl-add-listing profile-password">
-                    <div className="form-group">
-                      <label htmlFor="listing_title">Old password</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="listing_title"
-                        placeholder="Old password"
-                        defaultValue=""
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="listing_title">New password</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="listing_title"
-                        placeholder="New password"
-                        defaultValue=""
-                      />
-                    </div>
-                    <ul className="list-check-req mb-3">
-                      <li className="check">
-                        <span>One number</span>
-                      </li>
-                      <li>
-                        <span>One lowercase character</span>
-                      </li>
-                      <li>
-                        <span>One uppercase character</span>
-                      </li>
-                      <li>
-                        <span>8 characters minimum</span>
-                      </li>
-                    </ul>
-                    <div className="form-group">
-                      <label htmlFor="listing_title">Confirm password</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="listing_title"
-                        placeholder="Confirm password"
-                        defaultValue=""
-                      />
-                    </div>
-                    <div className="group-button-submit left mb-0">
-                      <button className="pre-btn">Change passwords</button>
-                    </div>
-                  </div>
-                </div>
+                </form>
               </div>
             </main>
           </div>

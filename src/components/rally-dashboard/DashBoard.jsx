@@ -15,7 +15,7 @@ import {
 
 import DropdownSelect from "../common/DropDownSelect";
 import Pagination2 from "../common/Pagination2";
-import { useGetMyEventsMutation } from "../../redux/slices/api.slice";
+import { useGetMyEventsQuery } from "../../redux/slices/api.slice";
 import {
   formatDateRange,
   formatDuration,
@@ -24,16 +24,12 @@ import {
 } from "@/utlis/helpers";
 
 export default function DashBoard() {
-  const [getMyEvents, { data: eventsData, isLoading }] =
-    useGetMyEventsMutation();
+  const { data: eventsData, isLoading, error } = useGetMyEventsQuery();
+
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [events, setEvents] = useState([]);
   const [selectedType, setSelectedType] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-
-  useEffect(() => {
-    getMyEvents();
-  }, [getMyEvents]);
 
   useEffect(() => {
     if (eventsData) {
