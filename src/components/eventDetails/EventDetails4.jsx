@@ -28,11 +28,10 @@ export default function EventDetails({ eventDetail }) {
       zoom: 14,
     });
 
-    // For car meets, just show the starting location marker
+
     if (eventDetail.type === EventType.CAR_MEETS.type) {
       if (eventDetail.start_latitude && eventDetail.start_longitude) {
         map.on("load", () => {
-          // Center map on start location
           map.setCenter([
             eventDetail.start_longitude,
             eventDetail.start_latitude,
@@ -279,8 +278,8 @@ export default function EventDetails({ eventDetail }) {
           </div>
           <div className="row">
             <div className="col-lg-8">
-              {JSON.parse(eventDetail.thumbnail).length > 0 && (
-                <Slider3 images={JSON.parse(eventDetail.thumbnail)} />
+              {eventDetail?.thumbnail && eventDetail?.thumbnail.length > 0 && (
+                <Slider3 images={eventDetail.thumbnail} />
               )}
 
               <nav
@@ -376,7 +375,7 @@ export default function EventDetails({ eventDetail }) {
                                     >
                                       <div className="accordion-body">
                                         <div className="row image-container">
-                                          {checkpoint.images.map(
+                                          {checkpoint?.images?.map(
                                             (url, index) => (
                                               <div
                                                 key={index}

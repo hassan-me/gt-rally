@@ -13,7 +13,7 @@ export default function Rally(props) {
       <div className="image-group relative">
         <div className="top flex-two">
           <ul className="d-flex gap-8">
-            <li className="flag-tag success">{EventType[rally.type].label}</li>
+            <li className="flag-tag success text-nowrap">{EventType[rally.type].label}</li>
             <li className="flag-tag style-1">
               <div className="icon">
                 <svg
@@ -35,7 +35,7 @@ export default function Rally(props) {
               {rally.thumbnail_url.length}
             </li>
           </ul>
-          <div className="year flag-tag">
+          <div className="year flag-tag text-nowrap">
             {formatDateRange(rally.start_date, rally.end_date)}
           </div>
         </div>
@@ -90,7 +90,7 @@ export default function Rally(props) {
             alt="image"
             src={
               rally.thumbnail && rally.thumbnail.length > 0
-                ? `https://gtrally.web.app/image_web/${rally.thumbnail[0]}`
+                ? `https://gtrally.web.app/image_web/${rally.thumbnail}`
                 : "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/800px-Image_not_available.png"
             }
             style={{
@@ -121,16 +121,16 @@ export default function Rally(props) {
             {rally.name}
           </Link>
         </h5>
-        <div className="icon-box flex flex-wrap">
-          <div className="icons flex-three">
+        <div className="icon-box flex" >
+          <div className="icons flex-three text-nowrap">
             <i className="icon-autodeal-km1" />
             <span>{rally.no_of_vehicles.toLocaleString()} vehicles</span>
           </div>
-          <div className="icons flex-three">
+          <div className="icons flex-three text-nowrap">
             <i className="icon-autodeal-diesel" />
             <span>{metersToMiles(rally.distance)} miles</span>
           </div>
-          <div className="icons flex-three">
+          <div className="icons flex-three text-nowrap">
             <i className="icon-autodeal-automatic" />
             <span>
               {rally.duration == 0 ? 0 : formatDuration(rally.duration)}

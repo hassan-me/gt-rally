@@ -45,9 +45,9 @@ const userSlice = createSlice({
     //   state.user = action.payload.user;
     //   state.token = action.payload.token;
     // });
-    // builder.addMatcher(api.endpoints.getProfile.matchFulfilled, (state, action) => {
-    //   state.user = action.payload;
-    // });
+    builder.addMatcher(api.endpoints.getProfile.matchFulfilled, (state, action) => {
+      state.user = action.payload;
+    });
   },
 });
 

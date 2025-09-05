@@ -1,6 +1,6 @@
-import MyListings from "@/components/dashboard/MyListings";
-import Sidebar from "@/components/dashboard/Sidebar";
-import Header4 from "@/components/headers/Header4";
+import MyListings from "@/components/rally-dashboard/MyListings";
+import Sidebar from "@/components/rally-dashboard/Sidebar";
+import Header4 from "@/components/rally-headers/Header4";
 import React from "react";
 
 import MetaComponent from "@/components/common/MetaComponent";

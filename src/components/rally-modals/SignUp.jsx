@@ -130,12 +130,13 @@ export default function SignUp() {
         id="popup_bid2"
         tabIndex={-1}
         role="dialog"
+        style={{paddingTop:"2%",paddingBottom:"2%"}}
         aria-hidden="true"
       >
         <div className="modal-dialog modal-dialog-centered" role="document">
           <div
             className="modal-content"
-            style={{ height: currentStep === 1 ? "800px" : "" }}
+            style={{height:currentStep==1?"800px":"auto", }}
           >
             <button
               type="button"

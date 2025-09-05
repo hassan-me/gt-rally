@@ -59,8 +59,8 @@ export default function Cars() {
       .then((data) => {
         setRallies(
           data.map((rec) => {
-            rec.thumbnail = JSON.parse(rec.thumbnail);
-            rec.thumbnail_url = JSON.parse(rec.thumbnail_url);
+            rec.thumbnail = rec.thumbnail[0];
+            rec.thumbnail_url = rec.thumbnail_url[0];
             // if (rec.type_custom == EventType.Events.type) {
             //   if (rec.start_location) rec.start_location = JSON.parse(rec.start_location);
             //   if (rec.end_location) rec.end_location = JSON.parse(rec.end_location);
@@ -105,7 +105,7 @@ export default function Cars() {
 
   return (
     <section className="tf-section3">
-      <div className="container">
+      <div className="container" style={{minWidth:"80%"}}>
         <div className="row">
           <div className="col-lg-12">
             <div className="heading-section flex align-center justify-space flex-wrap gap-20">
@@ -144,7 +144,7 @@ export default function Cars() {
                   ))}
                 </ul>
               </div>
-              <div className="content-tab">
+              <div  className="content-tab">
                 <div className="content-inner tab-content">
                   <Swiper
                     {...swiperOptions}

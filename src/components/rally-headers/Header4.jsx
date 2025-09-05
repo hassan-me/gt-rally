@@ -139,9 +139,13 @@ export default function Header4() {
                     </div>
                   )}
                   <div className="flat-bt-top">
-                    <Link className="sc-button" to="/add-listing">
+                    <Link
+                      className="sc-button"
+                      to="/create-event"
+                      state={{ forceCreateEvent: true }}
+                    >
                       <Plus size={20} />
-                      <span>Add listing</span>
+                      <span>Create Event</span>
                     </Link>
                   </div>
                 </div>
@@ -202,9 +206,13 @@ export default function Header4() {
             </div>
             <MobileNav />
             <div className="button-mobi-sell">
-              <Link className="sc-button btn-icon center" to="/add-listing">
+              <Link
+                className="sc-button btn-icon center"
+                to="/create-event"
+                state={{ forceCreateEvent: true }}
+              >
                 <Plus size={20} />
-                <span>Add listing</span>
+                <span>Create Event</span>
               </Link>
             </div>
           </div>

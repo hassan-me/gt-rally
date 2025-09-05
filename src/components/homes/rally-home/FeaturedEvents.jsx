@@ -23,8 +23,8 @@ export default function FeaturedEvents() {
       .then((data) => {
         setRallies(
           data.map((rec) => {
-            rec.thumbnail = JSON.parse(rec.thumbnail);
-            rec.thumbnail_url = JSON.parse(rec.thumbnail_url);
+          
+            rec.thumbnail_url = rec.thumbnail_url[0];
             return rec;
           })
         );

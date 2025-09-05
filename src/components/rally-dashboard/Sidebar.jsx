@@ -1,11 +1,10 @@
 import { useEffect } from "react";
 
-import { Link, useLocation,useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { logout, selectUser } from "../../redux/slices/user.slice";
 import { useDispatch, useSelector } from "react-redux";
 import { User } from "lucide-react";
 import { getImage } from "@/utlis/helpers";
-
 
 export default function Sidebar() {
   const user = useSelector(selectUser);
@@ -41,12 +40,11 @@ export default function Sidebar() {
 
   const { pathname } = useLocation();
 
-    const handleLogout = (e) => {
-      e.preventDefault();
-      dispatch(logout());
-      navigate("/");
-    };
-  
+  const handleLogout = (e) => {
+    e.preventDefault();
+    dispatch(logout());
+    navigate("/");
+  };
 
   return (
     <>
@@ -71,7 +69,7 @@ export default function Sidebar() {
               {user.profileImageUrl ? (
                 <img
                   alt="profile"
-                  src={ getImage(user.profileImage)}
+                  src={getImage(user.profileImage)}
                   width={52}
                   height={52}
                 />
@@ -181,7 +179,7 @@ export default function Sidebar() {
                       />
                     </g>
                   </svg>
-                  My Listing
+                  Public Events
                 </Link>
               </li>
               <li>

@@ -1,4 +1,5 @@
 import { CheckCircle, AlertCircle } from "lucide-react";
+import { createRoot } from "react-dom/client";
 
 const Toast = ({ message, type, onClose }) => {
   return (
@@ -37,3 +38,42 @@ const Toast = ({ message, type, onClose }) => {
 };
 
 export default Toast;
+
+// Programmatic API
+const ensureToastHost = () => {
+  const existing = document.getElementById("toast-host");
+  if (existing) return existing;
+  const host = document.createElement("div");
+  host.id = "toast-host";
+  host.style.position = "fixed";
+  host.style.top = "0";
+  host.style.right = "0";
+  host.style.zIndex = 1090;
+  host.style.pointerEvents = "none";
+  document.body.appendChild(host);
+  return host;
+};
+
+const showToast = (type, message, duration = 3000) => {
+  const host = ensureToastHost();
+  const wrapper = document.createElement("div");
+  wrapper.style.pointerEvents = "auto";
+  host.appendChild(wrapper);
+  const root = createRoot(wrapper);
+
+  const cleanup = () => {
+    try {
+      root.unmount();
+    } catch {}
+    if (wrapper.parentNode) wrapper.parentNode.removeChild(wrapper);
+  };
+
+  const handleClose = () => cleanup();
+
+  root.render(<Toast message={message} type={type} onClose={handleClose} />);
+
+  window.setTimeout(cleanup, duration);
+};
+
+export const successToast = (message) => showToast("success", message);
+export const errorToast = (message) => showToast("error", message);

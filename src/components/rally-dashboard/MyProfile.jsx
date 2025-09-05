@@ -1,19 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { States, Cities } from "@/data/locations";
 import DropdownSelect from "../common/DropDownSelect";
+import { getImage } from "@/utlis/helpers";
 
-export default function MyProfile({ modal = false, onComplete }) {
-  const [preview, setPreview] = useState(
-    "/assets/images/dashboard/avt-profile.jpg"
-  );
-
+export default function MyProfile({
+  modal = false,
+  onComplete,
+  profile,
+  updateProfileLoading,
+}) {
+  const [preview, setPreview] = useState(null);
   const [uploadedFile, setUploadedFile] = useState(null);
 
   const {
     register,
     handleSubmit,
     setValue,
+    reset,
     watch,
     formState: { errors },
   } = useForm({
@@ -23,6 +27,19 @@ export default function MyProfile({ modal = false, onComplete }) {
     },
   });
 
+  useEffect(() => {
+    if (profile) {
+      reset({
+        zipCode: profile.zipCode || "",
+        lastName: profile.lastName || "",
+        username: profile.username || "",
+        state: profile.state || "Alabama",
+        firstName: profile.firstName || "",
+        city: profile.city || Cities.Alabama[0],
+      });
+    }
+  }, [profile, reset]);
+
   const selectedState = watch("state");
 
   const handleImageUpload = (event) => {
@@ -31,7 +48,7 @@ export default function MyProfile({ modal = false, onComplete }) {
       setUploadedFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
-        setPreview(reader.result); 
+        setPreview(reader.result);
       };
       reader.readAsDataURL(file);
     }
@@ -39,21 +56,18 @@ export default function MyProfile({ modal = false, onComplete }) {
 
   const onSubmit = (data) => {
     const formData = new FormData();
-  
+
     Object.entries(data).forEach(([key, value]) => {
       formData.append(key, value);
     });
-  
+
     if (uploadedFile) {
-      formData.append("profile_image", uploadedFile); 
+      formData.append("profile_image", uploadedFile);
     }
-  
-    // Call onComplete with FormData
     if (onComplete) {
-      onComplete(formData); 
+      onComplete(formData);
     }
   };
-  
 
   return (
     <div className="container">
@@ -79,7 +93,9 @@ export default function MyProfile({ modal = false, onComplete }) {
                           height={138}
                           id="tfcl_avatar_thumbnail"
                           alt="avatar"
-                          src={preview}
+                          src={
+                            preview ? preview : getImage(profile?.profileImage)
+                          }
                         />
                       </div>
                       <div className="choose-box">
@@ -112,7 +128,7 @@ export default function MyProfile({ modal = false, onComplete }) {
                         {...register("username", { required: true })}
                         placeholder="User Name"
                       />
-                      {errors.userName && (
+                      {errors.username && (
                         <span className="text-danger">
                           Username is required
                         </span>
@@ -139,6 +155,7 @@ export default function MyProfile({ modal = false, onComplete }) {
                         addtionalParentClass="form-control"
                         defaultOption="Select State"
                         options={States}
+                        selectedValue={selectedState}
                         onChange={(value) => {
                           setValue("state", value);
                           setValue("city", null);
@@ -151,6 +168,7 @@ export default function MyProfile({ modal = false, onComplete }) {
                         addtionalParentClass="form-control"
                         defaultOption="Select City"
                         options={Cities[selectedState] || []}
+                        selectedValue={watch("city")}
                         onChange={(value) => {
                           setValue("city", value);
                         }}
@@ -159,8 +177,23 @@ export default function MyProfile({ modal = false, onComplete }) {
                   </div>
 
                   <div className="group-button-submit left mb-3">
-                    <button type="submit" className="pre-btn">
-                      Save &amp; Update
+                    <button
+                      type="submit"
+                      className="pre-btn"
+                      disabled={updateProfileLoading}
+                    >
+                      {updateProfileLoading ? (
+                        <>
+                          <span
+                            className="spinner-border spinner-border-sm me-2"
+                            role="status"
+                            aria-hidden="true"
+                          ></span>
+                          Saving...
+                        </>
+                      ) : (
+                        "Save & Update"
+                      )}
                     </button>
                   </div>
                 </form>

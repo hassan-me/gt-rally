@@ -4,11 +4,13 @@ import storage from 'redux-persist/lib/storage';
 
 import userReducer from './slices/user.slice';
 import { api } from './slices/api.slice';
+import { mapApi } from './slices/mapApi.slice';
 import { setupInterceptors } from '@/axios/instances';
 
 const rootReducer = combineReducers({
   user: userReducer,
   [api.reducerPath]: api.reducer,
+  [mapApi.reducerPath]: mapApi.reducer,
 });
 
 const persistedReducer = persistReducer(
@@ -27,7 +29,7 @@ const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(api.middleware),
+    }).concat(api.middleware, mapApi.middleware),
   devTools: true,
 });
 

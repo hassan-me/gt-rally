@@ -118,7 +118,7 @@ export default function Header1() {
                     </ul>
                   </div>
                   <div className="flat-bt-top">
-                    <Link className="sc-button" to={`/add-listing`}>
+                    <Link className="sc-button" to={`/create-event`}>
                       <svg
                         width={21}
                         height={20}
@@ -151,7 +151,7 @@ export default function Header1() {
                           </clipPath>
                         </defs>
                       </svg>
-                      <span>Create Rally</span>
+                      <span>Create Event</span>
                     </Link>
                   </div>
                 </div>

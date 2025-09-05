@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import DashboardChart from "./DashboardChart";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Award,
   Search,
@@ -11,12 +10,15 @@ import {
   MapPin,
   Clock,
   CheckSquare,
-  Star
+  Star,
 } from "lucide-react";
 
 import DropdownSelect from "../common/DropDownSelect";
 import Pagination2 from "../common/Pagination2";
-import { useGetMyEventsQuery } from "../../redux/slices/api.slice";
+import {
+  useGetMyEventsQuery,
+  useDeleteEventMutation,
+} from "../../redux/slices/api.slice";
 import {
   formatDateRange,
   formatDuration,
@@ -26,10 +28,12 @@ import {
 import MapWithRadius from "../common/MapWithRadius";
 import SponsorForm from "../otherPages/SponsorForm";
 import { Modal } from "bootstrap";
-import Toast from "../common/Toast";
+import Toast, { errorToast, successToast } from "../common/Toast";
 
 export default function DashBoard() {
-  const { data: eventsData, isLoading, error } = useGetMyEventsQuery();
+  const { data: eventsData, isLoading, error, refetch } = useGetMyEventsQuery();
+  const [deleteEvent, { isLoading: isDeleting }] = useDeleteEventMutation();
+  const navigate = useNavigate();
 
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [events, setEvents] = useState([]);
@@ -81,22 +85,19 @@ export default function DashBoard() {
   }, [events]);
 
   useEffect(() => {
-    if (events?.length > 0) {
-      const filterdata = events.filter((event) => {
-        const typeMatch = selectedType ? event.type === selectedType : true;
-        const SearchMatch = event.name
-          .toLowerCase()
-          .includes(searchQuery.toLowerCase());
+    const filterdata = events.filter((event) => {
+      const typeMatch = selectedType ? event.type === selectedType : true;
+      const SearchMatch = event.name
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase());
 
-        return typeMatch && SearchMatch;
-      });
-      setFilteredEvents(filterdata);
-    }
+      return typeMatch && SearchMatch;
+    });
+    setFilteredEvents(filterdata);
   }, [selectedType, events, searchQuery]);
 
-
   const handleSponserModalSubmit = () => {
-    setSponsoredEventIds([...sponsoredEventIds, selectedRow.id])
+    setSponsoredEventIds([...sponsoredEventIds, selectedRow.id]);
     Modal.getInstance(document.getElementById("popup_bid_sponser"))?.hide();
     setToastMessage(
       "Sponsorship inquiry submitted successfully! We'll contact you soon."
@@ -110,6 +111,17 @@ export default function DashBoard() {
 
   const isEventSponsored = (eventId) => {
     return sponsoredEventIds.includes(eventId);
+  };
+
+  const onDeleteEvent = async (id) => {
+    try {
+      await deleteEvent(id).unwrap();
+      setEvents((prev) => prev.filter((e) => e.id !== id));
+      refetch();
+      successToast("Event has been Deleted");
+    } catch (e) {
+      errorToast("Error Deleting Event");
+    }
   };
 
   return (
@@ -137,11 +149,11 @@ export default function DashBoard() {
                               <Car size={36} />
                             </div>
                             <div className="content-overview">
-                              <h5>Your Rallies</h5>
+                              <h5>Total Events</h5>
                               <div className="tfcl-dashboard-title">
                                 <div className="listing-text d-flex">
                                   <b>{events?.length || 0} </b>
-                                  <div className="per">/50 remaining</div>
+                                  
                                 </div>
                               </div>
                             </div>
@@ -152,14 +164,14 @@ export default function DashBoard() {
                         <a className="tfcl-card" href="#">
                           <div className="card-body">
                             <div className="tfcl-icon-overview">
-                              <Clock size={36} />
+                              <Car size={36} />
                             </div>
                             <div className="content-overview">
-                              <h5>Pending</h5>
+                              <h5>Grand Touring Rallies</h5>
                               <div className="tfcl-dashboard-title">
                                 <span>
                                   <b>
-                                    {events?.filter((e) => !e.isActive)
+                                    {events?.filter((e) => e.type==="GRAND_TOURING_RALLY")
                                       .length || 0}
                                   </b>
                                 </span>
@@ -172,15 +184,15 @@ export default function DashBoard() {
                         <a className="tfcl-card" href="#">
                           <div className="card-body">
                             <div className="tfcl-icon-overview">
-                              <CheckSquare size={36} />
+                              <Car size={36} />
                             </div>
                             <div className="content-overview">
-                              <h5>Active</h5>
+                              <h5>Custom Drive</h5>
                               <div className="tfcl-dashboard-title">
                                 <span>
                                   <b>
-                                    {events?.filter((e) => e.isActive).length ||
-                                      0}
+                                  {events?.filter((e) => e.type==="CUSTOM_DRIVE")
+                                      .length || 0}
                                   </b>
                                 </span>
                               </div>
@@ -192,18 +204,15 @@ export default function DashBoard() {
                         <a className="tfcl-card" href="#">
                           <div className="card-body">
                             <div className="tfcl-icon-overview">
-                              <MapPin size={36} />
+                              <Car size={36} />
                             </div>
                             <div className="content-overview">
-                              <h5>Checkpoints</h5>
+                              <h5>Car Meets</h5>
                               <div className="tfcl-dashboard-title">
                                 <span>
                                   <b>
-                                    {events?.reduce(
-                                      (acc, event) =>
-                                        acc + (event.checkpoints?.length || 0),
-                                      0
-                                    )}
+                                  {events?.filter((e) => e.type==="CAR_MEETS")
+                                      .length || 0}
                                   </b>
                                 </span>
                               </div>
@@ -220,9 +229,9 @@ export default function DashBoard() {
                           <h5 className="title-dashboard-table">
                             Your Rallies
                           </h5>
-                        
-                            <MapWithRadius />
-                         
+
+                          <MapWithRadius />
+
                           <div className="row">
                             <div className="col-xl-3 col-lg-6 mb-2">
                               <div className="group-input-icon search">
@@ -240,7 +249,7 @@ export default function DashBoard() {
                                   <Search size={18} />
                                 </span>
                               </div>
-                            </div>                       
+                            </div>
                             <div className="col-xl-3 col-lg-6 mb-2">
                               <DropdownSelect
                                 addtionalParentClass="form-control"
@@ -259,7 +268,7 @@ export default function DashBoard() {
                               </span>
                               <table
                                 className="table"
-                                style={{width: "100%" }}
+                                style={{ width: "100%" }}
                               >
                                 <thead>
                                   <tr>
@@ -274,8 +283,12 @@ export default function DashBoard() {
                                     <th style={{ textAlign: "center" }}>
                                       Status
                                     </th>
-                                    <th style={{ textAlign: "center" }}>Type</th>
-                                    <th style={{ textAlign: "center" }}>Date</th>
+                                    <th style={{ textAlign: "center" }}>
+                                      Type
+                                    </th>
+                                    <th style={{ textAlign: "center" }}>
+                                      Date
+                                    </th>
                                     <th style={{ textAlign: "center" }}>
                                       Distance-Duration
                                     </th>
@@ -297,7 +310,7 @@ export default function DashBoard() {
                                   ) : filteredEvents &&
                                     filteredEvents.length > 0 ? (
                                     filteredEvents.map((event, i) => (
-                                      <tr key={i}>
+                                      <tr key={event.id}>
                                         <td className="column-listing">
                                           <div className="tfcl-listing-product">
                                             <Link to={`/events/${event.id}`}>
@@ -305,7 +318,9 @@ export default function DashBoard() {
                                                 alt="Rally thumbnail"
                                                 src={
                                                   event.thumbnail[0]
-                                                    ? getImage(event.thumbnail[0])
+                                                    ? getImage(
+                                                        event.thumbnail[0]
+                                                      )
                                                     : "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/800px-Image_not_available.png"
                                                 }
                                                 width={168}
@@ -314,14 +329,17 @@ export default function DashBoard() {
                                             </Link>
                                             <div className="tfcl-listing-summary">
                                               <h4 className="tfcl-listing-title">
-                                                <Link to={`/events/${event.id}`}>
+                                                <Link
+                                                  to={`/events/${event.id}`}
+                                                >
                                                   {event.name}
                                                 </Link>
                                               </h4>
                                               <div className="features-text">
                                                 {event.startMapboxDistrict ||
                                                   "No points of interest"}{" "}
-                                                - {event.checkpoints?.length || 0}{" "}
+                                                -{" "}
+                                                {event.checkpoints?.length || 0}{" "}
                                                 checkpoints
                                               </div>
                                               <div className="price">
@@ -397,19 +415,29 @@ export default function DashBoard() {
                                           className="column-date"
                                         >
                                           <div className="tfcl-listing-date">
-                                          {isEventSponsored(event.id) ? (
-                                            <div>
-                                              <Star size={20} fill="#FFD700" color="#FFD700" />
-                                              <span className="ms-1 text-warning">Sponsored</span>
-                                            </div>
-                                          ) : (
-                                            <span className="text-muted">Not Sponsored</span>
-                                          )}
+                                            {isEventSponsored(event.id) ? (
+                                              <div>
+                                                <Star
+                                                  size={20}
+                                                  fill="#FFD700"
+                                                  color="#FFD700"
+                                                />
+                                                <span className="ms-1 text-warning">
+                                                  Sponsored
+                                                </span>
+                                              </div>
+                                            ) : (
+                                              <span className="text-muted">
+                                                Not Sponsored
+                                              </span>
+                                            )}
                                           </div>
                                         </td>
-                                    
-                                        <td className="column-controller" style={{ verticalAlign: "middle" }}>
 
+                                        <td
+                                          className="column-controller"
+                                          style={{ verticalAlign: "middle" }}
+                                        >
                                           <div className="inner-controller">
                                             <span className="icon">
                                               <Edit size={16} />
@@ -417,6 +445,12 @@ export default function DashBoard() {
                                             <a
                                               href="#"
                                               className="btn-action tfcl-dashboard-action-edit"
+                                              onClick={(e) => {
+                                                e.preventDefault();
+                                                navigate("/update-event", {
+                                                  state: { rallyId: event.id },
+                                                });
+                                              }}
                                             >
                                               Edit
                                             </a>
@@ -439,10 +473,34 @@ export default function DashBoard() {
                                               <Trash2 size={16} />
                                             </span>{" "}
                                             <a
+                                              onClick={(e) => {
+                                                e.preventDefault();
+                                                if (!isDeleting) {
+                                                  onDeleteEvent(event.id);
+                                                }
+                                              }}
                                               href="#"
                                               className="btn-action tfcl-dashboard-action-edit"
+                                              style={{
+                                                position: "relative",
+                                                pointerEvents: isDeleting
+                                                  ? "none"
+                                                  : "auto",
+                                                opacity: isDeleting ? 0.6 : 1,
+                                              }}
                                             >
-                                              Delete
+                                              {isDeleting ? (
+                                                <span
+                                                  className="spinner-border spinner-border-sm me-1"
+                                                  role="status"
+                                                  aria-hidden="true"
+                                                  style={{
+                                                    verticalAlign: "middle",
+                                                  }}
+                                                ></span>
+                                              ) : (
+                                                "Delete"
+                                              )}
                                             </a>
                                           </div>
                                           {!isEventSponsored(event.id) && (
@@ -455,7 +513,9 @@ export default function DashBoard() {
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#popup_bid_sponser"
                                                 className="btn-action tfcl-dashboard-action-edit"
-                                                onClick={() => setSelectedRow(event)}
+                                                onClick={() =>
+                                                  setSelectedRow(event)
+                                                }
                                               >
                                                 Sponsor
                                               </a>

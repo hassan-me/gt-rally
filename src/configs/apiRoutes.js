@@ -15,16 +15,19 @@ export default {
     //   GENERATE_ROUTE: 'generate_route',
     // },
     EVENT: {
-      BASE: 'event',
+      BASE: 'v1/events',
       MY_EVENTS: 'v1/events',
-      PUBLIC: 'events_web/public',
+      CHECKPOINTS: 'checkpoint',
+      PUBLIC: 'v1/events_web/public',
+      GENERATE_ROUTE: 'generate_route',
+      UPDATE_CHECKPOINT_ORDER: 'v1/events/update_checkpoint_order',
     },
-    // MAP: {
-    //   GEOCODING: 'geocoding/v5/mapbox.places',
-    //   DIRECTIONS: 'directions/v5/mapbox/driving',
-    //   SEARCH_SUGGEST: `${mapSearchAPISegment}suggest`,
-    //   SEARCH_RETRIEVE: `${mapSearchAPISegment}retrieve`,
-    // },
+    MAP: {
+      GEOCODING: 'geocoding/v5/mapbox.places',
+      DIRECTIONS: 'directions/v5/mapbox/driving',
+      SEARCH_SUGGEST: 'search/searchbox/v1/suggest',
+      SEARCH_RETRIEVE: 'search/searchbox/v1/retrieve',
+    },
     GARAGE: {
       GARAGE: 'garage',
     },

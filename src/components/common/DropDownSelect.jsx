@@ -10,6 +10,21 @@ export default function DropdownSelect({
   const selectRef = useRef();
   const optionsRef = useRef();
   const [selected, setSelected] = useState("");
+  // Keep internal state in sync with external selectedValue
+  useEffect(() => {
+    if (selectedValue == null) {
+      setSelected("");
+    } else {
+      setSelected(selectedValue);
+    }
+  }, [selectedValue]);
+
+  // If options change and current selected is no longer present, clear it
+  useEffect(() => {
+    if (selected && !options.includes(selected)) {
+      setSelected("");
+    }
+  }, [options, selected]);
   const toggleDropdown = () => {
     selectRef.current.classList.toggle("open");
   };

@@ -43,7 +43,8 @@ export const setupInterceptors = (store) => {
           API_ROUTES.AUTH.LOGIN,
         ];
   
-        if (!unprotectedAPIRoutes.some((x) => config.url === x)) {
+        const isMapbox = config.baseURL === GLOBAL_CONFIG.MAPBOX_API_BASE_URL;
+        if (!isMapbox && !unprotectedAPIRoutes.some((x) => config.url === x)) {
           const { token } = store.getState().user;
           if (!token) {
             store.dispatch(logout());

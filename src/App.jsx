@@ -49,14 +49,14 @@ import BlogPage from "./pages/blogs/blog";
 import BlogGridPage from "./pages/blogs/blog-grid";
 import BlogDetailsPage from "./pages/blogs/blog-detail";
 import DashboardPage from "./pages/rally-dashboard/dashboard";
-import MyListingPage from "./pages/dashboard/my-listing";
-import MyProfilePage from "./pages/dashboard/my-profile";
+import MyListingPage from "./pages/rally-dashboard/my-listing";
+import MyProfilePage from "./pages/rally-dashboard/my-profile";
 import MessagePage from "./pages/dashboard/message";
 import MyReviewPage from "./pages/dashboard/my-review";
 import MyFavoritePage from "./pages/dashboard/my-favorite";
 import ChangePassPage from "./pages/dashboard/change-password";
 import ContactPage from "./pages/other-pages/contact";
-import AddListingPage from "./pages/dashboard/add-listing";
+import CreateEventPage from "./pages/rally-dashboard/create-event";
 import ProtectedRoute from "./components/common/protectedRoute";
 function App() {
   useEffect(() => {
@@ -241,10 +241,18 @@ function App() {
                 }
               />
               <Route
-                path="add-listing"
+                path="create-event"
                 element={
                   <ProtectedRoute>
-                    <AddListingPage />
+                    <CreateEventPage />
+                  </ProtectedRoute>
+                }
+              />
+                <Route
+                path="update-event"
+                element={
+                  <ProtectedRoute>
+                    <CreateEventPage />
                   </ProtectedRoute>
                 }
               />
