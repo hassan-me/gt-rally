@@ -1,17 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  Award,
-  Search,
-  Edit,
-  EyeOff,
-  Trash2,
-  Car,
-  MapPin,
-  Clock,
-  CheckSquare,
-  Star,
-} from "lucide-react";
+import { Award, Search, Edit, Trash2, Car, Star } from "lucide-react";
 
 import DropdownSelect from "../common/DropDownSelect";
 import Pagination2 from "../common/Pagination2";
@@ -26,24 +15,25 @@ import {
   getImage,
 } from "@/utlis/helpers";
 import MapWithRadius from "../common/MapWithRadius";
-import SponsorForm from "../otherPages/SponsorForm";
-import { Modal } from "bootstrap";
 import Toast, { errorToast, successToast } from "../common/Toast";
+import RallyMasterInviteModal from "../modals/RallyMasterInvite";
 
 export default function DashBoard() {
-  const { data: eventsData, isLoading, error, refetch } = useGetMyEventsQuery();
+  const { data: eventsData, isLoading, refetch } = useGetMyEventsQuery();
   const [deleteEvent, { isLoading: isDeleting }] = useDeleteEventMutation();
   const navigate = useNavigate();
 
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [events, setEvents] = useState([]);
+  const [numberOfVehicles, setNumberOfVehicles] = useState(0);
   const [selectedType, setSelectedType] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedRow, setSelectedRow] = useState(null);
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("success");
   const [showToast, setShowToast] = useState(false);
-  const [sponsoredEventIds, setSponsoredEventIds] = useState([]);
+
+  const [showInviteModal, setShowInviteModal] = useState(false);
+  const [inviteRallyId, setInviteRallyId] = useState(null);
 
   useEffect(() => {
     if (eventsData) {
@@ -96,23 +86,6 @@ export default function DashBoard() {
     setFilteredEvents(filterdata);
   }, [selectedType, events, searchQuery]);
 
-  const handleSponserModalSubmit = () => {
-    setSponsoredEventIds([...sponsoredEventIds, selectedRow.id]);
-    Modal.getInstance(document.getElementById("popup_bid_sponser"))?.hide();
-    setToastMessage(
-      "Sponsorship inquiry submitted successfully! We'll contact you soon."
-    );
-    setToastType("success");
-    setShowToast(true);
-    setTimeout(() => {
-      setShowToast(false);
-    }, 5000);
-  };
-
-  const isEventSponsored = (eventId) => {
-    return sponsoredEventIds.includes(eventId);
-  };
-
   const onDeleteEvent = async (id) => {
     try {
       await deleteEvent(id).unwrap();
@@ -153,7 +126,6 @@ export default function DashBoard() {
                               <div className="tfcl-dashboard-title">
                                 <div className="listing-text d-flex">
                                   <b>{events?.length || 0} </b>
-                                  
                                 </div>
                               </div>
                             </div>
@@ -171,8 +143,9 @@ export default function DashBoard() {
                               <div className="tfcl-dashboard-title">
                                 <span>
                                   <b>
-                                    {events?.filter((e) => e.type==="GRAND_TOURING_RALLY")
-                                      .length || 0}
+                                    {events?.filter(
+                                      (e) => e.type === "GRAND_TOURING_RALLY"
+                                    ).length || 0}
                                   </b>
                                 </span>
                               </div>
@@ -191,8 +164,9 @@ export default function DashBoard() {
                               <div className="tfcl-dashboard-title">
                                 <span>
                                   <b>
-                                  {events?.filter((e) => e.type==="CUSTOM_DRIVE")
-                                      .length || 0}
+                                    {events?.filter(
+                                      (e) => e.type === "CUSTOM_DRIVE"
+                                    ).length || 0}
                                   </b>
                                 </span>
                               </div>
@@ -211,8 +185,9 @@ export default function DashBoard() {
                               <div className="tfcl-dashboard-title">
                                 <span>
                                   <b>
-                                  {events?.filter((e) => e.type==="CAR_MEETS")
-                                      .length || 0}
+                                    {events?.filter(
+                                      (e) => e.type === "CAR_MEETS"
+                                    ).length || 0}
                                   </b>
                                 </span>
                               </div>
@@ -292,9 +267,7 @@ export default function DashBoard() {
                                     <th style={{ textAlign: "center" }}>
                                       Distance-Duration
                                     </th>
-                                    <th style={{ textAlign: "center" }}>
-                                      Sponsored
-                                    </th>
+
                                     <th style={{ textAlign: "center" }}>
                                       Action
                                     </th>
@@ -407,32 +380,6 @@ export default function DashBoard() {
                                             {formatDuration(event.duration)}
                                           </div>
                                         </td>
-                                        <td
-                                          style={{
-                                            textAlign: "center",
-                                            paddingRight: "20px",
-                                          }}
-                                          className="column-date"
-                                        >
-                                          <div className="tfcl-listing-date">
-                                            {isEventSponsored(event.id) ? (
-                                              <div>
-                                                <Star
-                                                  size={20}
-                                                  fill="#FFD700"
-                                                  color="#FFD700"
-                                                />
-                                                <span className="ms-1 text-warning">
-                                                  Sponsored
-                                                </span>
-                                              </div>
-                                            ) : (
-                                              <span className="text-muted">
-                                                Not Sponsored
-                                              </span>
-                                            )}
-                                          </div>
-                                        </td>
 
                                         <td
                                           className="column-controller"
@@ -455,19 +402,7 @@ export default function DashBoard() {
                                               Edit
                                             </a>
                                           </div>
-                                          <div className="inner-controller">
-                                            <span className="icon">
-                                              <EyeOff size={16} />
-                                            </span>{" "}
-                                            <a
-                                              href="#"
-                                              className="btn-action tfcl-dashboard-action-edit"
-                                            >
-                                              {event.is_active
-                                                ? "Deactivate"
-                                                : "Activate"}
-                                            </a>
-                                          </div>
+
                                           <div className="inner-controller">
                                             <span className="icon">
                                               <Trash2 size={16} />
@@ -503,24 +438,26 @@ export default function DashBoard() {
                                               )}
                                             </a>
                                           </div>
-                                          {!isEventSponsored(event.id) && (
-                                            <div className="inner-controller">
-                                              <span className="icon">
-                                                <Award size={16} />
-                                              </span>{" "}
-                                              <a
-                                                href="#"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#popup_bid_sponser"
-                                                className="btn-action tfcl-dashboard-action-edit"
-                                                onClick={() =>
-                                                  setSelectedRow(event)
-                                                }
-                                              >
-                                                Sponsor
-                                              </a>
-                                            </div>
-                                          )}
+
+                                          <div className="inner-controller text-nowrap">
+                                            <span className="icon">
+                                              <Award size={16} />
+                                            </span>{" "}
+                                            <a
+                                              href="#"
+                                              className="btn-action text-nowrap tfcl-dashboard-action-edit"
+                                              onClick={(e) => {
+                                                e.preventDefault();
+                                                setInviteRallyId(event.id);
+                                                setShowInviteModal(true);
+                                                setNumberOfVehicles(
+                                                  event.noOfVehicles
+                                                );
+                                              }}
+                                            >
+                                              Manage Participants
+                                            </a>
+                                          </div>
                                         </td>
                                       </tr>
                                     ))
@@ -544,44 +481,23 @@ export default function DashBoard() {
                       </div>
                     </div>
                   </div>
-
-                  <div
-                    className="modal fade popup login-form"
-                    id="popup_bid_sponser"
-                    tabIndex={-1}
-                    aria-hidden="true"
-                  >
-                    <div
-                      className="modal-dialog modal-dialog-centered"
-                      role="document"
-                    >
-                      <div className="modal-content">
-                        <button
-                          type="button"
-                          className="close"
-                          data-bs-dismiss="modal"
-                          aria-label="Close"
-                        >
-                          <span aria-hidden="true">×</span>
-                        </button>
-                        <div className="modal-body space-y-20 pd-40">
-                          {selectedRow && (
-                            <SponsorForm
-                              modal={true}
-                              event={selectedRow}
-                              onFormsubmit={handleSponserModalSubmit}
-                            />
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </main>
             </div>
           </div>
         </div>
       </div>
+      {showInviteModal && (
+        <RallyMasterInviteModal
+          rallyId={inviteRallyId}
+          noOfVehicles={numberOfVehicles}
+          show={showInviteModal}
+          onClose={() => setShowInviteModal(false)}
+          onSuccess={() => {
+            setShowInviteModal(false);
+          }}
+        />
+      )}
     </>
   );
 }

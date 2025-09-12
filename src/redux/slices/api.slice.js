@@ -104,7 +104,72 @@ export const api = createApi({
         method: HTTP_METHODS.DELETE,
       }),
     }),
+
+    getRallyInvites: builder.query({
+      query: (rallyId) => ({
+        url: `${API_ROUTES.RALLY_INVITES.GET_RALLY_INVITES}/${rallyId}`,
+      }),
+    }),
+    getRallyParticipants: builder.query({
+      query: (rallyId) => ({
+        url: `${API_ROUTES.RALLY_INVITES.GET_RALLY_PARTICIPANTS}/${rallyId}`,
+      }),
+    }),
+    getPreviousDrivers: builder.query({
+      query: (rallyId) => ({
+        url: `${API_ROUTES.INVITE_DRIVERS.PREVIOUS_DRIVERS}/${rallyId}`,
+      }),
+    }),
+    getAllUsers: builder.query({
+      query: (rallyId) => ({
+        url: `${API_ROUTES.INVITE_DRIVERS.ALL_USERS}/${rallyId}`,
+      }),
+    }),
+    sendInviteToDrivers: builder.mutation({
+      query: (body) => ({
+        url: API_ROUTES.INVITE_DRIVERS.INVITE_DRIVERS,
+        method: HTTP_METHODS.POST,
+        data: body,
+      }),
+    }),
+
+    acceptOrRejectInvite: builder.mutation({
+      query: (data) => ({
+        url: `${API_ROUTES.RALLY_INVITES.ACCEPT_REJECT_INVITE}`,
+        method: HTTP_METHODS.POST,
+        data,
+      }),
+  
+    }),
+
+    createUpdateGarage: builder.mutation({
+      query: (body) => ({
+        url: API_ROUTES.GARAGE.GARAGE,
+        method: HTTP_METHODS.POST,
+        data: body,
+      }),
+      invalidatesTags: ['Garage'],
+    }),
+
+    deleteGarage: builder.mutation({
+      query: (id) => ({
+        url: `${API_ROUTES.GARAGE.GARAGE}/${id}`,
+        method: HTTP_METHODS.DELETE,
+      }),
+      invalidatesTags: ['Garage'],
+    }),
+
+    getGarage: builder.query({
+      query: () => ({
+        url: API_ROUTES.GARAGE.GARAGE,
+        method: HTTP_METHODS.GET,
+      }),
+      providesTags: ['Garage'],
+    }),
+
   }),
 });
 
-export const { useSignupMutation,useCreateEditCheckpointMutation,useDeleteCheckpointMutation,useDeleteEventMutation,useGetProfileQuery,useCreateEditEventMutation, useLoginMutation,useGetMyEventsQuery,useUpdateProfileMutation,useCreateGarageMutation,useGetEventByIdQuery,useGetPublicEventsQuery,useUpdateCheckpointOrderMutation } = api;
+
+
+export const { useSignupMutation,useDeleteGarageMutation,useGetGarageQuery,useCreateUpdateGarageMutation,useCreateEditCheckpointMutation,useAcceptOrRejectInviteMutation,useDeleteCheckpointMutation,useDeleteEventMutation,useGetProfileQuery,useCreateEditEventMutation, useLoginMutation,useGetMyEventsQuery,useUpdateProfileMutation,useGetEventByIdQuery,useGetPublicEventsQuery,useUpdateCheckpointOrderMutation,useGetRallyInvitesQuery,useGetRallyParticipantsQuery,useGetPreviousDriversQuery,useGetAllUsersQuery,useSendInviteToDriversMutation } = api;

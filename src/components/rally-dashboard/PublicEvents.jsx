@@ -415,41 +415,6 @@ export default function PublicEvents() {
                                           className="column-controller"
                                           style={{ verticalAlign: "middle" }}
                                         >
-                                          <div className="inner-controller">
-                                            <span className="icon">
-                                              <Edit size={16} />
-                                            </span>{" "}
-                                            <a
-                                              href="#"
-                                              className="btn-action tfcl-dashboard-action-edit"
-                                            >
-                                              Edit
-                                            </a>
-                                          </div>
-                                          <div className="inner-controller">
-                                            <span className="icon">
-                                              <EyeOff size={16} />
-                                            </span>{" "}
-                                            <a
-                                              href="#"
-                                              className="btn-action tfcl-dashboard-action-edit"
-                                            >
-                                              {event.is_active
-                                                ? "Deactivate"
-                                                : "Activate"}
-                                            </a>
-                                          </div>
-                                          <div className="inner-controller">
-                                            <span className="icon">
-                                              <Trash2 size={16} />
-                                            </span>{" "}
-                                            <a
-                                              href="#"
-                                              className="btn-action tfcl-dashboard-action-edit"
-                                            >
-                                              Delete
-                                            </a>
-                                          </div>
                                           {!isEventSponsored(event.id) && (
                                             <div className="inner-controller">
                                               <span className="icon">

@@ -302,14 +302,14 @@ export default function EventDetails({ eventDetail }) {
                           <div className="tfcl-listing-header mb-4">
                             <h2>Checkpoints</h2>
                           </div>
-                          {eventDetail.checkpoints.map((checkpoint) => (
+                          {eventDetail.checkpoints.map((checkpoint,index) => (
                             <div
                               key={checkpoint.id}
                               className="card mb-4 shadow-sm"
                             >
                               <div className="card-header text-white">
                                 <h5 className="p-1">
-                                  Checkpoint {checkpoint.order}:{" "}
+                                  Checkpoint {index+1}:{" "}
                                   {checkpoint.name}
                                 </h5>
                               </div>
@@ -399,9 +399,7 @@ export default function EventDetails({ eventDetail }) {
                                     </div>
                                   </div>
                                 </div>
-                                {/* End Images Accordion */}
                               </div>
-                              {/* End Card Body */}
                             </div>
                           ))}
                         </>

@@ -31,22 +31,22 @@ export default {
     GARAGE: {
       GARAGE: 'garage',
     },
-    // RALLY_INVITES: {
-    //   ACCEPTED: 'accepted',
-    //   GET_RALLY_INVITES: 'invites',
-    //   ACCEPT_REJECT_INVITE: 'invite',
-    //   GET_RALLY_PARTICIPANTS: 'participants',
-    //   GET_USER_RALLY_INVITES: 'invites_with_user_rallies',
-    // },
-    // INVITE_DRIVERS: {
-    //   ALL_USERS: 'invites/all_users',
-    //   INVITE_DRIVERS: 'send_invite_to_drivers',
-    //   PREVIOUS_DRIVERS: 'drivers_from_prev_rallies',
-    // },
-    // USER_INVITES: {
-    //   RALLY_INVITES: 'user_invites_from_rally_master',
-    // },
-    // NOTIFICATION: {
-    //   NOTIFICATIONS: 'notifications',
-    // },
+    RALLY_INVITES: {
+      ACCEPTED: 'accepted',
+      GET_RALLY_INVITES: 'invites',
+      ACCEPT_REJECT_INVITE: 'invite',
+      GET_RALLY_PARTICIPANTS: 'participants',
+      GET_USER_RALLY_INVITES: 'invites_with_user_rallies',
+    },
+    INVITE_DRIVERS: {
+      ALL_USERS: 'invites/all_users',
+      INVITE_DRIVERS: 'send_invite_to_drivers',
+      PREVIOUS_DRIVERS: 'drivers_from_prev_rallies',
+    },
+    USER_INVITES: {
+      RALLY_INVITES: 'user_invites_from_rally_master',
+    },
+    NOTIFICATION: {
+      NOTIFICATIONS: 'notifications',
+    },
   };

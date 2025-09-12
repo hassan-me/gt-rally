@@ -122,9 +122,9 @@ export default function Sidebar() {
               </li>
               <li>
                 <Link
-                  to={`/my-listing`}
+                  to={`/public-events`}
                   className={`menu-index-2 ${
-                    pathname == "/my-listing" ? "active" : ""
+                    pathname == "/public-events" ? "active" : ""
                   } `}
                 >
                   <svg

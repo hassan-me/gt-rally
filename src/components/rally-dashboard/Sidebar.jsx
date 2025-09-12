@@ -141,9 +141,9 @@ export default function Sidebar() {
               </li>
               <li>
                 <Link
-                  to={`/my-listing`}
+                  to={`/public-events`}
                   className={`menu-index-2 ${
-                    pathname == "/my-listing" ? "active" : ""
+                    pathname == "/public-events" ? "active" : ""
                   } `}
                 >
                   <svg
@@ -184,9 +184,9 @@ export default function Sidebar() {
               </li>
               <li>
                 <Link
-                  to={`/my-favorite`}
+                  to={`/my-garage`}
                   className={`menu-index-3 ${
-                    pathname == "/my-favorite" ? "active" : ""
+                    pathname == "/my-garage" ? "active" : ""
                   } `}
                 >
                   <svg
@@ -215,12 +215,13 @@ export default function Sidebar() {
                       />
                     </g>
                   </svg>
-                  My Favorites
+                  My Garage
                 </Link>
               </li>
               <li>
                 <Link
-                  to={`/message`}
+                  to="/create-event"
+                  state={{ forceCreateEvent: true }}
                   className={`menu-index-4 ${
                     pathname == "/message" ? "active" : ""
                   } `}
@@ -265,10 +266,10 @@ export default function Sidebar() {
                       />
                     </g>
                   </svg>
-                  Message <span className="count-page">7</span>
+                  Create Event
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
                   to={`/my-review`}
                   className={`menu-index-4 ${
@@ -303,7 +304,7 @@ export default function Sidebar() {
                   </svg>
                   My Reviews
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link
                   to={`/my-profile`}
@@ -342,7 +343,7 @@ export default function Sidebar() {
                   Profile
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
                   to={`/change-password`}
                   className={`menu-index-7 ${
@@ -380,7 +381,7 @@ export default function Sidebar() {
                   </svg>
                   Change passwords
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link to="/" className="menu-index-7" onClick={handleLogout}>
                   <svg

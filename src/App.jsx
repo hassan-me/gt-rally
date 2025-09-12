@@ -49,11 +49,11 @@ import BlogPage from "./pages/blogs/blog";
 import BlogGridPage from "./pages/blogs/blog-grid";
 import BlogDetailsPage from "./pages/blogs/blog-detail";
 import DashboardPage from "./pages/rally-dashboard/dashboard";
-import MyListingPage from "./pages/rally-dashboard/my-listing";
+import PublicEventsPage from "./pages/rally-dashboard/public-events";
 import MyProfilePage from "./pages/rally-dashboard/my-profile";
 import MessagePage from "./pages/dashboard/message";
 import MyReviewPage from "./pages/dashboard/my-review";
-import MyFavoritePage from "./pages/dashboard/my-favorite";
+import MyGaragePage from "./pages/rally-dashboard/my-garage";
 import ChangePassPage from "./pages/dashboard/change-password";
 import ContactPage from "./pages/other-pages/contact";
 import CreateEventPage from "./pages/rally-dashboard/create-event";
@@ -193,18 +193,18 @@ function App() {
                 }
               />
               <Route
-                path="my-listing"
+                path="public-events"
                 element={
                   <ProtectedRoute>
-                    <MyListingPage />
+                    <PublicEventsPage />
                   </ProtectedRoute>
                 }
               />
               <Route
-                path="my-favorite"
+                path="my-garage"
                 element={
                   <ProtectedRoute>
-                    <MyFavoritePage />
+                    <MyGaragePage />
                   </ProtectedRoute>
                 }
               />

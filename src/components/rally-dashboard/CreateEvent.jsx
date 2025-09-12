@@ -57,7 +57,6 @@ export default function CreateEvent({
   const {
     data: eventData,
     isLoading: eventLoading,
-    refetch,
   } = useGetEventByIdQuery(
     { id: rallyId },
     {

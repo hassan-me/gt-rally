@@ -6,24 +6,21 @@ import {
   User,
   Mail,
   Lock,
-  Facebook,
   ChevronRight,
-  ChevronLeft,
   Check,
 } from "lucide-react";
 import {
   useSignupMutation,
   useUpdateProfileMutation,
-  useCreateGarageMutation,
+  useCreateUpdateGarageMutation,
 } from "@/redux/slices/api.slice";
 import { Modal } from "bootstrap";
 import Toast from "../common/Toast";
 import MyProfile from "../rally-dashboard/MyProfile";
-import MyGarage from "../rally-dashboard/MyGarage";
+import MyGarage from "../modals/MyGarage";
 import { useNavigate } from "react-router-dom";
 
 
-// Validation schema for signup form
 const signupSchema = yup.object().shape({
   firstName: yup.string().required("First name is required"),
   lastName: yup.string().required("Last name is required"),
@@ -42,12 +39,12 @@ export default function SignUp() {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("success");
-  const [currentStep, setCurrentStep] = useState(1); // 1 for signup, 2 for profile
+  const [currentStep, setCurrentStep] = useState(3); // 1 for signup, 2 for profile
   const navigate = useNavigate();
 
   const [signup, { isLoading: isSignupLoading }] = useSignupMutation();
   const [updateProfile] = useUpdateProfileMutation();
-  const [createGarage] = useCreateGarageMutation();
+  const [createGarage] = useCreateUpdateGarageMutation();
   const {
     register,
     handleSubmit,

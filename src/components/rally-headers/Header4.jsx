@@ -3,11 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   BarChart2,
   FileText,
-  Heart,
-  MessageCircle,
-  Star,
   User,
-  Settings,
   LogOut,
   Plus,
   ChevronDown,
@@ -104,30 +100,16 @@ export default function Header4() {
                         <BarChart2 size={20} />
                         Dashboard
                       </Link>
-                      <Link className="dropdown-item" to="/my-listing">
+                      <Link className="dropdown-item" to="/public-events">
                         <FileText size={20} />
-                        My Listing
+                        Public Events
                       </Link>
-                      <Link className="dropdown-item" to="/my-favorites">
-                        <Heart size={20} />
-                        My Favorites
-                      </Link>
-                      <Link className="dropdown-item" to="/message">
-                        <MessageCircle size={20} />
-                        Message
-                      </Link>
-                      <Link className="dropdown-item" to="/my-review">
-                        <Star size={20} />
-                        My Reviews
-                      </Link>
+                  
                       <Link className="dropdown-item" to="/my-profile">
                         <User size={20} />
                         Profile
                       </Link>
-                      <Link className="dropdown-item" to="/change-password">
-                        <Settings size={20} />
-                        Change passwords
-                      </Link>
+                  
                       <a
                         className="dropdown-item"
                         href="#"

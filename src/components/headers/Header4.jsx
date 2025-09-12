@@ -100,7 +100,7 @@ export default function Header4() {
                       </svg>
                       Dashboard
                     </Link>
-                    <Link className="dropdown-item" to={`/my-listing`}>
+                    <Link className="dropdown-item" to={`/public-events`}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width={22}
