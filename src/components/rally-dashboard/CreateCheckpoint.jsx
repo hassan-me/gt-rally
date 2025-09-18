@@ -1,5 +1,5 @@
 import "mapbox-gl/dist/mapbox-gl.css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   DndContext,
@@ -31,7 +31,6 @@ import {
   toIsoStringOrEmpty,
 } from "@/utlis/helpers";
 
-// Sortable item component
 function SortableItem({
   id,
   checkpoint,
@@ -158,6 +157,8 @@ export default function CreateCheckpoint({ rallyId, isCreate = true, goBack }) {
   const [imageFiles, setImageFiles] = useState([]);
   const [isReordering, setIsReordering] = useState(false);
   const [deletingId, setDeletingId] = useState(null);
+  const [formValues, setFormValues] = useState(eventDetails);
+  const tempCheckpointIdRef = useRef(null);
 
   const handleImageChange = (e) => {
     const file = e.target.files?.[0];
@@ -182,6 +183,12 @@ export default function CreateCheckpoint({ rallyId, isCreate = true, goBack }) {
     setImagePreviews((prev) => prev.filter((_, i) => i !== index));
     setImageFiles((prev) => prev.filter((_, i) => i !== index));
   };
+
+  useEffect(() => {
+    if (eventDetails) {
+      setFormValues(eventDetails);
+    }
+  }, [eventDetails]);
 
   const handleDrop = (e) => {
     e.preventDefault();
@@ -211,6 +218,21 @@ export default function CreateCheckpoint({ rallyId, isCreate = true, goBack }) {
   const [waypoint1Label, setWaypoint1Label] = useState("");
   const [waypoint2Label, setWaypoint2Label] = useState("");
   const [activeLocationPicker, setActiveLocationPicker] = useState(null);
+
+  const applyCheckpointPreviewUpdate = (patch) => {
+    const currentId = watch("id") || tempCheckpointIdRef.current;
+    if (!currentId) return;
+
+    setFormValues((prev) => {
+      const prevCheckpoints = Array.isArray(prev?.checkpoints)
+        ? prev.checkpoints
+        : [];
+      const nextCheckpoints = prevCheckpoints.map((cp) =>
+        cp?.id === currentId ? { ...cp, ...patch } : cp
+      );
+      return { ...prev, checkpoints: nextCheckpoints };
+    });
+  };
 
   const getOrderValue = () => {
     const checkpointsData = eventDetails?.checkpoints ?? [];
@@ -242,6 +264,47 @@ export default function CreateCheckpoint({ rallyId, isCreate = true, goBack }) {
       } catch {}
     }
   }, [eventDetails, isCreate]);
+
+  const GenerateNewCheckpoint = (picker) => {
+    if (!picker) return;
+    const isEditing = !!watch("_isEditing");
+    const existingId = watch("id");
+    if (isEditing || existingId) return;
+
+    const prefix =
+      picker === "waypoint2"
+        ? "temp-waypoint2-"
+        : picker === "waypoint1"
+        ? "temp-waypoint1-"
+        : "temp-location-";
+
+    const existingTemp = Array.isArray(formValues?.checkpoints)
+      ? formValues.checkpoints.find(
+          (cp) => typeof cp?.id === "string" && cp.id.startsWith(prefix)
+        )
+      : null;
+
+    if (existingTemp) {
+      tempCheckpointIdRef.current = existingTemp.id;
+      return;
+    }
+
+    const tempId = `${prefix}${Date.now()}`;
+    tempCheckpointIdRef.current = tempId;
+
+    const nameVal = watch("name") || "New checkpoint";
+    const descVal = watch("description") || "";
+    const orderVal = watch("order") || getOrderValue();
+
+    setFormValues((prev) => {
+      const prevCps = Array.isArray(prev?.checkpoints) ? prev.checkpoints : [];
+      const nextCps = [
+        ...prevCps,
+        { id: tempId, name: nameVal, description: descVal, order: orderVal },
+      ];
+      return { ...prev, checkpoints: nextCps };
+    });
+  };
 
   const handleCheckpointClick = (checkpoint) => {
     // Prepare form data for reset
@@ -279,7 +342,6 @@ export default function CreateCheckpoint({ rallyId, isCreate = true, goBack }) {
       }
     }
 
-    // Set waypoint data if they exist
     if (checkpoint.mapboxWaypoint1Json) {
       try {
         const waypoint1Data =
@@ -338,9 +400,11 @@ export default function CreateCheckpoint({ rallyId, isCreate = true, goBack }) {
     setLocationLabel("");
     setWaypoint1Label("");
     setWaypoint2Label("");
+    setActiveLocationPicker(null);
 
     setImagePreviews([]);
     setImageFiles([]);
+    tempCheckpointIdRef.current = null;
   };
 
   function safeStringifyLocation(raw) {
@@ -632,7 +696,10 @@ export default function CreateCheckpoint({ rallyId, isCreate = true, goBack }) {
                             placeholder="Select on map"
                             data-bs-toggle="modal"
                             data-bs-target="#mapbox_location_modal"
-                            onClick={() => setActiveLocationPicker("location")}
+                            onClick={() => {
+                              setActiveLocationPicker("location");
+                              GenerateNewCheckpoint("location");
+                            }}
                           />
                           <input
                             type="hidden"
@@ -653,7 +720,7 @@ export default function CreateCheckpoint({ rallyId, isCreate = true, goBack }) {
 
                       {eventDetails?.type === "CUSTOM_DRIVE" && (
                         <div className="form-group">
-                          <label htmlFor="waypoint1_json">Waypoint 1 *</label>
+                          <label htmlFor="waypoint1_json">Waypoint 1</label>
                           <div className="d-flex gap-2">
                             <input
                               id="waypoint1_json"
@@ -664,15 +731,14 @@ export default function CreateCheckpoint({ rallyId, isCreate = true, goBack }) {
                               placeholder="Select on map"
                               data-bs-toggle="modal"
                               data-bs-target="#mapbox_location_modal"
-                              onClick={() =>
-                                setActiveLocationPicker("waypoint1")
-                              }
+                              onClick={() => {
+                                setActiveLocationPicker("waypoint1");
+                                GenerateNewCheckpoint("waypoint1");
+                              }}
                             />
                             <input
                               type="hidden"
-                              {...register("waypoint1_json", {
-                                required: "Waypoint 1 is required",
-                              })}
+                              {...register("waypoint1_json")}
                             />
                           </div>
                           {errors.waypoint1_json && (
@@ -689,7 +755,7 @@ export default function CreateCheckpoint({ rallyId, isCreate = true, goBack }) {
                     {eventDetails?.type === "CUSTOM_DRIVE" && (
                       <div className="form-group-2">
                         <div className="form-group">
-                          <label htmlFor="waypoint2_json">Waypoint 2 *</label>
+                          <label htmlFor="waypoint2_json">Waypoint 2</label>
                           <div className="d-flex gap-2">
                             <input
                               id="waypoint2_json"
@@ -700,15 +766,14 @@ export default function CreateCheckpoint({ rallyId, isCreate = true, goBack }) {
                               placeholder="Select on map"
                               data-bs-toggle="modal"
                               data-bs-target="#mapbox_location_modal"
-                              onClick={() =>
-                                setActiveLocationPicker("waypoint2")
-                              }
+                              onClick={() => {
+                                setActiveLocationPicker("waypoint2");
+                                GenerateNewCheckpoint("waypoint2");
+                              }}
                             />
                             <input
                               type="hidden"
-                              {...register("waypoint2_json", {
-                                required: "Waypoint 2 is required",
-                              })}
+                              {...register("waypoint2_json")}
                             />
                           </div>
                           {errors.waypoint2_json && (
@@ -716,7 +781,7 @@ export default function CreateCheckpoint({ rallyId, isCreate = true, goBack }) {
                               style={{ marginLeft: 3 }}
                               className="text-danger"
                             >
-                              {errors.waypoint2_json.message}
+                              ;{errors.waypoint2_json.message}
                             </small>
                           )}
                         </div>
@@ -851,7 +916,7 @@ export default function CreateCheckpoint({ rallyId, isCreate = true, goBack }) {
       </div>
       <MapboxLocationModal
         id="mapbox_location_modal"
-        eventDetails={eventDetails}
+        eventDetails={formValues}
         initialCoordinates={
           activeLocationPicker === "waypoint2"
             ? watch("waypoint2_json")?.query
@@ -868,17 +933,110 @@ export default function CreateCheckpoint({ rallyId, isCreate = true, goBack }) {
             setValue("waypoint2_json", retrievedLocation, {
               shouldValidate: true,
             });
+            applyCheckpointPreviewUpdate({
+              mapboxWaypoint2Json: retrievedLocation,
+            });
           } else if (activeLocationPicker === "waypoint1") {
             setWaypoint1Label(display);
             setValue("waypoint1_json", retrievedLocation, {
               shouldValidate: true,
+            });
+            applyCheckpointPreviewUpdate({
+              mapboxWaypoint1Json: retrievedLocation,
             });
           } else {
             setLocationLabel(display);
             setValue("location_json", retrievedLocation, {
               shouldValidate: true,
             });
+            applyCheckpointPreviewUpdate({
+              latitude: retrievedLocation?.query?.[1],
+              longitude: retrievedLocation?.query?.[0],
+            });
           }
+        }}
+        onCancel={() => {
+          const id = watch("id");
+          const originalCp = (eventDetails?.checkpoints || []).find(
+            (cp) => cp?.id === id
+          );
+          if (!originalCp) {
+            const tempId = tempCheckpointIdRef.current;
+            if (tempId) {
+              setFormValues((prev) => {
+                const prevCps = Array.isArray(prev?.checkpoints)
+                  ? prev.checkpoints
+                  : [];
+                return {
+                  ...prev,
+                  checkpoints: prevCps.filter((cp) => cp?.id !== tempId),
+                };
+              });
+            }
+            if (activeLocationPicker === "waypoint2") {
+              setWaypoint2Label("");
+              setValue("waypoint2_json", "", { shouldValidate: true });
+            } else if (activeLocationPicker === "waypoint1") {
+              setWaypoint1Label("");
+              setValue("waypoint1_json", "", { shouldValidate: true });
+            } else {
+              setLocationLabel("");
+              setValue("location_json", "", { shouldValidate: true });
+            }
+            tempCheckpointIdRef.current = null;
+            return;
+          }else {
+
+          if (activeLocationPicker === "waypoint2") {
+            applyCheckpointPreviewUpdate({
+              mapboxWaypoint2Json: originalCp?.mapboxWaypoint2Json || "",
+            });
+            setValue("waypoint2_json", originalCp?.mapboxWaypoint2Json || "", {
+              shouldValidate: true,
+            });
+            const label =
+              (typeof originalCp?.mapboxWaypoint2Json === "string"
+                ? JSON.parse(originalCp?.mapboxWaypoint2Json)?.features?.[0]
+                    ?.place_name
+                : originalCp?.mapboxWaypoint2Json?.features?.[0]?.place_name) ||
+              "";
+            setWaypoint2Label(label);
+          } else if (activeLocationPicker === "waypoint1") {
+            applyCheckpointPreviewUpdate({
+              mapboxWaypoint1Json: originalCp?.mapboxWaypoint1Json || "",
+            });
+            setValue("waypoint1_json", originalCp?.mapboxWaypoint1Json || "", {
+              shouldValidate: true,
+            });
+            const label =
+              (typeof originalCp?.mapboxWaypoint1Json === "string"
+                ? JSON.parse(originalCp?.mapboxWaypoint1Json)?.features?.[0]
+                    ?.place_name
+                : null) || "";
+            setWaypoint1Label(label);
+          } else {
+            applyCheckpointPreviewUpdate({
+              latitude:
+                typeof originalCp?.latitude === "number"
+                  ? originalCp.latitude
+                  : undefined,
+              longitude:
+                typeof originalCp?.longitude === "number"
+                  ? originalCp.longitude
+                  : undefined,
+              mapboxLocationJson: originalCp?.mapboxLocationJson || "",
+            });
+            setValue("location_json", originalCp?.mapboxLocationJson || "", {
+              shouldValidate: true,
+            });
+            const label =
+              (typeof originalCp?.mapboxLocationJson === "string"
+                ? JSON.parse(originalCp?.mapboxLocationJson)?.features?.[0]
+                    ?.place_name
+                : null) || "";
+            setLocationLabel(label);
+          }
+        }
         }}
       />
     </div>

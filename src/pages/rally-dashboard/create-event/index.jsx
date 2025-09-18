@@ -9,7 +9,7 @@ import CreateCheckpoint from "@/components/rally-dashboard/CreateCheckpoint";
 
 const metadata = {
   title:
-    "Add Listing || AutoDeal - Car Dealer, Rental & Listing Reactjs Template",
+    "Create Rally",
   description: "AutoDeal - Car Dealer, Rental & Listing Reactjs Template",
 };
 

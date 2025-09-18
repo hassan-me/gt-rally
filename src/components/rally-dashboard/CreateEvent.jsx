@@ -7,16 +7,16 @@ import { errorToast, successToast } from "../common/Toast";
 import MapboxLocationModal from "../common/MapboxLocationModal";
 
 import {
-  useCreateEditEventMutation,
   useGetEventByIdQuery,
+  useCreateEditEventMutation,
 } from "@/redux/slices/api.slice";
 import {
+  getImage,
+  toUtcIso,
+  toLocalHHMM,
   normalizeMapboxFeature,
   toIsoStringOrEmpty,
-  getImage,
-  toLocalHHMM,
   toLocalYYYYMMDD,
-  toUtcIso,
 } from "@/utlis/helpers";
 
 export default function CreateEvent({
@@ -38,6 +38,7 @@ export default function CreateEvent({
     inspection_form: false,
     avoid_highway: false,
     avoid_toll: false,
+    checkpoints:[],
   };
   const {
     watch,
@@ -47,9 +48,9 @@ export default function CreateEvent({
     reset,
     formState: { errors },
   } = useForm({ defaultValues });
+  const [imageFiles, setImageFiles] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
   const [imagePreviews, setImagePreviews] = useState([]);
-  const [imageFiles, setImageFiles] = useState([]);
   const [existingThumbnails, setExistingThumbnails] = useState([]);
   const [createEvent, { isLoading: createEventLoading }] =
     useCreateEditEventMutation();
@@ -185,6 +186,7 @@ export default function CreateEvent({
       avoid_toll: eventData.avoidToll || false,
       start_location_json: parseLoc(eventData.startMapboxLocationJson),
       end_location_json: parseLoc(eventData.endMapboxLocationJson),
+      checkpoints:eventData.checkpoints ||[],
     };
 
     reset(mapped, {
@@ -261,6 +263,7 @@ export default function CreateEvent({
   const [startLocationLabel, setStartLocationLabel] = useState("");
   const [endLocationLabel, setEndLocationLabel] = useState("");
   const [activeLocationPicker, setActiveLocationPicker] = useState(null);
+  const formValues = watch(); 
 
   function safeStringifyLocation(raw) {
     const normalized = normalizeMapboxFeature(raw);
@@ -301,7 +304,6 @@ export default function CreateEvent({
       rest.start_time = startUTC;
     }
 
-    // Add rallyId for editing mode
     if (rallyId) {
       formData.append("id", rallyId);
     }
@@ -364,6 +366,7 @@ export default function CreateEvent({
       errorToast("Error Creating Event");
     }
   };
+  console.log("watch form values",formValues)
 
   return (
     <div className="container">
@@ -959,6 +962,7 @@ export default function CreateEvent({
       </div>
       <MapboxLocationModal
         id="mapbox_location_modal"
+        eventDetails={ formValues } 
         initialCoordinates={
           activeLocationPicker === "end"
             ? watch("end_location_json")?.query

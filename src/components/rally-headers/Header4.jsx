@@ -33,7 +33,10 @@ export default function Header4() {
         <div className="container2">
           <div className="row">
             <div className="col-lg-12">
-              <div className="inner-container flex justify-space align-center">
+              <div
+                className="inner-container flex justify-space align-center"
+                style={{ height: 70 }}
+              >
                 {/* Logo Box */}
                 <div className="logo-box flex">
                   <div className="logo">
@@ -48,8 +51,7 @@ export default function Header4() {
                   </div>
                 </div>
                 <div className="nav-outer flex align-center">
-                  {/* Main Menu */}
-                  <nav className="main-menu show navbar-expand-md">
+                  {/* <nav className="main-menu show navbar-expand-md">
                     <div
                       className="navbar-collapse collapse clearfix"
                       id="navbarSupportedContent"
@@ -58,8 +60,7 @@ export default function Header4() {
                         <Nav />
                       </ul>
                     </div>
-                  </nav>
-                  {/* Main Menu End*/}
+                  </nav> */}
                 </div>
                 <div className="header-account flex align-center">
                   {isLoggedIn ? (
@@ -104,12 +105,12 @@ export default function Header4() {
                         <FileText size={20} />
                         Public Events
                       </Link>
-                  
+
                       <Link className="dropdown-item" to="/my-profile">
                         <User size={20} />
                         Profile
                       </Link>
-                  
+
                       <a
                         className="dropdown-item"
                         href="#"

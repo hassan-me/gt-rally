@@ -8,7 +8,7 @@ import { useGetProfileQuery, useUpdateProfileMutation } from "@/redux/slices/api
 import { errorToast, successToast } from "@/components/common/Toast";
 const metadata = {
   title:
-    "My Profile || AutoDeal - Car Dealer, Rental & Listing Reactjs Template",
+    "My Profile",
   description: "AutoDeal - Car Dealer, Rental & Listing Reactjs Template",
 };
 

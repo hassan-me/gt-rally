@@ -6,7 +6,7 @@ import React from "react";
 import MetaComponent from "@/components/common/MetaComponent";
 const metadata = {
   title:
-    "My Listings || AutoDeal - Car Dealer, Rental & Listing Reactjs Template",
+    "Public Events",
   description: "AutoDeal - Car Dealer, Rental & Listing Reactjs Template",
 };
 export default function PublicEventsPage() {

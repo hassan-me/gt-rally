@@ -6,7 +6,7 @@ import React from "react";
 import MetaComponent from "@/components/common/MetaComponent";
 const metadata = {
   title:
-    "Dashboard || AutoDeal - Car Dealer, Rental & Listing Reactjs Template",
+    "Dashboard ",
   description: "AutoDeal - Car Dealer, Rental & Listing Reactjs Template",
 };
 export default function DashboardPage() {
