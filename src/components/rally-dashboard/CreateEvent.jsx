@@ -38,7 +38,7 @@ export default function CreateEvent({
     inspection_form: false,
     avoid_highway: false,
     avoid_toll: false,
-    checkpoints:[],
+    checkpoints: [],
   };
   const {
     watch,
@@ -55,10 +55,7 @@ export default function CreateEvent({
   const [createEvent, { isLoading: createEventLoading }] =
     useCreateEditEventMutation();
 
-  const {
-    data: eventData,
-    isLoading: eventLoading,
-  } = useGetEventByIdQuery(
+  const { data: eventData, isLoading: eventLoading } = useGetEventByIdQuery(
     { id: rallyId },
     {
       skip: !rallyId,
@@ -186,7 +183,7 @@ export default function CreateEvent({
       avoid_toll: eventData.avoidToll || false,
       start_location_json: parseLoc(eventData.startMapboxLocationJson),
       end_location_json: parseLoc(eventData.endMapboxLocationJson),
-      checkpoints:eventData.checkpoints ||[],
+      checkpoints: eventData.checkpoints || [],
     };
 
     reset(mapped, {
@@ -263,7 +260,7 @@ export default function CreateEvent({
   const [startLocationLabel, setStartLocationLabel] = useState("");
   const [endLocationLabel, setEndLocationLabel] = useState("");
   const [activeLocationPicker, setActiveLocationPicker] = useState(null);
-  const formValues = watch(); 
+  const formValues = watch();
 
   function safeStringifyLocation(raw) {
     const normalized = normalizeMapboxFeature(raw);
@@ -366,7 +363,7 @@ export default function CreateEvent({
       errorToast("Error Creating Event");
     }
   };
-  console.log("watch form values",formValues)
+  console.log("watch form values", formValues);
 
   return (
     <div className="container">
@@ -962,7 +959,7 @@ export default function CreateEvent({
       </div>
       <MapboxLocationModal
         id="mapbox_location_modal"
-        eventDetails={ formValues } 
+        eventDetails={formValues}
         initialCoordinates={
           activeLocationPicker === "end"
             ? watch("end_location_json")?.query
@@ -984,6 +981,21 @@ export default function CreateEvent({
             setValue("start_location_json", retrievedLocation, {
               shouldValidate: true,
             });
+          }
+        }}
+        onCancel={() => {
+          if (activeLocationPicker == "end") {
+            setValue(
+              "end_location_json",
+              eventData?.endMapboxLocationJson || ""
+            );
+            setEndLocationLabel("");
+          } else if (activeLocationPicker == "start") {
+            setValue(
+              "start_location_json",
+              eventData?.startMapboxLocationJson || ""
+            );
+            setStartLocationLabel("");
           }
         }}
       />

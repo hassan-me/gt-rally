@@ -25,10 +25,11 @@ export default function DashBoard() {
 
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [events, setEvents] = useState([]);
+  const [mapFilteredIds, setMapFilteredIds] = useState(null);
+  const [mapInteracted, setMapInteracted] = useState(false);
   const [numberOfVehicles, setNumberOfVehicles] = useState(0);
   const [selectedType, setSelectedType] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("success");
   const [showToast, setShowToast] = useState(false);
 
@@ -75,16 +76,19 @@ export default function DashBoard() {
   }, [events]);
 
   useEffect(() => {
-    const filterdata = events.filter((event) => {
+    const base = events.filter((event) => {
       const typeMatch = selectedType ? event.type === selectedType : true;
-      const SearchMatch = event.name
+      const searchMatch = event.name
         .toLowerCase()
         .includes(searchQuery.toLowerCase());
-
-      return typeMatch && SearchMatch;
+      return typeMatch && searchMatch;
     });
-    setFilteredEvents(filterdata);
-  }, [selectedType, events, searchQuery]);
+    const withMap =
+      mapFilteredIds === null
+        ? base
+        : base.filter((e) => mapFilteredIds.has(e.id));
+    setFilteredEvents(withMap);
+  }, [selectedType, events, searchQuery, mapFilteredIds]);
 
   const onDeleteEvent = async (id) => {
     try {
@@ -99,13 +103,6 @@ export default function DashBoard() {
 
   return (
     <>
-      {showToast && (
-        <Toast
-          message={toastMessage}
-          type={toastType}
-          onClose={() => setShowToast(false)}
-        />
-      )}
       <div className="container">
         <div className="row">
           <div className="col-md-12">
@@ -205,14 +202,31 @@ export default function DashBoard() {
                             Your Rallies
                           </h5>
 
-                          <MapWithRadius />
+                          <MapWithRadius
+                            events={events}
+                            onFilter={(evts) => {
+                              if (!Array.isArray(evts)) {
+                                setMapFilteredIds(null);
+                                return;
+                              }
+                              if (evts.length === 0) {
+                                setMapFilteredIds(
+                                  mapInteracted ? new Set() : null
+                                );
+                                return;
+                              }
+                              setMapFilteredIds(new Set(evts.map((e) => e.id)));
+                            }}
+                            onUserInteraction={() => setMapInteracted(true)}
+                          />
 
-                          <div className="row">
-                            <div className="col-xl-3 col-lg-6 mb-2">
+                          <div className="row mt-3">
+                            <div className="col-xl-4 col-lg-6 mb-2">
                               <div className="group-input-icon search">
                                 <input
                                   type="text"
                                   name="title_search"
+                                  className="form-control"
                                   id="title_search"
                                   defaultValue=""
                                   placeholder="Search..."
@@ -225,7 +239,7 @@ export default function DashBoard() {
                                 </span>
                               </div>
                             </div>
-                            <div className="col-xl-3 col-lg-6 mb-2">
+                            <div className="col-xl-3 col-lg-2 col-md-2 mb-2">
                               <DropdownSelect
                                 addtionalParentClass="form-control"
                                 defaultOption={"Select Type"}
@@ -471,11 +485,11 @@ export default function DashBoard() {
                                 </tbody>
                               </table>
                             </div>
-                            <div className="themesflat-pagination clearfix mt-40">
+                            {/* <div className="themesflat-pagination clearfix mt-40">
                               <ul>
                                 <Pagination2 />
                               </ul>
-                            </div>
+                            </div> */}
                           </div>
                         </div>
                       </div>

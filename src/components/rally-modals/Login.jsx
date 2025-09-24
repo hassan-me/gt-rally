@@ -175,9 +175,9 @@ export default function Login() {
                           </div>
                         </fieldset>
 
-                        <div className="title-forgot">
+                        {/* <div className="title-forgot">
                           <a className="fs-14 fw-4">Forgot password</a>
-                        </div>
+                        </div> */}
                         <button
                           className="sc-button"
                           name="submit"
@@ -198,7 +198,7 @@ export default function Login() {
                       Register
                     </a>
                   </div>
-                  <p className="texts line fs-12 text-center">or login with</p>
+                  {/* <p className="texts line fs-12 text-center">or login with</p>
                   <div className="button-box flex">
                     <a
                       href="#"
@@ -252,7 +252,7 @@ export default function Login() {
                       </svg>
                       <span className="fw-6">Facebook</span>
                     </a>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

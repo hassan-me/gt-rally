@@ -90,7 +90,7 @@ export default function MobileNav() {
         id="navbarSupportedContent"
       >
         <ul className="navigation clearfix">
-          <li
+          {/* <li
             className={`tf-megamenu dropdown2 parent-menu-1 ${
               isActive(homepages) ? "current" : ""
             } `}
@@ -111,8 +111,8 @@ export default function MobileNav() {
               ))}
             </ul>
             <div className="dropdown2-btn" onClick={handleActive1} />
-          </li>
-          <li
+          </li> */}
+          {/* <li
             className={`tfcl-mega-menu dropdown2 parent-menu-1  ${
               isActive(listingPages) ? "current" : ""
             } `}
@@ -141,13 +141,13 @@ export default function MobileNav() {
               ))}
             </ul>
             <div className="dropdown2-btn" onClick={handleActive1} />
-          </li>
+          </li> */}
           <li
             className={`dropdown2 parent-menu-1  ${
               isActive(otherPages) ? "current" : ""
             } `}
           >
-            <a href="#">Page</a>
+            <a href="#">Start your Journey</a>
             <ul>
               {otherPages.map((item, index) => (
                 <li
@@ -188,26 +188,11 @@ export default function MobileNav() {
             <div className="dropdown2-btn" onClick={handleActive1} />
           </li>
           <li
-            className={`dropdown2  parent-menu-1 ${
-              isActive(blogPages) ? "current" : ""
-            } `}
+            className={`dropdown2  parent-menu-1`}
           >
-            <a href="#">Blog</a>
-            <ul>
-              {blogPages.map((item, index) => (
-                <li
-                  key={index}
-                  className={
-                    item.href.split("/")[1] == pathname.split("/")[1]
-                      ? "current"
-                      : ""
-                  }
-                >
-                  <Link to={item.href}>{item.text}</Link>
-                </li>
-              ))}
-            </ul>
-            <div className="dropdown2-btn" onClick={handleActive1} />
+            <a href="/">Home</a>
+            
+          
           </li>
           <li className={"contact" == pathname.split("/")[1] ? "current" : ""}>
             <Link to={`/contact`}>Contact</Link>

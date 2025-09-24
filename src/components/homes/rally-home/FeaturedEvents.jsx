@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
+
 import { Link } from "react-router-dom";
 import {
   getImage,
@@ -10,6 +11,7 @@ import {
   formatDuration,
   formatDateRange,
 } from "@/utlis/helpers";
+import { Car } from "lucide-react";
 export default function FeaturedEvents() {
   const [rallies, setRallies] = useState([]);
   useEffect(() => {
@@ -95,25 +97,17 @@ export default function FeaturedEvents() {
                       <SwiperSlide key={i} className="swiper-slide">
                         <div className="box-car-list hv-one">
                           <div className="image-group relative">
-                            <div className="top flex-two">
-                              <ul className="d-flex gap-8">
+                            <div className="top flex-two" style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center" }}>
+                              <ul className="d-flex gap-8 align-items-center">
                                 <li className="flag-tag success">Featured</li>
-                                <li className="flag-tag style-1">
-                                  <div className="icon">
-                                    <svg
-                                      width={16}
-                                      height={13}
-                                      viewBox="0 0 16 13"
-                                      fill="none"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      {/* SVG path remains unchanged */}
-                                    </svg>
-                                  </div>
-                                  {elm.no_of_vehicles}
-                                </li>
                               </ul>
-                              <div className="year flag-tag">
+                              <div className="flag-tag style-1"  >
+                                <div className="icon" >
+                                  <Car size={18} />
+                                </div>
+                                {elm.no_of_vehicles}
+                              </div>
+                              <div className="year flag-tag" style={{ justifySelf: "end" }}>
                                 {formatDateRange(elm.start_date, elm.end_date)}
                               </div>
                             </div>
@@ -147,8 +141,9 @@ export default function FeaturedEvents() {
                                   "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/800px-Image_not_available.png"
                                 }
                                 style={{
-                                  minWidth: "450px",
-                                  minHeight: "180px",
+                                  minWidth: "400px",
+                                  minHeight: "220px",
+                                  ...(window.innerWidth > 768 ? { transform: "translateX(-40px)" } : {}),
                                   objectFit: "cover",
                                 }}
                               />

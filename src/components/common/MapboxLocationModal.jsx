@@ -99,7 +99,16 @@ export default function MapboxLocationModal({
             "bottom-right"
           );
 
-          // Ensure mouse interactions are enabled inside the modal
+          markerRef.current = new mapboxgl.Marker({ draggable: true })
+            .setLngLat(initialCoordinates || [-98.5795, 39.8283])
+            .addTo(mapRef.current);
+          markerRef.current.on("dragend", async () => {
+            const lngLat = markerRef.current.getLngLat();
+            const coords = [lngLat.lng, lngLat.lat];
+            placeMarker(coords, { fly: true });
+            setSelectedCoords(coords);
+            await reverseGeocodeAndSet(coords);
+          });
 
           // click to place marker
           mapRef.current.on("click", async (e) => {
@@ -173,7 +182,6 @@ export default function MapboxLocationModal({
       if (!eventDetails) return null;
       const token = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN || "";
       if (!token) return null;
-      
 
       const coords = [];
       let startLocation =
@@ -199,7 +207,7 @@ export default function MapboxLocationModal({
           coords.push([startLocation.query[0], startLocation.query[1]]);
         }
       }
-console.log(eventDetails.checkpoints)
+      console.log(eventDetails.checkpoints);
       if (Array.isArray(eventDetails.checkpoints)) {
         const getTypeWeight = (cp) => {
           const idStr = String(cp?.id || "");
@@ -816,7 +824,10 @@ console.log(eventDetails.checkpoints)
       aria-hidden="true"
       aria-labelledby={`${id}_label`}
     >
-      <div className="modal-dialog modal-dialog-centered modal-xxl" style={{ width: "95vw", maxWidth: "95vw" }}>
+      <div
+        className="modal-dialog modal-dialog-centered modal-xxl"
+        style={{ width: "95vw", maxWidth: "95vw" }}
+      >
         <div
           className="modal-content"
           style={{ overflow: "hidden", borderRadius: 8 }}
@@ -1058,23 +1069,24 @@ console.log(eventDetails.checkpoints)
               {/* Right panel (route preview) */}
               <div
                 style={{
-                  flex:0.8,
-                  padding:6,
-                  paddingLeft:3,
-                  gap:8,
+                  flex: 0.8,
+                  padding: 6,
+                  paddingLeft: 3,
+                  gap: 8,
                   position: "relative",
                   display: "flex",
                   flexDirection: "column",
-                
                 }}
               >
-                <div style={{ fontWeight: 900, fontSize: 16 }}>Route preview</div>
+                <div style={{ fontWeight: 900, fontSize: 16 }}>
+                  Route preview
+                </div>
                 <div
                   ref={routePreviewContainerRef}
                   style={{
-                    flex:1,
+                    flex: 1,
                     minHeight: 0,
-                   
+
                     overflow: "hidden",
                   }}
                 />
@@ -1115,7 +1127,6 @@ console.log(eventDetails.checkpoints)
                 </div>
               </div>
             </div>
-            
           </div>
 
           <div className="modal-footer">

@@ -1,23 +1,21 @@
-import React, { useRef, useEffect } from "react";
-import Slider3 from "./sliders/Slider3";
-
-import { Swiper, SwiperSlide } from "swiper/react";
-import Overview from "./detailComponents/Overview";
-import { Navigation, Pagination } from "swiper/modules";
-import LoanCalculator from "./detailComponents/LoanCalculator";
-import CarReview from "./detailComponents/CarReview";
-import ProfileInfo from "./detailComponents/ProfileInfo";
-import Recommended from "./detailComponents/Recommended";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { allCars, eventData } from "@/data/cars";
-import SidebarToggleButton from "./SidebarToggleButton";
-import { formatDuration, getImage, metersToMiles } from "@/utlis/helpers";
+import Slider3 from "./sliders/Slider3";
+import React, { useRef, useEffect } from "react";
+
 import { EventType } from "@/constants";
+import Overview from "./detailComponents/Overview";
+import SidebarToggleButton from "./SidebarToggleButton";
+import ProfileInfo from "./detailComponents/ProfileInfo";
+import {
+  getImage,
+  metersToMiles,
+  formatDuration,
+  createLabeledMarkerElement,
+} from "@/utlis/helpers";
+
 export default function EventDetails({ eventDetail }) {
-  console.log("--> ", eventDetail);
   const mapContainer = useRef(null);
-  console.log("--> process.env", import.meta.env);
 
   useEffect(() => {
     mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
@@ -28,7 +26,6 @@ export default function EventDetails({ eventDetail }) {
       zoom: 14,
     });
 
-
     if (eventDetail.type === EventType.CAR_MEETS.type) {
       if (eventDetail.start_latitude && eventDetail.start_longitude) {
         map.on("load", () => {
@@ -37,7 +34,6 @@ export default function EventDetails({ eventDetail }) {
             eventDetail.start_latitude,
           ]);
 
-          // Add marker for the start location
           new mapboxgl.Marker({ color: "red", scale: 1.5 })
             .setLngLat([
               eventDetail.start_longitude,
@@ -47,77 +43,188 @@ export default function EventDetails({ eventDetail }) {
         });
       }
     } else {
-      // Your existing route drawing code for other event types
-      if (eventDetail.route_json) {
+      map.on("load", async () => {
         try {
-          const routeData = JSON.parse(eventDetail.route_json);
-          if (Array.isArray(routeData) && routeData.length) {
-            map.on("load", () => {
-              const geoJson = {
-                type: "Feature",
-                geometry: {
-                  type: "LineString",
-                  coordinates: routeData,
-                },
-              };
+          const token = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN || "";
+          if (!token) return;
 
-              map.addSource("route", {
-                type: "geojson",
-                data: geoJson,
-              });
+          const coords = [];
 
-              map.addLayer({
-                id: "route-layer",
-                type: "line",
-                source: "route",
-                layout: {
-                  "line-join": "round",
-                  "line-cap": "round",
-                },
-                paint: {
-                  "line-color": "#1DA1F2",
-                  "line-width": 4,
-                },
-              });
+          if (
+            typeof eventDetail.start_longitude === "number" &&
+            typeof eventDetail.start_latitude === "number"
+          ) {
+            coords.push([
+              eventDetail.start_longitude,
+              eventDetail.start_latitude,
+            ]);
+          }
 
-              const bounds = new mapboxgl.LngLatBounds();
-              routeData.forEach((coord) => bounds.extend(coord));
-              map.fitBounds(bounds, { padding: 50 });
-
-              const startCoord = routeData[0];
-              const endCoord = routeData[routeData.length - 1];
-
-              if (Array.isArray(eventDetail.checkpoints)) {
-                eventDetail.checkpoints?.forEach(({ latitude, longitude }) => {
-                  new mapboxgl.Marker({ color: "orange" })
-                    .setLngLat([longitude, latitude])
-                    .addTo(map);
+          if (Array.isArray(eventDetail.checkpoints)) {
+            [...eventDetail.checkpoints]
+              .sort((a, b) => (a?.order || 0) - (b?.order || 0))
+              .forEach((cp) => {
+                const shapingJsons = [
+                  cp?.mapbox_waypoint1_json,
+                  cp?.mapbox_waypoint2_json,
+                  cp?.mapboxWaypoint1Json,
+                  cp?.mapboxWaypoint2Json,
+                ].filter(Boolean);
+                shapingJsons.forEach((j) => {
+                  try {
+                    const fc = typeof j === "string" ? JSON.parse(j) : j;
+                    const c =
+                      fc?.features?.[0]?.geometry?.coordinates ||
+                      fc?.geometry?.coordinates;
+             
+                      coords.push([c[0], c[1]]);
+                   
+                  } catch (e) {}
                 });
-              }
 
-              new mapboxgl.Marker({ color: "red", scale: 1.5 })
-                .setLngLat(startCoord)
-                .addTo(map);
+                if (
+                  typeof cp?.longitude === "number" &&
+                  typeof cp?.latitude === "number"
+                ) {
+                  coords.push([cp.longitude, cp.latitude]);
+                }
+              });
+          }
 
-              if (
-                startCoord[0] === endCoord[0] &&
-                startCoord[1] === endCoord[1]
-              ) {
-                // Use a smaller size for the overlapping end marker
-                new mapboxgl.Marker({ color: "green", scale: 1.0 })
-                  .setLngLat(endCoord)
-                  .addTo(map);
-              } else {
-                new mapboxgl.Marker({ color: "green", scale: 1.5 })
-                  .setLngLat(endCoord)
-                  .addTo(map);
-              }
-            });
+          // End
+          if (
+            typeof eventDetail.end_longitude === "number" &&
+            typeof eventDetail.end_latitude === "number"
+          ) {
+            coords.push([eventDetail.end_longitude, eventDetail.end_latitude]);
+          }
+
+          if (coords.length < 2) return;
+
+          const coordStr = coords.map((c) => `${c[0]},${c[1]}`).join(";");
+          const excludeParams = [];
+          if (eventDetail?.avoid_highway) excludeParams.push("motorway");
+          if (eventDetail?.avoid_toll) excludeParams.push("toll");
+          const exclude = excludeParams.length
+            ? `&exclude=${excludeParams.join(",")}`
+            : "";
+          const url = `https://api.mapbox.com/directions/v5/mapbox/driving/${coordStr}?geometries=geojson&overview=full&steps=false&alternatives=false${exclude}&access_token=${token}`;
+
+          const res = await fetch(url);
+          const json = await res.json();
+          const route = json?.routes?.[0]?.geometry;
+          if (!route) return;
+
+          // Draw route
+          if (map.getLayer("route-layer")) {
+            map.removeLayer("route-layer");
+          }
+          if (map.getSource("route")) {
+            map.removeSource("route");
+          }
+          map.addSource("route", {
+            type: "geojson",
+            data: { type: "Feature", properties: {}, geometry: route },
+          });
+          map.addLayer({
+            id: "route-layer",
+            type: "line",
+            source: "route",
+            layout: { "line-join": "round", "line-cap": "round" },
+            paint: {
+              "line-color": "#0d6efd",
+              "line-width": 4,
+              "line-opacity": 0.9,
+            },
+          });
+
+          // Fit bounds
+          const bounds = new mapboxgl.LngLatBounds();
+          (route?.coordinates || []).forEach((c) => bounds.extend(c));
+          map.fitBounds(bounds, { padding: 50 });
+
+          // Marker helper
+
+          // Start & End
+          const startCoord = coords[0];
+          const endCoord = coords[coords.length - 1];
+          new mapboxgl.Marker({
+            element: createLabeledMarkerElement({
+              labelText: "Start",
+              emoji: "🏁",
+              size: 24,
+            }),
+          })
+            .setLngLat(startCoord)
+            .addTo(map);
+          new mapboxgl.Marker({
+            element: createLabeledMarkerElement({
+              labelText: "End",
+              emoji: "🏁",
+              size: 24,
+            }),
+          })
+            .setLngLat(endCoord)
+            .addTo(map);
+
+          // Checkpoints and Waypoints
+          if (Array.isArray(eventDetail.checkpoints)) {
+            [...eventDetail.checkpoints]
+              .sort((a, b) => (a?.order || 0) - (b?.order || 0))
+              .forEach((cp) => {
+                if (
+                  typeof cp?.longitude === "number" &&
+                  typeof cp?.latitude === "number"
+                ) {
+                  const cpLabel = cp?.name ? `${cp.name}` : "Checkpoint";
+                  new mapboxgl.Marker({
+                    element: createLabeledMarkerElement({
+                      labelText: cpLabel,
+                      emoji: "🚩",
+                      size: 24,
+                    }),
+                  })
+                    .setLngLat([cp.longitude, cp.latitude])
+                    .addTo(map);
+                }
+                const shapingJsons = [
+                  cp?.mapbox_waypoint1_json,
+                  cp?.mapbox_waypoint2_json,
+                  cp?.mapboxWaypoint1Json,
+                  cp?.mapboxWaypoint2Json,
+                ].filter(Boolean);
+                shapingJsons.forEach((j, idx) => {
+                  try {
+                    const fc = typeof j === "string" ? JSON.parse(j) : j;
+                    const c =
+                      fc?.features?.[0]?.geometry?.coordinates ||
+                      fc?.geometry?.coordinates;
+                    if (
+                      Array.isArray(c) &&
+                      typeof c[0] === "number" &&
+                      typeof c[1] === "number"
+                    ) {
+                      const wpLabel = `${
+                        idx === 0 ? "Waypoint 1" : "Waypoint 2"
+                      }${cp?.name ? `: ${cp.name}` : ""}`;
+                      new mapboxgl.Marker({
+                        element: createLabeledMarkerElement({
+                          labelText: wpLabel,
+                          color: "#1e90ff",
+                          size: 18,
+                        }),
+                      })
+                        .setLngLat([c[0], c[1]])
+                        .addTo(map);
+                    }
+                  } catch (e) {}
+                });
+              });
           }
         } catch (error) {
-          console.error("Invalid route data:", error);
+          console.error("Directions build failed:", error);
         }
-      }
+      });
     }
 
     return () => map.remove();
@@ -302,15 +409,14 @@ export default function EventDetails({ eventDetail }) {
                           <div className="tfcl-listing-header mb-4">
                             <h2>Checkpoints</h2>
                           </div>
-                          {eventDetail.checkpoints.map((checkpoint,index) => (
+                          {eventDetail.checkpoints.map((checkpoint, index) => (
                             <div
                               key={checkpoint.id}
                               className="card mb-4 shadow-sm"
                             >
                               <div className="card-header text-white">
                                 <h5 className="p-1">
-                                  Checkpoint {index+1}:{" "}
-                                  {checkpoint.name}
+                                  Checkpoint {index + 1}: {checkpoint.name}
                                 </h5>
                               </div>
 

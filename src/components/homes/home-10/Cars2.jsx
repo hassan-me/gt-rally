@@ -140,8 +140,12 @@ export default function Cars2() {
                               className="lazyload"
                               alt="image"
                               src={elm.imgSrc}
-                              width={450}
-                              height={338}
+                              style={{
+                                minWidth: "400px",
+                                minHeight: "220px",
+                                ...(window.innerWidth > 768 ? { transform: "translateX(-35px)" } : {}),
+                                objectFit: "cover",
+                              }}
                             />
                           </div>
                         </div>

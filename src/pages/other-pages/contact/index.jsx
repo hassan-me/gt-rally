@@ -10,6 +10,8 @@ const metadata = {
   description: "AutoDeal - Car Dealer, Rental & Listing Reactjs Template",
 };
 export default function ContactPage() {
+
+  
   return (
     <>
       <MetaComponent meta={metadata} />

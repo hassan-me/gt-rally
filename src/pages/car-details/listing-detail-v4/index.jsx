@@ -1,14 +1,15 @@
-import CarDetails4 from "@/components/carDetails/CarDetails4";
+import React from "react";
+import { allCars } from "@/data/cars";
+import { Link, useParams } from "react-router-dom";
+
 import Footer1 from "@/components/footers/Footer1";
 import Header2 from "@/components/headers/Header2";
-import React from "react";
-import { Link, useParams } from "react-router-dom";
-import { allCars } from "@/data/cars";
+import CarDetails4 from "@/components/carDetails/CarDetails4";
 import MetaComponent from "@/components/common/MetaComponent";
+
 const metadata = {
   title:
-    "Car Details 04 || AutoDeal - Car Dealer, Rental & Listing Reactjs Template",
-  description: "AutoDeal - Car Dealer, Rental & Listing Reactjs Template",
+    "Event Details",
 };
 export default function BlogListingDetailsPage4() {
   let params = useParams();

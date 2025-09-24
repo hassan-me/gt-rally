@@ -11,10 +11,11 @@ import {
   ChevronDown,
 } from "lucide-react";
 
-import MobileNav from "./MobileNav";
+
 import { useDispatch, useSelector } from "react-redux";
 import { logout, selectUser } from "@/redux/slices/user.slice";
 import { getImage } from "@/utlis/helpers";
+import MobileNav from "../rally-headers/MobileNav";
 
 export default function Header1() {
   const user = useSelector(selectUser);
@@ -74,7 +75,7 @@ export default function Header1() {
                   {/* Main Menu End*/}
                 </div>
                 <div className="header-account flex align-center">
-                  <div className="search-mobie">
+                  {/* <div className="search-mobie">
                     <a
                       onClick={() => {
                         document
@@ -106,13 +107,13 @@ export default function Header1() {
                         </div>
                       </form>
                     </div>
-                  </div>
-                  <a
+                  </div> */}
+                  {/* <a
                     href="#"
                     className="header-favorite flex items-center justify-center"
                   >
                     <i className="icon-autodeal-favorite fs-18" />
-                  </a>
+                  </a> */}
                   {!isLoggedIn ? (
                     <div className="register">
                       <ul className="flex align-center">
@@ -238,20 +239,37 @@ export default function Header1() {
             </Link>
           </div>
           <div className="bottom-canvas">
-            <div className="login-box flex align-center">
-              <i className="icon-autodeal-user fs-20" />
-              <a
-                href="#"
-                data-bs-toggle="modal"
-                data-bs-target="#popup_bid"
-                className="fw-7 font-2"
-              >
-                Login
-              </a>
-            </div>
+          <div className="register">
+                      <ul className="flex align-center mb-1">
+                        <li >
+                          <i className="icon-autodeal-user fs-20 me-2" />
+                        </li>
+                        <li className="">
+                          <a
+                            href="#"
+                            data-bs-toggle="modal"
+                            data-bs-target="#popup_bid"
+                          >
+                            Login
+                          </a>
+                        </li>
+                        <li className="me-2  ms-2">
+                          <span>/</span>
+                        </li>
+                        <li className="">
+                          <a
+                            href="#"
+                            data-bs-toggle="modal"
+                            data-bs-target="#popup_bid2"
+                          >
+                            Register
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
             <MobileNav />
             <div className="button-mobi-sell">
-              <Link className="sc-button btn-icon center" to={`/add-listing`}>
+              <Link className="sc-button btn-icon center" to={`/create-event`}>
                 <svg
                   width={21}
                   height={20}
@@ -284,7 +302,7 @@ export default function Header1() {
                     </clipPath>
                   </defs>
                 </svg>
-                <span>Add listing</span>
+                <span>Create Event</span>
               </Link>
             </div>
           </div>

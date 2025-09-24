@@ -343,11 +343,11 @@ export default function DashBoard() {
                                 </tbody>
                               </table>
                             </div>
-                            <div className="themesflat-pagination clearfix mt-40">
+                            {/* <div className="themesflat-pagination clearfix mt-40">
                               <ul>
                                 <Pagination2 />
                               </ul>
-                            </div>
+                            </div> */}
                           </div>
                         </div>
                       </div>

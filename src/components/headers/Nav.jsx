@@ -85,7 +85,7 @@ export default function Nav() {
           ))}
         </ul>
       </li>
-      <li className={` ${isActive(blogPages) ? "current" : ""} `}>
+      {/* <li className={` ${isActive(blogPages) ? "current" : ""} `}>
         <a href="#">Blog</a>
         <ul>
           {blogPages.map((item, index) => (
@@ -101,8 +101,8 @@ export default function Nav() {
             </li>
           ))}
         </ul>
-      </li>
-      <li
+      </li> */}
+      {/* <li
         className={`tfcl-mega-menu dropdown2  ${
           isActive(listingPages) ? "current" : ""
         } `}
@@ -130,7 +130,7 @@ export default function Nav() {
             </li>
           ))}
         </ul>
-      </li>
+      </li> */}
       <li className={"contact" == pathname.split("/")[1] ? "current" : ""}>
         <Link to={`/contact`}>Contact</Link>
       </li>

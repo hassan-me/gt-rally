@@ -1,20 +1,19 @@
-import CarDetails4 from "@/components/carDetails/CarDetails4";
+
 import Footer1 from "@/components/footers/Footer1";
 import Header2 from "@/components/headers/Header2";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import EventDetails from "@/components/eventDetails/EventDetails4";
-import { allCars } from "@/data/cars";
 import { ClipLoader } from 'react-spinners';
 import MetaComponent from "@/components/common/MetaComponent";
+
 const metadata = {
   title:
-    "Car Details 04 || AutoDeal - Car Dealer, Rental & Listing Reactjs Template",
+    "Event Details",
   description: "AutoDeal - Car Dealer, Rental & Listing Reactjs Template",
 };
 export default function EventDetail() {
   let params = useParams();
-  const carItem = allCars.filter((elm) => elm.id == params.id)[0] || allCars[0];
   const [singleEvent, setSingleEvent] = useState(null);
 
   const [loading, setLoading] = useState(true);

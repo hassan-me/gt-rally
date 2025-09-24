@@ -5,11 +5,10 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import EventDetails from "@/components/eventDetails/EventDetails4";
 import { allCars } from "@/data/cars";
-import { ClipLoader } from 'react-spinners';
+import { ClipLoader } from "react-spinners";
 import MetaComponent from "@/components/common/MetaComponent";
 const metadata = {
-  title:
-    "Car Details 04 || AutoDeal - Car Dealer, Rental & Listing Reactjs Template",
+  title: "Event Details",
   description: "AutoDeal - Car Dealer, Rental & Listing Reactjs Template",
 };
 export default function EventDetail() {
@@ -60,13 +59,12 @@ export default function EventDetail() {
         </div>
       </section>
       {loading ? (
-  <div className="flex justify-center items-center h-64 mb-5">
-    <ClipLoader size={60} color="#3B82F6" loading={loading} />
-  </div>
-) : (
-  <EventDetails eventDetail={singleEvent} />
-)}
-
+        <div className="flex justify-center items-center h-64 mb-5">
+          <ClipLoader size={60} color="#3B82F6" loading={loading} />
+        </div>
+      ) : (
+        <EventDetails eventDetail={singleEvent} />
+      )}
 
       <Footer1 />
     </>

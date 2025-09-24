@@ -2,13 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import {
-  User,
-  Mail,
-  Lock,
-  ChevronRight,
-  Check,
-} from "lucide-react";
+import { User, Mail, Lock, ChevronRight, Check } from "lucide-react";
 import {
   useSignupMutation,
   useUpdateProfileMutation,
@@ -19,7 +13,6 @@ import Toast from "../common/Toast";
 import MyProfile from "../rally-dashboard/MyProfile";
 import MyGarage from "../modals/MyGarage";
 import { useNavigate } from "react-router-dom";
-
 
 const signupSchema = yup.object().shape({
   firstName: yup.string().required("First name is required"),
@@ -39,7 +32,7 @@ export default function SignUp() {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("success");
-  const [currentStep, setCurrentStep] = useState(3); // 1 for signup, 2 for profile
+  const [currentStep, setCurrentStep] = useState(1); // 1 for signup, 2 for profile
   const navigate = useNavigate();
 
   const [signup, { isLoading: isSignupLoading }] = useSignupMutation();
@@ -104,7 +97,7 @@ export default function SignUp() {
       displayToast(response?.message || "Garage created successfully!");
       reset();
       Modal.getInstance(document.getElementById("popup_bid2"))?.hide();
-      navigate("/dashboard")
+      navigate("/dashboard");
     } catch (err) {
       displayToast(
         err?.data?.message || "Garage creation failed. Please try again.",
@@ -127,13 +120,13 @@ export default function SignUp() {
         id="popup_bid2"
         tabIndex={-1}
         role="dialog"
-        style={{paddingTop:"2%",paddingBottom:"2%"}}
+        style={{ paddingTop: "2%", paddingBottom: "2%" }}
         aria-hidden="true"
       >
         <div className="modal-dialog modal-dialog-centered" role="document">
           <div
             className="modal-content"
-            style={{height:currentStep==1?"800px":"auto", }}
+            style={{ display: "flex", flexDirection: "column" }}
           >
             <button
               type="button"
@@ -146,17 +139,11 @@ export default function SignUp() {
             <div style={{ marginTop: "15px" }} className="stepper-container">
               <div className="stepper">
                 {/* Step 1 */}
-                <div
-                  style={{ marginLeft: "15%" }}
-                  className={`step ${currentStep >= 1 ? "active" : ""}`}
-                >
+                <div className={`step ${currentStep >= 1 ? "active" : ""}`}>
                   <div className="step-icon">
                     {currentStep > 1 ? <Check size={18} /> : "1"}
                   </div>
-                  <div
-                    className="step-content"
-                    style={{ marginRight: "270px" }}
-                  >
+                  <div className="step-content">
                     <div className="step-title">Account Details</div>
                     <div className="step-description">
                       Create your login credentials
@@ -177,10 +164,7 @@ export default function SignUp() {
                   <div className="step-icon">
                     {currentStep > 2 ? <Check size={18} /> : "2"}
                   </div>
-                  <div
-                    className="step-content"
-                    style={{ marginRight: "270px" }}
-                  >
+                  <div className="step-content">
                     <div className="step-title">Personal Info</div>
                     <div className="step-description">
                       Complete your profile
@@ -197,10 +181,7 @@ export default function SignUp() {
                 </div>
 
                 {/* Step 3 */}
-                <div
-                  style={{ marginRight: "12%" }}
-                  className={`step ${currentStep === 3 ? "active" : ""}`}
-                >
+                <div className={`step ${currentStep === 3 ? "active" : ""}`}>
                   <div className="step-icon">3</div>
                   <div className="step-content">
                     <div className="step-title">Add Garage</div>
@@ -236,50 +217,100 @@ export default function SignUp() {
                             className="comment-form form-submit"
                             acceptCharset="utf-8"
                           >
-                            <div style={{ display: "flex" }}>
-                              <div className="" style={{ width: "310px" }}>
-                                <label className="fw-6">First name</label>
-                                <input
-                                  type="text"
-                                  className="tb-my-input"
-                                  placeholder="First name"
-                                  {...register("firstName")}
-                                />
-                                {errors.firstName && (
-                                  <p className="label error text-sm mt-1">
-                                    {errors.firstName.message}
-                                  </p>
-                                )}
-                                <div className="icon">
-                                  <User
-                                    size={18}
-                                    stroke="#B6B6B6"
-                                    strokeWidth={1.5}
+                            <div className="row">
+                              {/* First name */}
+                              <div className="col-12 col-lg-6 custom-mb">
+                                <div
+                                  className="input-icon-group"
+                                  style={{ position: "relative" }}
+                                >
+                                  <label className="fw-6">First name</label>
+                                  <input
+                                    type="text"
+                                    className="tb-my-input"
+                                    placeholder="First name"
+                                    {...register("firstName")}
+                                    style={{ paddingLeft: "38px" }}
                                   />
+                                  <div
+                                    className="icon"
+                                    style={{
+                                      position: "absolute",
+                                      left: "10px",
+                                      top: "45px",
+                                      pointerEvents: "none",
+                                    }}
+                                  >
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width={18}
+                                      height={18}
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      stroke="#B6B6B6"
+                                      strokeWidth={1.5}
+                                    >
+                                      {" "}
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M15.75 7.5a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 19.25a7.25 7.25 0 1115 0v.25a.75.75 0 01-.75.75h-13.5a.75.75 0 01-.75-.75v-.25z"
+                                      />{" "}
+                                    </svg>
+                                  </div>
+                                  {errors.firstName && (
+                                    <p className="label error text-sm mt-1">
+                                      {errors.firstName.message}
+                                    </p>
+                                  )}
                                 </div>
                               </div>
-                              <div
-                                className=""
-                                style={{ width: "310px", marginLeft: "20px" }}
-                              >
-                                <label className="fw-6">Last name</label>
-                                <input
-                                  type="text"
-                                  className="tb-my-input"
-                                  placeholder="Last name"
-                                  {...register("lastName")}
-                                />
-                                {errors.lastName && (
-                                  <p className="label error text-sm mt-1">
-                                    {errors.lastName.message}
-                                  </p>
-                                )}
-                                <div className="icon">
-                                  <User
-                                    size={18}
-                                    stroke="#B6B6B6"
-                                    strokeWidth={1.5}
+
+                              {/* Last name */}
+                              <div className="col-12 col-lg-6">
+                                <div
+                                  className="input-icon-group"
+                                  style={{ position: "relative" }}
+                                >
+                                  <label className="fw-6">Last name</label>
+                                  <input
+                                    type="text"
+                                    className="tb-my-input"
+                                    placeholder="Last name"
+                                    {...register("lastName")}
+                                    style={{ paddingLeft: "38px" }}
                                   />
+                                  <div
+                                    className="icon"
+                                    style={{
+                                      position: "absolute",
+                                      left: "10px",
+                                      top: "45px",
+                                      pointerEvents: "none",
+                                    }}
+                                  >
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width={18}
+                                      height={18}
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      stroke="#B6B6B6"
+                                      strokeWidth={1.5}
+                                    >
+                                      {" "}
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M15.75 7.5a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 19.25a7.25 7.25 0 1115 0v.25a.75.75 0 01-.75.75h-13.5a.75.75 0 01-.75-.75v-.25z"
+                                      />{" "}
+                                    </svg>
+                                  </div>
+                                  {errors.lastName && (
+                                    <p className="label error text-sm mt-1">
+                                      {errors.lastName.message}
+                                    </p>
+                                  )}
                                 </div>
                               </div>
                             </div>
@@ -433,15 +464,27 @@ export default function SignUp() {
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
 
+        div.custom-mb {
+          margin-bottom: 0;
+        }
+
+        @media (max-width: 991.98px) {
+          div.custom-mb {
+            margin-bottom: 12px;
+          }
+        }
+
         .stepper {
           display: flex;
-
           justify-content: space-between;
+          gap: 12px;
+          width: 100%;
         }
 
         .step {
           display: flex;
-          width: 20%;
+          width: 33%;
+          min-width: 0;
         }
 
         .step-icon {
@@ -498,7 +541,7 @@ export default function SignUp() {
           display: flex;
           align-items: center;
           justify-content: center;
-          min-width: 60px;
+          min-width: 180px;
         }
 
         .connector-line {
@@ -569,18 +612,52 @@ export default function SignUp() {
 
         /* Responsive adjustments */
         @media (max-width: 767px) {
-          .step-description {
-            display: none;
+          /* Mobile-only scrollable modal body */
+          .modal-content {
+            max-height: 90vh;
           }
 
-          .step-icon {
-            width: 30px;
-            height: 30px;
-            font-size: 14px;
+          .modal-body {
+            overflow-y: auto;
+          }
+
+          .stepper-container {
+            padding: 12px 8px;
+          }
+
+          .stepper {
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+          }
+
+          .step {
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+          }
+
+          .step-content {
+            flex: 0;
+            align-items: center;
+            text-align: center;
           }
 
           .step-title {
             font-size: 14px;
+          }
+
+          .step-description {
+            font-size: 12px;
+            white-space: normal;
+          }
+
+          .step-connector {
+            display: none;
+          }
+
+          .connector-line {
+            display: none;
           }
         }
       `}</style>

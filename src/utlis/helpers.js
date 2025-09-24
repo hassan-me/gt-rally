@@ -113,3 +113,40 @@ const normalizeFeature = (f) => {
   };
 }
 
+
+ export const createLabeledMarkerElement = ({ labelText, emoji, color = "#1e90ff", size = 24 }) => {
+  const container = document.createElement("div");
+  container.style.display = "flex";
+  container.style.flexDirection = "column";
+  container.style.alignItems = "center";
+  container.style.transform = "translate(-50%, -100%)";
+  container.style.pointerEvents = "none";
+  const label = document.createElement("div");
+  label.textContent = labelText || "";
+  label.style.background = "rgba(0,0,0,0.7)";
+  label.style.color = "#fff";
+  label.style.padding = "2px 6px";
+  label.style.borderRadius = "4px";
+  label.style.fontSize = "11px";
+  label.style.marginBottom = "4px";
+  label.style.whiteSpace = "nowrap";
+  label.style.pointerEvents = "none";
+  const marker = document.createElement("div");
+  marker.style.pointerEvents = "auto";
+  if (emoji) {
+    marker.style.fontSize = `${size}px`;
+    marker.style.lineHeight = "1";
+    marker.textContent = emoji;
+  } else {
+    marker.style.width = `${Math.max(10, Math.floor(size * 0.6))}px`;
+    marker.style.height = `${Math.max(10, Math.floor(size * 0.6))}px`;
+    marker.style.background = color;
+    marker.style.border = "2px solid #fff";
+    marker.style.borderRadius = "50%";
+    marker.style.boxShadow = "0 0 0 2px rgba(0,0,0,0.2)";
+  }
+  container.appendChild(label);
+  container.appendChild(marker);
+  return container;
+};
+

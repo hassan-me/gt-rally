@@ -108,28 +108,31 @@ export default function MyGarage({
 
   return (
     <div className="container" style={{ position: "relative" }}>
-      <button
-        type="button"
-        aria-label="Close"
-        onClick={() => onClose && onClose()}
-        style={{
-          position: "absolute",
-          top: 10,
-          right: 10,
-          background: "transparent",
-          border: "none",
-          fontSize: "1.5rem",
-          lineHeight: 1,
-          cursor: "pointer",
-        }}
-      >
-        ×
-      </button>
+      {isCreate &&(
+   <button
+   type="button"
+   aria-label="Close"
+   onClick={() => onClose && onClose()}
+   style={{
+     position: "absolute",
+     top: 10,
+     right: 10,
+     background: "transparent",
+     border: "none",
+     fontSize: "1.5rem",
+     lineHeight: 1,
+     cursor: "pointer",
+   }}
+ >
+   ×
+ </button>
+      )}
+   
       <div className="row">
         <div className="col-md-12">
           <form
             className="tfcl-add-listing profile-inner"
-            style={isCreate ? { border: 0 } : undefined}
+            style={!isCreate ? { border: "none" } : {}}
             onSubmit={handleSubmit(onSubmit)}
           >
             <h2 className="admin-title mb-3" style={{ textAlign: "left" }}>
@@ -278,7 +281,7 @@ export default function MyGarage({
             </div>
 
             <div
-              className={`group-button-submit${!isCreate ? "left" : ""} mb-3`}
+              className={`group-button-submit ${!isCreate ? "left" : ""} mb-3`}
             >
               <button type="submit" className="pre-btn" disabled={isloading}>
                 {isloading ? (

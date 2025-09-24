@@ -203,11 +203,11 @@ export default function PublicEvents() {
                     <div className="row">
                       <div className="tfcl-dashboard-middle-left col-md-12">
                         <div className="tfcl-dashboard-listing">
-                          <h5 className="title-dashboard-table">
+                          {/* <h5 className="title-dashboard-table">
                             Your Rallies
-                          </h5>
+                          </h5> */}
 
-                          <MapWithRadius />
+                          {/* <MapWithRadius /> */}
 
                           <div className="row">
                             <div className="col-xl-3 col-lg-6 mb-2">
@@ -446,11 +446,11 @@ export default function PublicEvents() {
                                 </tbody>
                               </table>
                             </div>
-                            <div className="themesflat-pagination clearfix mt-40">
+                            {/* <div className="themesflat-pagination clearfix mt-40">
                               <ul>
                                 <Pagination2 />
                               </ul>
-                            </div>
+                            </div> */}
                           </div>
                         </div>
                       </div>
