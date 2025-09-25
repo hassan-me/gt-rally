@@ -162,7 +162,7 @@ export default function Header1() {
                             <User size={24} />
                           )}
                         </div>
-                        <p className="name text-white">
+                        <p className="name">
                           {user.firstName || user.username}{" "}
                           <ChevronDown size={14} />
                         </p>

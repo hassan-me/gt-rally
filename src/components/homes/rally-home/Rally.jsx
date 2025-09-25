@@ -83,9 +83,9 @@ export default function Rally(props) {
                 : "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/800px-Image_not_available.png"
             }
             style={{
-              minWidth: "400px",
+              minWidth: "450px",
               minHeight: "220px",
-              ...(window.innerWidth > 768 ? { transform: "translateX(-35px)" } : {}),
+              ...(window.innerWidth > 768 ? { transform: "translateX(-40px)" } : {}),
               objectFit: "cover",
             }}
           />
@@ -106,6 +106,7 @@ export default function Rally(props) {
               overflow: "hidden",
               whiteSpace: "nowrap",
               textOverflow: "ellipsis",
+             
             }}
           >
             {rally.name}
@@ -114,15 +115,15 @@ export default function Rally(props) {
         <div className="icon-box flex">
           <div className="icons flex-three text-nowrap">
             <i className="icon-autodeal-km1" />
-            <span>{rally.no_of_vehicles.toLocaleString()} vehicles</span>
+            <span style={{fontSize:14}}>{rally.no_of_vehicles.toLocaleString()} vehicles</span>
           </div>
           <div className="icons flex-three text-nowrap">
             <i className="icon-autodeal-diesel" />
-            <span>{metersToMiles(rally.distance)} miles</span>
+            <span style={{fontSize:14}}>{metersToMiles(rally.distance)} miles</span>
           </div>
           <div className="icons flex-three text-nowrap">
             <i className="icon-autodeal-automatic" />
-            <span>
+            <span style={{fontSize:14}}>
               {rally.duration == 0 ? 0 : formatDuration(rally.duration)}
             </span>
           </div>

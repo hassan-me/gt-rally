@@ -35,21 +35,20 @@ export default function Features2(props) {
               <div className="image-inner1 hover-img-wrap img-style-hover">
                 <img
                   className="ls-is-cached lazyloaded"
-                  data-src="/assets/images/section/wcu-1.jpg"
+                  data-src="/assets/images/section/stock-car.jpg"
                   alt="images"
-                  src="/assets/images/section/wcu-1.jpg"
+                  src="/assets/images/section/stock-car.jpg"
                   width={615}
                   height={890}
                 />
               </div>
-              <div className="image-inner2">
+              <div className="image-inner2" >
                 <img
                   className="ls-is-cached lazyloaded"
-                  data-src="/assets/images/section/wcu-2.png"
+                  data-src="/assets/images/section/stock-car2.jpg"
                   alt="images"
-                  src="/assets/images/section/wcu-2.png"
-                  width={661}
-                  height={307}
+                  src="/assets/images/section/stock-car2.jpg"
+                  style={{ width: 700, height: 320 ,borderRadius:25,objectFit: "cover", objectPosition: "top",display: "block"}}
                 />
               </div>
             </div>

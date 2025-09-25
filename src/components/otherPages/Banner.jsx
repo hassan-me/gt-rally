@@ -1,13 +1,32 @@
 import React from "react";
 
 export default function Banner(props) {
-  const { heading, description} = props;
+  const { heading, description, bgImage = "/assets/images/slider/slide7.jpg" } = props;
   return (
-    <section className="tf-banner style-1">
+    <section
+      className="tf-banner style-1"
+      style={{
+        backgroundImage: `url(${bgImage})`,
+        backgroundSize: "cover",
+      backgroundPosition: "center -350px",
+        backgroundRepeat: "no-repeat",
+        position: "relative",
+      
+      }}
+    >
+      {/* Overlay for better text contrast */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "rgba(0,0,0,0.35)",
+        }}
+      />
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
-            <div className="content relative z-2">
+            <div className="content relative z-2" style={{ position: "relative", zIndex: 2 }}>
               <div className="heading">
                 <h1 className="text-color-1">
                   {heading}

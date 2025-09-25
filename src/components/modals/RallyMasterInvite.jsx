@@ -82,9 +82,8 @@ export default function RallyMasterInviteModal({
     return currentUsers
       .filter((u) => {
         if (!q) return true;
-        const fullName = `${u.firstName || ""} ${
-          u.lastName || ""
-        }`.toLowerCase();
+        const fullName = `${u.firstName || ""} ${u.lastName || ""
+          }`.toLowerCase();
         const username = (u.username || "").toLowerCase();
         return (
           fullName.includes(q) ||
@@ -194,11 +193,11 @@ export default function RallyMasterInviteModal({
                     activeTab === "users"
                       ? {
                         border: "2px solid #ff7102",
-                          color: "white",
-                          backgroundColor: "#ff7102",
-                          borderRadius: 0,
-                        }
-                      : {color:"black"}
+                        color: "white",
+                        backgroundColor: "#ff7102",
+                        borderRadius: 0,
+                      }
+                      : { color: "black" }
                   }
                 >
                   Invite users
@@ -219,9 +218,9 @@ export default function RallyMasterInviteModal({
                         color: "white",
                         backgroundColor: "#ff7102",
                         borderRadius: 0,
-                        }
+                      }
                       : {
-                        color:"black"
+                        color: "black"
                       }
                   }
                 >
@@ -238,13 +237,13 @@ export default function RallyMasterInviteModal({
                   }}
                   style={
                     activeTab === "Participants"
-                      ?  {
+                      ? {
                         border: "2px solid #ff7102",
-                          color: "white",
-                          backgroundColor: "#ff7102",
-                          borderRadius: 0,
-                        }
-                      : {color:"black"}
+                        color: "white",
+                        backgroundColor: "#ff7102",
+                        borderRadius: 0,
+                      }
+                      : { color: "black" }
                   }
                 >
                   Participants
@@ -256,10 +255,12 @@ export default function RallyMasterInviteModal({
               <input
                 type="text"
                 className="form-control"
-                style={{ border: "2px solid #ff7102",
+                style={{
+                  border: "2px solid #ff7102",
                   color: "#ff7102",
                   backgroundColor: "transparent",
-                  borderRadius: 10,}}
+                  borderRadius: 10,
+                }}
                 placeholder="Search by name, username or email"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -268,14 +269,16 @@ export default function RallyMasterInviteModal({
                 <button
                   type="button"
                   className="btn text-nowrap"
-                  style={{ border: "2px solid #ff7102",
+                  style={{
+                    border: "2px solid #ff7102",
                     color: "#ff7102",
                     backgroundColor: "transparent",
-                    borderRadius: 10,}}
+                    borderRadius: 10,
+                  }}
                   onClick={handleSelectAll}
                 >
                   {selectedUserIds.length === selectableUsers.length &&
-                  selectableUsers.length > 0
+                    selectableUsers.length > 0
                     ? "Unselect all"
                     : "Select all"}
                 </button>
@@ -298,19 +301,17 @@ export default function RallyMasterInviteModal({
                   {filteredUsers.map((user) => {
                     const id = getId(user);
                     const excluded = isUserExcluded(user);
-                    const fullName = `${user.firstName || ""} ${
-                      user.lastName || ""
-                    }`.trim();
+                    const fullName = `${user.firstName || ""} ${user.lastName || ""
+                      }`.trim();
                     const checked = selectedUserIds.includes(id);
                     const avatar = user.profileImage
-                      ? getImage(user.profileImage)
-                      : "https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?semt=ais_hybrid&w=740&q=80";
+                      ? getImage(user.profileImage) :
+                      "assets/images/logo/avatar.png"
                     return (
                       <li
                         key={id}
-                        className={`list-group-item d-flex align-items-center justify-content-between ${
-                          excluded ? "list-group-item-secondary" : ""
-                        }`}
+                        className={`list-group-item d-flex align-items-center justify-content-between ${excluded ? "list-group-item-secondary" : ""
+                          }`}
                       >
                         <div className="d-flex align-items-center gap-3">
                           <div>
@@ -319,6 +320,7 @@ export default function RallyMasterInviteModal({
                               type="checkbox"
                               disabled={excluded}
                               checked={checked}
+                              style={{ backgroundColor: checked ? "#ff7102" : "", border: checked ? "none" : "" }}
                               onChange={() => toggleSelect(user)}
                             />
                           </div>
@@ -346,11 +348,12 @@ export default function RallyMasterInviteModal({
 
                         <div>
                           {excluded ? (
-                            <span  className="badge" style={{
+                            <span className="badge" style={{
                               color: "white",
-                              fontSize:12,
+                              fontSize: 12,
                               backgroundColor: "#ff7102",
-                              borderRadius: 4,}}>
+                              borderRadius: 4,
+                            }}>
                               Invite sent
                             </span>
                           ) : (
@@ -380,9 +383,8 @@ export default function RallyMasterInviteModal({
                     {filteredUsers.map((item) => {
                       const { user } = item;
                       const id = item.id;
-                      const fullName = `${user.firstName || ""} ${
-                        user.lastName || ""
-                      }`.trim();
+                      const fullName = `${user.firstName || ""} ${user.lastName || ""
+                        }`.trim();
                       const avatar = user.profileImage
                         ? getImage(user.profileImage)
                         : "https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?semt=ais_hybrid&w=740&q=80";
@@ -404,13 +406,13 @@ export default function RallyMasterInviteModal({
                                 }}
                               />
                               <div>
-                              <div className="fw-semibold">
-                                {fullName || user.username || user.email}{" "}
-                            
-                              </div>
-                              <div className="small text-muted">
-                              {user.username && `${user.username}`}
-                              </div>
+                                <div className="fw-semibold">
+                                  {fullName || user.username || user.email}{" "}
+
+                                </div>
+                                <div className="small text-muted">
+                                  {user.username && `${user.username}`}
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -473,7 +475,7 @@ export default function RallyMasterInviteModal({
               <button
                 type="button"
                 className="btn"
-                style={{backgroundColor:"#ff7102",color:"white"}}
+                style={{ backgroundColor: "#ff7102", color: "white" }}
                 onClick={handleSendInvites}
                 disabled={selectedUserIds.length === 0 || sendingInvite}
               >

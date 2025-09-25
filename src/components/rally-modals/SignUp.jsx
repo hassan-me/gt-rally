@@ -32,7 +32,7 @@ export default function SignUp() {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("success");
-  const [currentStep, setCurrentStep] = useState(1); // 1 for signup, 2 for profile
+  const [currentStep, setCurrentStep] = useState(3); // 1 for signup, 2 for profile
   const navigate = useNavigate();
 
   const [signup, { isLoading: isSignupLoading }] = useSignupMutation();
@@ -140,11 +140,11 @@ export default function SignUp() {
               <div className="stepper">
                 {/* Step 1 */}
                 <div className={`step ${currentStep >= 1 ? "active" : ""}`}>
-                  <div className="step-icon">
+                  <div className="step-icon"  style={{backgroundColor:"#FF7102",borderColor:"#FF7102"}}>
                     {currentStep > 1 ? <Check size={18} /> : "1"}
                   </div>
                   <div className="step-content">
-                    <div className="step-title">Account Details</div>
+                    <div className="step-title" style={{color:"#FF7102"}}>Account Details</div>
                     <div className="step-description">
                       Create your login credentials
                     </div>
@@ -156,35 +156,37 @@ export default function SignUp() {
                     className={`connector-line ${
                       currentStep > 1 ? "completed" : ""
                     }`}
+                    style={{backgroundColor:"#FF7102"}}
                   ></div>
                 </div>
 
                 {/* Step 2 */}
                 <div className={`step ${currentStep >= 2 ? "active" : ""}`}>
-                  <div className="step-icon">
+                  <div className="step-icon" style={{backgroundColor:"#FF7102",borderColor:"#FF7102",color:"white"}} >
                     {currentStep > 2 ? <Check size={18} /> : "2"}
                   </div>
                   <div className="step-content">
-                    <div className="step-title">Personal Info</div>
+                    <div className="step-title" style={{color:"#FF7102"}}>Personal Info</div>
                     <div className="step-description">
                       Complete your profile
                     </div>
                   </div>
                 </div>
 
-                <div className="step-connector">
+                <div className="step-connector" >
                   <div
                     className={`connector-line ${
                       currentStep > 2 ? "completed" : ""
                     }`}
+                    style={{backgroundColor:"#FF7102"}}
                   ></div>
                 </div>
 
                 {/* Step 3 */}
                 <div className={`step ${currentStep === 3 ? "active" : ""}`}>
-                  <div className="step-icon">3</div>
+                  <div className="step-icon" style={{backgroundColor:"#FF7102",borderColor:"#FF7102",color:"white"}}>3</div>
                   <div className="step-content">
-                    <div className="step-title">Add Garage</div>
+                    <div className="step-title" style={{color:"#FF7102"}}>Add Garage</div>
                     <div className="step-description">
                       Enter your car details
                     </div>
@@ -395,6 +397,7 @@ export default function SignUp() {
                               className="sc-button next-button"
                               name="submit"
                               type="submit"
+                              style={{backgroundColor:"#FF7102"}}
                               disabled={isSignupLoading}
                             >
                               <span>

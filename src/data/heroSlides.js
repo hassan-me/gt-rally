@@ -193,14 +193,14 @@ export const slidesData = [
     linkHref: "join-as-participant",
   },
   {
-    imgSrc: "/assets/images/slider/slide1.jpg",
+    imgSrc: "/assets/images/slider/slide7.jpg",
     heading: "GT Rally Mobile App. Your Ultimate Rally Companion!",
     paragraph: "Plan, join, and experience car rallies like never before with real-time navigation, event management, and community engagement—all in one powerful app!",
     linkText: "Download Mobile App",
     linkHref: "mobile-app",
   },
   {
-    imgSrc: "/assets/images/slider/slide1.jpg",
+    imgSrc: "/assets/images/slider/slide4.jpg",
     heading: "Fuel Your Brand’s Momentum with GT Rally!",
     paragraph: "Get in the fast lane—sponsor epic rallies, connect with die-hard car enthusiasts, and put your brand in pole position at GT Rally!",
     linkText: "Become a Sponsor",

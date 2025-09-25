@@ -134,6 +134,13 @@
         color: $color-1;
       }
     }
+
+    // Ensure username text is white before scroll (transparent header)
+    .box-avatar {
+      .name {
+        color: $color-1;
+      }
+    }
   }
 
   &.style3 {
@@ -245,6 +252,11 @@
 .main-header .is-fixed.is-small .header-account .flat-bt-top .sc-button span,
 .main-header .is-fixed.is-small .header-account .flat-bt-top .sc-button svg {
   color: $color-3;
+}
+
+// Ensure username text switches to dark when header becomes fixed on scroll
+.main-header .is-fixed.is-small .box-avatar .name {
+  color: #24272c;
 }
 
 .main-header .is-fixed.is-small .header-account .flat-bt-top .sc-button {

@@ -145,7 +145,7 @@ export default function Header2() {
                             <User size={24} />
                           )}
                         </div>
-                        <p className="name text-black">
+                        <p className="name tf-megamenu">
                           {user.firstName || user.username}{" "}
                           <ChevronDown size={14} />
                         </p>

@@ -116,7 +116,7 @@ export default function Cars() {
               >
                 Top Picks: Rally Cars & Thrilling Events
               </h2>
-              <Link
+              {/* <Link
                 to={`/blog-grid`}
                 className="tf-btn-arrow wow fadeInUpSmall"
                 data-wow-delay="0.2s"
@@ -124,7 +124,7 @@ export default function Cars() {
               >
                 View all
                 <i className="icon-autodeal-btn-right" />
-              </Link>
+              </Link> */}
             </div>
           </div>
           <div className="col-lg-12">

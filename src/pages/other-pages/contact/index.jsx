@@ -27,7 +27,7 @@ export default function ContactPage() {
                   <Link className="home fw-6 text-color-3" to={`/`}>
                     Home
                   </Link>
-                  <span>Used cars for sale</span>
+                  <span>Contact</span>
                 </div>
               </div>
             </div>

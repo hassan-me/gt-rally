@@ -76,10 +76,10 @@ export default function EventDetails({ eventDetail }) {
                     const c =
                       fc?.features?.[0]?.geometry?.coordinates ||
                       fc?.geometry?.coordinates;
-             
-                      coords.push([c[0], c[1]]);
-                   
-                  } catch (e) {}
+
+                    coords.push([c[0], c[1]]);
+
+                  } catch (e) { }
                 });
 
                 if (
@@ -204,9 +204,8 @@ export default function EventDetails({ eventDetail }) {
                       typeof c[0] === "number" &&
                       typeof c[1] === "number"
                     ) {
-                      const wpLabel = `${
-                        idx === 0 ? "Waypoint 1" : "Waypoint 2"
-                      }${cp?.name ? `: ${cp.name}` : ""}`;
+                      const wpLabel = `${idx === 0 ? "Waypoint 1" : "Waypoint 2"
+                        }${cp?.name ? `: ${cp.name}` : ""}`;
                       new mapboxgl.Marker({
                         element: createLabeledMarkerElement({
                           labelText: wpLabel,
@@ -217,7 +216,7 @@ export default function EventDetails({ eventDetail }) {
                         .setLngLat([c[0], c[1]])
                         .addTo(map);
                     }
-                  } catch (e) {}
+                  } catch (e) { }
                 });
               });
           }
@@ -303,15 +302,15 @@ export default function EventDetails({ eventDetail }) {
                   </div>
                   {eventDetail.id ===
                     "647264d1-73b9-4241-baf9-026ca35dc1ce" && (
-                    <div>
-                      <span
-                        className="badge bg-warning text-dark px-3 py-2"
-                        style={{ fontSize: "20px" }}
-                      >
-                        <i className="fas fa-star me-1"></i> Sponsored
-                      </span>
-                    </div>
-                  )}
+                      <div>
+                        <span
+                          className="badge bg-warning text-dark px-3 py-2"
+                          style={{ fontSize: "20px" }}
+                        >
+                          <i className="fas fa-star me-1"></i> Sponsored
+                        </span>
+                      </div>
+                    )}
 
                   {/* <div className="price-wrap flex">
                     <p className="fs-12 lh-16 text-color-2">
@@ -443,68 +442,72 @@ export default function EventDetails({ eventDetail }) {
                                       ).toLocaleString()}
                                     </p>
                                   </div>
+                                  {checkpoint.activities && (
+                                    <div className="col-12">
+                                      <p className="mb-1 mt-3">
+                                        <strong className="fw-bolder">
+                                          Activities:
+                                        </strong>
+                                      </p>
+                                      <p>{checkpoint.activities}</p>
+                                    </div>
+                                  )}
 
-                                  <div className="col-12">
-                                    <p className="mb-1 mt-3">
-                                      <strong className="fw-bolder">
-                                        Activities:
-                                      </strong>
-                                    </p>
-                                    <p>{checkpoint.activities}</p>
-                                  </div>
                                 </div>
-                                <div
-                                  className="accordion"
-                                  id={`accordionImages${checkpoint.id}`}
-                                >
-                                  <div className="accordion-item">
-                                    <h2
-                                      className="accordion-header"
-                                      id={`heading${checkpoint.id}`}
-                                    >
-                                      <button
-                                        className="accordion-button collapsed custom-accordion-button"
-                                        type="button"
-                                        data-bs-toggle="collapse"
-                                        data-bs-target={`#collapse${checkpoint.id}`}
-                                        aria-expanded="false"
-                                        aria-controls={`collapse${checkpoint.id}`}
+                                {checkpoint?.images?.length > 0 && (
+                                  <div
+                                    className="accordion"
+                                    id={`accordionImages${checkpoint.id}`}
+                                  >
+                                    <div className="accordion-item">
+                                      <h2
+                                        className="accordion-header"
+                                        id={`heading${checkpoint.id}`}
                                       >
-                                        View Images
-                                      </button>
-                                    </h2>
-                                    <div
-                                      id={`collapse${checkpoint.id}`}
-                                      className="accordion-collapse collapse"
-                                      aria-labelledby={`heading${checkpoint.id}`}
-                                      data-bs-parent={`#accordionImages${checkpoint.id}`}
-                                    >
-                                      <div className="accordion-body">
-                                        <div className="row image-container">
-                                          {checkpoint?.images?.map(
-                                            (url, index) => (
-                                              <div
-                                                key={index}
-                                                className="col-sm-12 col-md-3 mb-2"
-                                              >
-                                                <img
-                                                  style={{
-                                                    minHeight: "160px",
-                                                  }}
-                                                  src={getImage(url)}
-                                                  alt={`Checkpoint ${
-                                                    checkpoint.order
-                                                  } Image ${index + 1}`}
-                                                  className="img-fluid rounded border"
-                                                />
-                                              </div>
-                                            )
-                                          )}
+                                        <button
+                                          className="accordion-button collapsed custom-accordion-button"
+                                          type="button"
+                                          data-bs-toggle="collapse"
+                                          data-bs-target={`#collapse${checkpoint.id}`}
+                                          aria-expanded="false"
+                                          aria-controls={`collapse${checkpoint.id}`}
+                                        >
+                                          View Images
+                                        </button>
+                                      </h2>
+                                      <div
+                                        id={`collapse${checkpoint.id}`}
+                                        className="accordion-collapse collapse"
+                                        aria-labelledby={`heading${checkpoint.id}`}
+                                        data-bs-parent={`#accordionImages${checkpoint.id}`}
+                                      >
+                                        <div className="accordion-body">
+                                          <div className="row image-container">
+                                            {checkpoint?.images?.map(
+                                              (url, index) => (
+                                                <div
+                                                  key={index}
+                                                  className="col-sm-12 col-md-3 mb-2"
+                                                >
+                                                  <img
+                                                    style={{
+                                                      minHeight: "160px",
+                                                    }}
+                                                    src={getImage(url)}
+                                                    alt={`Checkpoint ${checkpoint.order
+                                                      } Image ${index + 1}`}
+                                                    className="img-fluid rounded border"
+                                                  />
+                                                </div>
+                                              )
+                                            )}
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
                                   </div>
-                                </div>
+                                )}
+
                               </div>
                             </div>
                           ))}

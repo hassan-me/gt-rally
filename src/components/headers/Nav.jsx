@@ -29,18 +29,14 @@ export default function Nav() {
           isActive(homepages) ? "current" : ""
         } `}
       >
-        <a href="#">Home</a>
+        <a href="/">Home</a>
         <ul>
           {homepages.map((page, index) => (
             <li
               key={index}
-              className={
-                page.href.split("/")[1] == pathname.split("/")[1]
-                  ? "current"
-                  : ""
-              }
+            
             >
-              <Link to={page.href}>{page.text}</Link>
+              <Link to={"/"}>{page.text}</Link>
             </li>
           ))}
         </ul>
