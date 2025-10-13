@@ -4,9 +4,9 @@ export default function DownloadApp({ parentClass = "tf-section-banner" }) {
   return (
     <section className={parentClass}>
       <div className="container">
-        <div className="row">
+        <div className="row align-items-stretch">
           <div className="col-lg-6">
-            <div className="tf-image-box style2 bg-black flex-three">
+            <div className="tf-image-box style2 bg-black flex-three h-100">
               <div className="image">
                 <img
                   className="lazyload"
@@ -14,7 +14,7 @@ export default function DownloadApp({ parentClass = "tf-section-banner" }) {
                   alt="images"
                   src="/assets/images/img-box/find-car-4.png"
                   width={247}
-                  height={275}
+                  height="100%"
                 />
               </div>
               <div className="content">
@@ -50,7 +50,7 @@ export default function DownloadApp({ parentClass = "tf-section-banner" }) {
             </div>
           </div>
           <div className="col-lg-6">
-            <div className="tf-image-box style2 bg-orange flex-three">
+            <div className="tf-image-box style2 bg-orange flex-three h-100">
               <div className="image">
                 <img
                   className="lazyload"
@@ -58,7 +58,7 @@ export default function DownloadApp({ parentClass = "tf-section-banner" }) {
                   alt="images"
                   src="/assets/images/img-box/find-car-4.png"
                   width={247}
-                  height={275}
+                  height="100%"
                 />
               </div>
               <div className="content">

@@ -33,9 +33,9 @@ export default function BecomeASponsor() {
         />
       <div className="mt-5 pt-5"></div>
       <Features
-        msg1 = "Punch line 1"
-        msg2 = "Punch line 2"
-        msg3 = "Punch line 3"
+        msg1 = "GET"
+        msg2 = "SET"
+        msg3 = "GO"
         title = {<span>Welcome to Grand Touring Rally (GT Rally) <br/> The Ultimate Hub for Car Event Enthusiasts and Sponsors!</span>}
         desc = "Our website is the central meeting point for discovering and engaging with car events. Whether you're a participant, organizer, or sponsor, GT Rally's online platform brings the community together."
         section1 = "Explore Upcoming Events"

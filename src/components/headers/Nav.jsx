@@ -54,10 +54,12 @@ export default function Nav() {
                   ? "current"
                   : ""
               }`}
+
+            
             >
               {item.title ? (
                 <>
-                  <a href="#">{item.title}</a>
+                  <a style={{paddingBottom: 0, paddingTop: 0}} href="#">{item.title}</a>
                   <ul>
                     {item.links.map((link, linkIndex) => (
                       <li
@@ -75,7 +77,7 @@ export default function Nav() {
                   <div className="dropdown2-btn" />
                 </>
               ) : (
-                <Link to={item.href}>{item.text}</Link>
+                <Link style={{paddingBottom: 10, paddingTop: 10}} to={item.href}>{item.text}</Link>
               )}
             </li>
           ))}

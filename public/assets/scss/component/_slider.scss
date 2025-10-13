@@ -532,6 +532,17 @@
         }
       }
     }
+    // Move navigation arrows lower to avoid overlapping CTA/chat link
+    .swiper-button-next,
+    .swiper-button-prev {
+      top: 75%;
+    }
+    @media only screen and (max-width: 1200px) and (min-width: 768px) {
+      .swiper-button-next,
+      .swiper-button-prev {
+        top: 80%;
+      }
+    }
   }
 }
 

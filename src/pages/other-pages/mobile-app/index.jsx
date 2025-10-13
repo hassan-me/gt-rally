@@ -18,35 +18,35 @@ export default function MobileApp() {
       <div className="header-fixed">
         <Header2 />
       </div>
-      <Banner 
+      <Banner
         heading={
           <span>
-           GT Rally Mobile App<br/>
-           Your Ultimate Rally Companion!
+            GT Rally Mobile App<br />
+            Your Ultimate Rally Companion!
           </span>}
         description={
           <span>
-            Plan, join, and experience car rallies like never before with<br/> 
-            real-time navigation, event management, and community engagement<br/>
-            all in one powerful app! 
+            Plan, join, and experience car rallies like never before with<br />
+            real-time navigation, event management, and community engagement<br />
+            all in one powerful app!
           </span>}
-        />
+      />
       <div className="mt-5 pt-5"></div>
       <Features
-        msg1 = "Punch line 1"
-        msg2 = "Punch line 2"
-        msg3 = "Punch line 3"
-        title = "Rev Up Your Road Rally Experience with Grand Touring Rally (GT Rally)!"
-        desc = "GT Rally is your all-in-one mobile solution designed for car enthusiasts and event managers alike. Whether you're planning a rally, a car meet, or a show, our app puts everything you need right at your fingertips."
-        section1 = "Seamless Account Creation"
-        desc1 = " Create your personalized profile via the app or web and showcase your custom garage of vehicles."
-        section2 = "Plan, Create & Manage Events"
-        desc2 = " Organize comprehensive events with ease. Whether you're hosting a rally, car meet, or show, manage event details such as start locations, checkpoints, points of interest, and maps. Coordinate teams, participants, vehicles, and logistics (including hotel and stop details) all within one platform."
-        section3 = "Real-Time Communication & Engagement"
-        desc3 = "Stay connected during events with in-app chat sessions and instant photo sharing. Sponsors participating in events also gain exclusive access to these chats and photos, fostering deeper community engagement."
-        section4 = "Integrated Event Logistics"
-        desc4 = "From invitation to managing attendance, GT Rally ensures every detail is covered so you can focus on the excitement of the event."
-        bottomMsg = "Download Grand Touring Rally (GT Rally) today and drive your passion further—because your next car event should be as dynamic and well-organized as you are!"
+        msg1="GET"
+        msg2="SET"
+        msg3="GO"
+        title="Rev Up Your Road Rally Experience with Grand Touring Rally (GT Rally)!"
+        desc="GT Rally is your all-in-one mobile solution designed for car enthusiasts and event managers alike. Whether you're planning a rally, a car meet, or a show, our app puts everything you need right at your fingertips."
+        section1="Seamless Account Creation"
+        desc1=" Create your personalized profile via the app or web and showcase your custom garage of vehicles."
+        section2="Plan, Create & Manage Events"
+        desc2=" Organize comprehensive events with ease. Whether you're hosting a rally, car meet, or show, manage event details such as start locations, checkpoints, points of interest, and maps. Coordinate teams, participants, vehicles, and logistics (including hotel and stop details) all within one platform."
+        section3="Real-Time Communication & Engagement"
+        desc3="Stay connected during events with in-app chat sessions and instant photo sharing. Sponsors participating in events also gain exclusive access to these chats and photos, fostering deeper community engagement."
+        section4="Integrated Event Logistics"
+        desc4="From invitation to managing attendance, GT Rally ensures every detail is covered so you can focus on the excitement of the event."
+        bottomMsg="Download Grand Touring Rally (GT Rally) today and drive your passion further—because your next car event should be as dynamic and well-organized as you are!"
       />
       <Footer1 />
     </>

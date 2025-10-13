@@ -638,6 +638,12 @@
   padding: 16px 24px;
 }
 
+// Tighter vertical padding for submenu items that open another submenu (dropdown2 titles)
+.main-header .main-menu .navigation > li > ul > li.dropdown2 > a {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
 .main-header .main-menu .navigation > li > ul > li:hover > a {
   color: $color-3;
   background-color: $bg-color4;

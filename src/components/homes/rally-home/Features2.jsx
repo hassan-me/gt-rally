@@ -32,7 +32,7 @@ export default function Features2(props) {
                   </span>
                 </li>
               </ul>
-              <div className="image-inner1 hover-img-wrap img-style-hover">
+              <div className="image-inner1 hover-img-wrap img-style-hover" style={{minWidth:500,height:620}}>
                 <img
                   className="ls-is-cached lazyloaded"
                   data-src="/assets/images/section/stock-car.jpg"
