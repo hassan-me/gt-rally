@@ -246,13 +246,10 @@ export default function MapboxLocationModal({
               } catch (e) {}
             });
 
-            // Then the checkpoint location (if present on this cp)
-            if (
-              typeof cp?.longitude === "number" &&
-              typeof cp?.latitude === "number"
-            ) {
-              coords.push([cp.longitude, cp.latitude]);
-            }
+          const mapbox=JSON.parse(cp.mapboxLocationJson)
+          
+              coords.push([mapbox.query[0], mapbox.query[1]])
+            
           });
       }
 
@@ -438,10 +435,9 @@ export default function MapboxLocationModal({
         [...eventDetails.checkpoints]
           .sort((a, b) => (a?.order || 0) - (b?.order || 0))
           .forEach((cp) => {
-            if (
-              typeof cp?.longitude === "number" &&
-              typeof cp?.latitude === "number"
-            ) {
+
+              const mapbox=JSON.parse(cp.mapboxLocationJson)
+
               const cpLabel = cp?.name ? `${cp.name}` : "Checkpoint";
               const cpMarker = new mapboxgl.Marker({
                 element: createLabeledMarkerElement({
@@ -450,10 +446,10 @@ export default function MapboxLocationModal({
                   size: 24,
                 }),
               })
-                .setLngLat([cp.longitude, cp.latitude])
+                .setLngLat([mapbox.query[0], mapbox.query[1]])
                 .addTo(map);
               routePreviewMarkersRef.current.push(cpMarker);
-            }
+            
 
             const shapingJsons = [
               cp?.mapboxWaypoint1Json,

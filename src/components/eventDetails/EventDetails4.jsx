@@ -45,59 +45,67 @@ export default function EventDetails({ eventDetail }) {
     } else {
       map.on("load", async () => {
         try {
-          const token = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN || "";
+          const token = mapboxgl.accessToken || "";
           if (!token) return;
+
+          const safeParse = (j) => {
+            try {
+              return typeof j === "string" ? JSON.parse(j) : j;
+            } catch {
+              return null;
+            }
+          };
+
+          const toLngLat = (obj) => {
+            if (!obj) return null;
+            const q = obj?.query;
+            if (Array.isArray(q) && typeof q[0] === "number" && typeof q[1] === "number") {
+              return [q[0], q[1]];
+            }
+            const c = obj?.features?.[0]?.geometry?.coordinates || obj?.geometry?.coordinates;
+            if (
+              Array.isArray(c) &&
+              typeof c[0] === "number" &&
+              typeof c[1] === "number"
+            ) {
+              return [c[0], c[1]];
+            }
+            return null;
+          };
 
           const coords = [];
 
-          if (
-            typeof eventDetail.start_longitude === "number" &&
-            typeof eventDetail.start_latitude === "number"
-          ) {
-            coords.push([
-              eventDetail.start_longitude,
-              eventDetail.start_latitude,
-            ]);
-          }
+          const startLocationJson = safeParse(eventDetail.start_mapbox_location_json);
+          const startCoord = toLngLat(startLocationJson);
+          if (startCoord) coords.push(startCoord);
 
-          if (Array.isArray(eventDetail.checkpoints)) {
-            [...eventDetail.checkpoints]
-              .sort((a, b) => (a?.order || 0) - (b?.order || 0))
-              .forEach((cp) => {
-                const shapingJsons = [
-                  cp?.mapbox_waypoint1_json,
-                  cp?.mapbox_waypoint2_json,
-                  cp?.mapboxWaypoint1Json,
-                  cp?.mapboxWaypoint2Json,
-                ].filter(Boolean);
-                shapingJsons.forEach((j) => {
-                  try {
-                    const fc = typeof j === "string" ? JSON.parse(j) : j;
-                    const c =
-                      fc?.features?.[0]?.geometry?.coordinates ||
-                      fc?.geometry?.coordinates;
+          const checkpointsSorted = Array.isArray(eventDetail.checkpoints)
+            ? [...eventDetail.checkpoints].sort((a, b) => (a?.order || 0) - (b?.order || 0))
+            : [];
 
-                    coords.push([c[0], c[1]]);
+          const checkpointsProcessed = checkpointsSorted.map((cp) => {
+            const base = safeParse(cp?.mapbox_location_json);
+            const cpCoord = toLngLat(base);
+            const shapingJsons = [
+              cp?.mapbox_waypoint1_json,
+              cp?.mapbox_waypoint2_json,
+              cp?.mapboxWaypoint1Json,
+              cp?.mapboxWaypoint2Json,
+            ].filter(Boolean);
+            const waypointCoords = shapingJsons
+              .map((j) => toLngLat(safeParse(j)))
+              .filter(Boolean);
+            return { cp, cpCoord, waypointCoords };
+          });
 
-                  } catch (e) { }
-                });
+          checkpointsProcessed.forEach(({ cpCoord, waypointCoords }) => {
+            waypointCoords.forEach((c) => coords.push(c));
+            if (cpCoord) coords.push(cpCoord);
+          });
 
-                if (
-                  typeof cp?.longitude === "number" &&
-                  typeof cp?.latitude === "number"
-                ) {
-                  coords.push([cp.longitude, cp.latitude]);
-                }
-              });
-          }
-
-          // End
-          if (
-            typeof eventDetail.end_longitude === "number" &&
-            typeof eventDetail.end_latitude === "number"
-          ) {
-            coords.push([eventDetail.end_longitude, eventDetail.end_latitude]);
-          }
+          const endLocationJson = safeParse(eventDetail.end_mapbox_location_json);
+          const endCoord = toLngLat(endLocationJson);
+          if (endCoord) coords.push(endCoord);
 
           if (coords.length < 2) return;
 
@@ -105,9 +113,7 @@ export default function EventDetails({ eventDetail }) {
           const excludeParams = [];
           if (eventDetail?.avoid_highway) excludeParams.push("motorway");
           if (eventDetail?.avoid_toll) excludeParams.push("toll");
-          const exclude = excludeParams.length
-            ? `&exclude=${excludeParams.join(",")}`
-            : "";
+          const exclude = excludeParams.length ? `&exclude=${excludeParams.join(",")}` : "";
           const url = `https://api.mapbox.com/directions/v5/mapbox/driving/${coordStr}?geometries=geojson&overview=full&steps=false&alternatives=false${exclude}&access_token=${token}`;
 
           const res = await fetch(url);
@@ -116,27 +122,28 @@ export default function EventDetails({ eventDetail }) {
           if (!route) return;
 
           // Draw route
-          if (map.getLayer("route-layer")) {
-            map.removeLayer("route-layer");
+          const existingSource = map.getSource("route");
+          if (existingSource) {
+            existingSource.setData({ type: "Feature", properties: {}, geometry: route });
+          } else {
+            map.addSource("route", {
+              type: "geojson",
+              data: { type: "Feature", properties: {}, geometry: route },
+            });
           }
-          if (map.getSource("route")) {
-            map.removeSource("route");
+          if (!map.getLayer("route-layer")) {
+            map.addLayer({
+              id: "route-layer",
+              type: "line",
+              source: "route",
+              layout: { "line-join": "round", "line-cap": "round" },
+              paint: {
+                "line-color": "#0d6efd",
+                "line-width": 4,
+                "line-opacity": 0.9,
+              },
+            });
           }
-          map.addSource("route", {
-            type: "geojson",
-            data: { type: "Feature", properties: {}, geometry: route },
-          });
-          map.addLayer({
-            id: "route-layer",
-            type: "line",
-            source: "route",
-            layout: { "line-join": "round", "line-cap": "round" },
-            paint: {
-              "line-color": "#0d6efd",
-              "line-width": 4,
-              "line-opacity": 0.9,
-            },
-          });
 
           // Fit bounds
           const bounds = new mapboxgl.LngLatBounds();
@@ -146,80 +153,56 @@ export default function EventDetails({ eventDetail }) {
           // Marker helper
 
           // Start & End
-          const startCoord = coords[0];
-          const endCoord = coords[coords.length - 1];
-          new mapboxgl.Marker({
-            element: createLabeledMarkerElement({
-              labelText: "Start",
-              emoji: "🏁",
-              size: 24,
-            }),
-          })
-            .setLngLat(startCoord)
-            .addTo(map);
-          new mapboxgl.Marker({
-            element: createLabeledMarkerElement({
-              labelText: "End",
-              emoji: "🏁",
-              size: 24,
-            }),
-          })
-            .setLngLat(endCoord)
-            .addTo(map);
+          if (startCoord) {
+            new mapboxgl.Marker({
+              element: createLabeledMarkerElement({
+                labelText: "Start",
+                emoji: "🏁",
+                size: 24,
+              }),
+            })
+              .setLngLat(startCoord)
+              .addTo(map);
+          }
+          if (endCoord) {
+            new mapboxgl.Marker({
+              element: createLabeledMarkerElement({
+                labelText: "End",
+                emoji: "🏁",
+                size: 24,
+              }),
+            })
+              .setLngLat(endCoord)
+              .addTo(map);
+          }
 
           // Checkpoints and Waypoints
-          if (Array.isArray(eventDetail.checkpoints)) {
-            [...eventDetail.checkpoints]
-              .sort((a, b) => (a?.order || 0) - (b?.order || 0))
-              .forEach((cp) => {
-                if (
-                  typeof cp?.longitude === "number" &&
-                  typeof cp?.latitude === "number"
-                ) {
-                  const cpLabel = cp?.name ? `${cp.name}` : "Checkpoint";
-                  new mapboxgl.Marker({
-                    element: createLabeledMarkerElement({
-                      labelText: cpLabel,
-                      emoji: "🚩",
-                      size: 24,
-                    }),
-                  })
-                    .setLngLat([cp.longitude, cp.latitude])
-                    .addTo(map);
-                }
-                const shapingJsons = [
-                  cp?.mapbox_waypoint1_json,
-                  cp?.mapbox_waypoint2_json,
-                  cp?.mapboxWaypoint1Json,
-                  cp?.mapboxWaypoint2Json,
-                ].filter(Boolean);
-                shapingJsons.forEach((j, idx) => {
-                  try {
-                    const fc = typeof j === "string" ? JSON.parse(j) : j;
-                    const c =
-                      fc?.features?.[0]?.geometry?.coordinates ||
-                      fc?.geometry?.coordinates;
-                    if (
-                      Array.isArray(c) &&
-                      typeof c[0] === "number" &&
-                      typeof c[1] === "number"
-                    ) {
-                      const wpLabel = `${idx === 0 ? "Waypoint 1" : "Waypoint 2"
-                        }${cp?.name ? `: ${cp.name}` : ""}`;
-                      new mapboxgl.Marker({
-                        element: createLabeledMarkerElement({
-                          labelText: wpLabel,
-                          color: "#1e90ff",
-                          size: 18,
-                        }),
-                      })
-                        .setLngLat([c[0], c[1]])
-                        .addTo(map);
-                    }
-                  } catch (e) { }
-                });
-              });
-          }
+          checkpointsProcessed.forEach(({ cp, cpCoord, waypointCoords }) => {
+            if (cpCoord) {
+              const cpLabel = cp?.name ? `${cp.name}` : "Checkpoint";
+              new mapboxgl.Marker({
+                element: createLabeledMarkerElement({
+                  labelText: cpLabel,
+                  emoji: "🚩",
+                  size: 24,
+                }),
+              })
+                .setLngLat(cpCoord)
+                .addTo(map);
+            }
+            waypointCoords.forEach((c, idx) => {
+              const wpLabel = `${idx === 0 ? "Waypoint 1" : "Waypoint 2"}${cp?.name ? `: ${cp.name}` : ""}`;
+              new mapboxgl.Marker({
+                element: createLabeledMarkerElement({
+                  labelText: wpLabel,
+                  color: "#1e90ff",
+                  size: 18,
+                }),
+              })
+                .setLngLat([c[0], c[1]])
+                .addTo(map);
+            });
+          });
         } catch (error) {
           console.error("Directions build failed:", error);
         }
@@ -442,7 +425,7 @@ export default function EventDetails({ eventDetail }) {
                                       ).toLocaleString()}
                                     </p>
                                   </div>
-                                  {checkpoint.activities && (
+                                  {checkpoint.activities !=="" && (
                                     <div className="col-12">
                                       <p className="mb-1 mt-3">
                                         <strong className="fw-bolder">
@@ -487,7 +470,7 @@ export default function EventDetails({ eventDetail }) {
                                               (url, index) => (
                                                 <div
                                                   key={index}
-                                                  className="col-sm-12 col-md-3 mb-2"
+                                                  className="col-sm-12 col-md-4 mb-2"
                                                 >
                                                   <img
                                                     style={{

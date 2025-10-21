@@ -9,6 +9,7 @@ import { Modal } from "bootstrap";
 import { useNavigate } from "react-router-dom";
 import Toast from "../common/Toast";
 
+
 // Validation schema
 const schema = yup.object().shape({
   email: yup.string().email("Invalid email").required("Email is required"),
@@ -83,9 +84,10 @@ export default function Login() {
         id="popup_bid"
         tabIndex={-1}
         aria-hidden="true"
+        
       >
-        <div className="modal-dialog modal-dialog-centered" role="document">
-          <div className="modal-content">
+        <div  className="modal-dialog modal-dialog-centered" role="document">
+          <div  className="modal-content">
             <button
               type="button"
               onClick={() => reset()}
@@ -97,12 +99,11 @@ export default function Login() {
             </button>
             <div className="modal-body space-y-20 pd-40">
               <div className="wrap-modal flex">
-                <div className="images flex-none">
+                <div className="images" style={{height:640,width:680}}>
                   <img
                     alt="images"
-                    src="/assets/images/section/login.jpg"
-                    width={380}
-                    height={640}
+                    src="assets/images/car-list/automobile.jpg"
+        
                   />
                 </div>
                 <div className="content">

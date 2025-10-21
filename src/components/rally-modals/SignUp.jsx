@@ -14,6 +14,7 @@ import MyProfile from "../rally-dashboard/MyProfile";
 import MyGarage from "../modals/MyGarage";
 import { useNavigate } from "react-router-dom";
 
+
 const signupSchema = yup.object().shape({
   firstName: yup.string().required("First name is required"),
   lastName: yup.string().required("Last name is required"),
@@ -32,7 +33,7 @@ export default function SignUp() {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("success");
-  const [currentStep, setCurrentStep] = useState(3); // 1 for signup, 2 for profile
+  const [currentStep, setCurrentStep] = useState(1); // 1 for signup, 2 for profile
   const navigate = useNavigate();
 
   const [signup, { isLoading: isSignupLoading }] = useSignupMutation();
